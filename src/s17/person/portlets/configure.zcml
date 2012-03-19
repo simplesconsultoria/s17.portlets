@@ -1,0 +1,69 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="s17.portlets.birthday">
+
+    <five:registerPackage package="." />
+    <include package="Products.CMFCore" file="permissions.zcml" />
+
+    <genericsetup:registerProfile
+       name="default"
+       title="Person Portlets Profile"
+       directory="profiles/default"
+       description="Person portlets"
+       provides="Products.GenericSetup.interfaces.EXTENSION"
+       />
+
+     <!-- Register the portlet -->
+
+     <!-- If the portlet has no configurable parameters, you can remove
+          the EditForm declaration in birthdayportlet.py and delete
+          the 'editview' attribute from this statement.
+       -->
+
+     <plone:portlet
+         name="s17.person.portlets.birthday.BirthdayPortlet"
+         interface=".birthdayportlet.IBirthdayPortlet"
+         assignment=".birthdayportlet.Assignment"
+         view_permission="zope2.View"
+         edit_permission="cmf.ManagePortal"
+         renderer=".birthdayportlet.Renderer"
+         addview=".birthdayportlet.AddForm"
+         editview=".birthdayportlet.EditForm"
+         />
+
+    <plone:portlet
+         name="s17.person.portlets.personprofile.PersonProfile"
+         interface=".personprofile.IPersonProfile"
+         assignment=".personprofile.Assignment"
+         view_permission="zope2.View"
+         edit_permission="cmf.ManagePortal"
+         renderer=".personprofile.Renderer"
+         addview=".personprofile.AddForm"
+         editview=".personprofile.EditForm"
+         />
+
+    <plone:portlet
+         name="s17.person.portlets.whitepages.WhitePagesPortlet"
+         interface=".whitepagesportlet.IWhitePagesPortlet"
+         assignment=".whitepagesportlet.Assignment"
+         view_permission="zope2.View"
+         edit_permission="cmf.ManagePortal"
+         renderer=".whitepagesportlet.Renderer"
+         addview=".whitepagesportlet.AddForm"
+         editview=".whitepagesportlet.EditForm"
+         />
+
+     <browser:page
+         for="*"
+         name="whitepages"
+         class=".whitepages.WhitePages"
+         template="whitepagesview.pt"
+         allowed_interface=".interfaces.IWhitePages"
+         permission="zope.Public"
+      />
+
+</configure>

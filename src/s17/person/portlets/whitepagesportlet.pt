@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="s17.portlets.whitepages"
+      tal:omit-tag="">
+<dl class="portlet portletWhitePagesPortlet">
+
+    <dt class="portletHeader" tal:content="view/data/portlet_title">
+        Yellow pages
+    </dt>
+
+    <dd class="portletItem odd">
+        <form action="./@@whitepages" id="searchpersonform" name="whitepages">
+            <!--<div tal:repeat="search_field view/data/search_fields">
+                <label tal:content="search_field"></label>
+                <input type="text" tal:attributes="name search_field"/>
+            </div>-->
+            <input type="text" name="fullname" />
+            <input type="submit" value="Search" class="searchButton" />
+        </form>
+    </dd>
+
+</dl>
+</html>

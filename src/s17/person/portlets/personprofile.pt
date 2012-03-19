@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="s17.portlets.personprofile"
+      tal:omit-tag="">
+<dl class="portlet portletPersonProfile">
+
+    <dt tal:content="view/data/title">Personal profile</dt>
+    <dd>
+        <div id="personal-profile">
+
+            <div class="portrait">
+	            <img tal:replace="structure view/get_portrait" src="defaultUser.png" />
+	        </div>
+
+	        <ul class="profile-options">
+	            <li><a class="profile" href=""
+	                   tal:attributes="href view/get_user_profile">My Perfil</a></li>
+	            <li><a class="resume" href=""
+	                   tal:attributes="href view/get_resume">My Resume</a></li>
+	            <li><a class="participation" href="">Participation</a></li>
+	        </ul>
+
+	       <dl class="portlet">
+	               <dt class="portletHeader">
+                        <span class="portletTopLeft"></span>
+                            <span>Latest posts</span>
+                        <span class="portletTopRight"></span>
+                    </dt>
+
+                <tal:participation tal:define="participation_list view/get_participation">
+                    <dd tal:condition="not: participation_list">No posts created</dd>
+                    <dd class="portletItem odd" tal:condition="participation_list"
+                        tal:repeat="activity participation_list">
+                        <tal:block tal:define="activity_obj activity/getObject">
+                        <a title="" class="tile"
+                           tal:attributes="href activity_obj/absolute_url">
+                           <span class="portletItemDetails" tal:content="python:view.data_transform(activity_obj.Date())"></span>
+                           <span tal:replace="activity/Title" />
+
+                        </a>
+                       </tal:block>
+                    </dd>
+                </tal:participation>
+
+	        </dl>
+        </div>
+    </dd>
+</dl>
+</html>

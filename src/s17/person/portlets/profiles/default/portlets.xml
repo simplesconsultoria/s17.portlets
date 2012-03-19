@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<portlets
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="plone">
+
+ <!-- Portlet type registrations -->
+
+ <portlet
+   addview="s17.person.portlets.birthday.BirthdayPortlet"
+   title="Birthday Portlet"
+   description="Birthday portlet"
+   />
+  <portlet
+   addview="s17.person.portlets.personprofile.PersonProfile"
+   title="Person Profile"
+   description="Portlet profile for person">
+    <for interface="plone.app.portlets.interfaces.IColumn" />
+    <for interface="plone.app.portlets.interfaces.IDashboard" />
+  </portlet>
+  <portlet
+   addview="s17.person.portlets.whitepages.WhitePagesPortlet"
+   title="White Pages Portlet"
+   description="White pages">
+    <for interface="plone.app.portlets.interfaces.IColumn" />
+    <for interface="plone.app.portlets.interfaces.IDashboard" />
+  </portlet>
+
+</portlets>
