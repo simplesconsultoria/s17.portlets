@@ -15,7 +15,7 @@ import DateTime
 
 from zope.component import getMultiAdapter
 
-from s17.portlets.personprofile import PersonProfileMessageFactory as _
+from s17.person.portlets import PersonProfileMessageFactory as _
 
 from collective.person.content.person import IPerson
 
@@ -117,6 +117,7 @@ class Renderer(base.Renderer):
 
                 height = round(width * proportion, 0)
                 images = getMultiAdapter((obj, self.request), name="images")
+                import pdb;pdb.set_trace()
                 img = images.scale('picture', width=width, height=height)
                 tag = img.tag()
 

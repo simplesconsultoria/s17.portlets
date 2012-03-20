@@ -5,6 +5,8 @@ import unittest2 as unittest
 
 from zope.component import getUtility, getMultiAdapter
 
+from Products.GenericSetup.utils import _getDottedName
+
 from plone.namedfile import NamedImage
 
 from plone.portlets.interfaces import IPortletType
@@ -133,7 +135,7 @@ class TestPersonProfilePortlet(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = 's17.portlets.personprofile.PersonProfile'
+        self.name = 's17.person.portlets.personprofile.PersonProfile'
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_portlet_type_registered(self):
@@ -198,7 +200,7 @@ class TestPersonProfileRenderer(unittest.TestCase):
         self.portal.portal_workflow.setChainForPortalTypes(
             ['collective.person.person'], ['simple_publication_workflow'])
         self.portal.invokeFactory('News Item', 'news1')
-        image = open('../../src/s17.person.portlets/' + \
+        image = open('../../src/' + \
         's17/person/portlets/tests/picture.jpg')
         image_data = image.read()
         image.close()
@@ -245,6 +247,7 @@ class TestPersonProfileRenderer(unittest.TestCase):
 
     def test_get_portrait(self):
         size = ('154', '123')
+        import pdb;pdb.set_trace()
         self.assertEquals(size,
             self.get_sizes_from_str(self.render.get_portrait()))
 
@@ -263,7 +266,7 @@ class TestWhitePagesPortlet(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = 's17.portlets.whitepages.WhitePagesPortlet'
+        self.name = 's17.person.portlets.whitepages.WhitePagesPortlet'
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_portlet_type_registered(self):

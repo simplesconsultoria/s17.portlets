@@ -26,8 +26,8 @@ setup(name='s17.person.portlets',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'setuptools',
-          'collective.person',
+        'setuptools',
+        'collective.person',
       ],
       extras_require={
         'test': ['plone.app.testing'],

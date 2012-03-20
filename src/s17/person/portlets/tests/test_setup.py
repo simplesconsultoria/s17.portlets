@@ -8,8 +8,8 @@ from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import login
 from plone.app.testing import setRoles
 
-from s17.portlets.birthday.config import PROJECTNAME
-from s17.portlets.birthday.testing import INTEGRATION_TESTING
+from s17.person.portlets.config import PROJECTNAME
+from s17.person.portlets.testing import INTEGRATION_TESTING
 
 
 class TestInstall(unittest.TestCase):

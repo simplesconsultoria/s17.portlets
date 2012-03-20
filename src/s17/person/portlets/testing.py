@@ -13,7 +13,7 @@ class Fixture(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         # Load ZCML
         import s17.person.portlets
-        self.loadZCML(package=s17.portlets.birthday)
+        self.loadZCML(package=s17.person.portlets)
         # Load ZCML
         import collective.person
         self.loadZCML(package=collective.person)
@@ -25,7 +25,7 @@ class Fixture(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         # Install into Plone site using portal_setup
-        self.applyProfile(portal, 's17.portlets.birthday:default')
+        self.applyProfile(portal, 's17.person.portlets:default')
         self.applyProfile(portal, 'collective.person:default')
 
 

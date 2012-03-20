@@ -5,7 +5,7 @@ from zope.interface import implements
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 
-from s17.portlets.whitepages.interfaces import IWhitePages
+from s17.person.portlets.interfaces import IWhitePages
 
 
 class WhitePages(BrowserView):
