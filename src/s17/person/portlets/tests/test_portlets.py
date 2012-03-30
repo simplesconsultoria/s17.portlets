@@ -3,11 +3,14 @@
 from datetime import datetime, timedelta
 import unittest2 as unittest
 
+import os
+
 from zope.component import getUtility, getMultiAdapter
 
 from Products.GenericSetup.utils import _getDottedName
 
 from plone.namedfile import NamedImage
+from plone.namedfile.tests.base import getFile
 
 from plone.portlets.interfaces import IPortletType
 from plone.portlets.interfaces import IPortletManager
@@ -200,13 +203,11 @@ class TestPersonProfileRenderer(unittest.TestCase):
         self.portal.portal_workflow.setChainForPortalTypes(
             ['collective.person.person'], ['simple_publication_workflow'])
         self.portal.invokeFactory('News Item', 'news1')
-        image = open('../../src/' + \
-        's17/person/portlets/tests/picture.jpg')
-        image_data = image.read()
-        image.close()
+        image = os.path.join(os.path.dirname(__file__), 'picture.jpg')
+        data = getFile(image).read()
         self.portal.invokeFactory('collective.person.person', TEST_USER_ID,
             birthday=datetime.date(datetime.now()),
-            picture=NamedImage(image_data))
+            picture=NamedImage(data))
         setRoles(self.portal, TEST_USER_ID, ['Member'])
         self.render = self.renderer(context=self.portal,
                           assignment=personprofile.Assignment('test'))
@@ -247,7 +248,6 @@ class TestPersonProfileRenderer(unittest.TestCase):
 
     def test_get_portrait(self):
         size = ('154', '123')
-        import pdb;pdb.set_trace()
         self.assertEquals(size,
             self.get_sizes_from_str(self.render.get_portrait()))
 
@@ -354,6 +354,7 @@ class TestWhitePagesRenderer(unittest.TestCase):
         html = render.render()
         self.assertNotEquals(None, html)
         self.assertNotEquals('', html)
+
 
 def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)
