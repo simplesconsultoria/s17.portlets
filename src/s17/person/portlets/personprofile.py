@@ -117,7 +117,6 @@ class Renderer(base.Renderer):
 
                 height = round(width * proportion, 0)
                 images = getMultiAdapter((obj, self.request), name="images")
-                import pdb;pdb.set_trace()
                 img = images.scale('picture', width=width, height=height)
                 tag = img.tag()
 
