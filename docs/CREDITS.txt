@@ -1,0 +1,10 @@
+Contributors
+------------
+
+- Silvestre Huens
+- Cleber J Santos
+- Héctor Velarde
+- Alejandro Pereira
+
+Development sponsored by Simples Consultoria.
+
