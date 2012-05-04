@@ -14,7 +14,7 @@ setup(name='s17.person.portlets',
       description="White pages, birthday and profile portlets for person",
       long_description=long_description,
       classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Plone :: 4.1",
