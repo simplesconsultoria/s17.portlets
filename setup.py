@@ -11,7 +11,7 @@ long_description = open("README.txt").read() + "\n" + \
 
 setup(name='s17.person.portlets',
       version=version,
-      description="White pages, birthday and profile portlets for person",
+      description="Profile, birthday and white pages portlets for a person.",
       long_description=long_description,
       classifiers=[
         "Development Status :: 3 - Alpha",
