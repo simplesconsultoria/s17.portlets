@@ -6,7 +6,7 @@
 <dl class="portlet portletWhitePagesPortlet">
 
     <dt class="portletHeader" tal:content="view/data/portlet_title">
-        Yellow pages
+        White Pages
     </dt>
 
     <dd class="portletItem odd">

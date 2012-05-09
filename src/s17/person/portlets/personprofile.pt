@@ -15,16 +15,19 @@
 
 	        <ul class="profile-options">
 	            <li><a class="profile" href=""
-	                   tal:attributes="href view/get_user_profile">My Perfil</a></li>
+	                   tal:attributes="href view/get_user_profile"
+	                   i18n:translate="">My Profile</a></li>
 	            <li><a class="resume" href=""
-	                   tal:attributes="href view/get_resume">My Resume</a></li>
-	            <li><a class="participation" href="">Participation</a></li>
+	                   tal:attributes="href view/get_resume"
+	                   i18n:translate="">My Resume</a></li>
+	            <li><a class="participation" href=""
+	                   i18n:translate="">Participation</a></li>
 	        </ul>
 
 	       <dl class="portlet">
 	               <dt class="portletHeader">
                         <span class="portletTopLeft"></span>
-                            <span>Latest posts</span>
+                            <span i18n:translate="">Latest Posts</span>
                         <span class="portletTopRight"></span>
                     </dt>
 

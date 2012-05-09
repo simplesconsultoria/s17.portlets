@@ -1,9 +1,10 @@
+# Héctor Velarde <hector.velarde@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: s17.person.portlets 1.0\n"
+"POT-Creation-Date: 2012-05-09 19:26+0000\n"
+"PO-Revision-Date: 2012-05-09 16:29-0300\n"
+"Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -12,5 +13,29 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: plone\n"
+
+#: s17/person/portlets/profiles/default/portlets.xml
+msgid "Birthday Portlet"
+msgstr "Portlet de aniversario"
+
+#: s17/person/portlets/profiles/default/portlets.xml
+msgid "Displays a search box to look for persons using their name."
+msgstr "Exibe uma caixa de busca para procurar pessoas pelo nome."
+
+#: s17/person/portlets/profiles/default/portlets.xml
+msgid "Displays information about a person personal profile including portrait, resume and latest posts made on the site."
+msgstr "Exibe informação sobre o perfil pessoal duma pessoa incluindo seu retrato, resumo e as últimas contribuções feitas no site."
+
+#: s17/person/portlets/profiles/default/portlets.xml
+msgid "Displays the names of the persons with upcoming birthdays in the following days."
+msgstr "Exibe os nomes dos aniversariantes nos próximos dias."
+
+#: s17/person/portlets/profiles/default/portlets.xml
+msgid "Person Profile Portlet"
+msgstr "Portlet do perfil da pessoa"
+
+#: s17/person/portlets/profiles/default/portlets.xml
+msgid "White Pages Portlet"
+msgstr "Portlet de páginas brancas"
 

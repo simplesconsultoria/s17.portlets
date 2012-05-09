@@ -2,27 +2,28 @@
 <portlets
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     i18n:domain="plone">
-
- <!-- Portlet type registrations -->
-
  <portlet
    addview="s17.person.portlets.birthday.BirthdayPortlet"
    title="Birthday Portlet"
-   description="Birthday portlet"
-   />
-  <portlet
-   addview="s17.person.portlets.personprofile.PersonProfile"
-   title="Person Profile"
-   description="Portlet profile for person">
+   description="Displays information about a person personal profile including portrait, resume and latest posts made on the site."
+   i18n:attributes="title; description">
     <for interface="plone.app.portlets.interfaces.IColumn" />
     <for interface="plone.app.portlets.interfaces.IDashboard" />
-  </portlet>
-  <portlet
+ </portlet>
+ <portlet
+   addview="s17.person.portlets.personprofile.PersonProfile"
+   title="Person Profile Portlet"
+   description="Displays the names of the persons with upcoming birthdays in the following days."
+   i18n:attributes="title; description">
+    <for interface="plone.app.portlets.interfaces.IColumn" />
+    <for interface="plone.app.portlets.interfaces.IDashboard" />
+ </portlet>
+ <portlet
    addview="s17.person.portlets.whitepages.WhitePagesPortlet"
    title="White Pages Portlet"
-   description="White pages">
+   description="Displays a search box to look for persons using their name."
+   i18n:attributes="title; description">
     <for interface="plone.app.portlets.interfaces.IColumn" />
     <for interface="plone.app.portlets.interfaces.IDashboard" />
-  </portlet>
-
+ </portlet>
 </portlets>

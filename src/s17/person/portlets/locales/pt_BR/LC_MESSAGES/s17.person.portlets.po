@@ -1,9 +1,10 @@
+# Héctor Velarde <hector.velarde@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-05-09 18:55+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: s17.person.portlets 1.0\n"
+"POT-Creation-Date: 2012-05-09 19:26+0000\n"
+"PO-Revision-Date: 2012-05-09 16:12-0300\n"
+"Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -12,31 +13,51 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: s17.person.portlets\n"
+
+#: s17/person/portlets/personprofile.pt:30
+msgid "Latest Posts"
+msgstr "Últimos posts"
+
+#: s17/person/portlets/personprofile.pt:17
+msgid "My Profile"
+msgstr "Meu perfil"
+
+#: s17/person/portlets/personprofile.pt:20
+msgid "My Resume"
+msgstr "Meu resumo"
 
 #: s17/person/portlets/birthdayportlet.py:41
 msgid "Numbers of days"
-msgstr ""
+msgstr "Número de dias"
+
+#: s17/person/portlets/personprofile.pt:23
+msgid "Participation"
+msgstr "Participação"
 
 #: s17/person/portlets/birthdayportlet.py:37
 #: s17/person/portlets/personprofile.py:36
 #: s17/person/portlets/whitepagesportlet.py:54
 msgid "Portlet Title"
+msgstr "Título do portlet"
+
+#: configure.zcml
+msgid "Profile, birthday and white pages portlets for persons."
 msgstr ""
 
 #: s17/person/portlets/birthdayportlet.py:42
 msgid "Search for birthdays from                                   here plus numbers of days"
-msgstr ""
+msgstr "Procurar aniversarios desde hoje ate o número de dias"
 
 #: s17/person/portlets/whitepagesportlet.py:55
 msgid "The portlet title"
-msgstr ""
+msgstr "O título do portlet"
 
 #: s17/person/portlets/personprofile.py:37
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: s17/person/portlets/birthdayportlet.py:38
 msgid "the Title of the portlet"
-msgstr ""
+msgstr "O título do portlet"
 

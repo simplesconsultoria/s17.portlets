@@ -3,8 +3,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="s17.person.portlets"
       tal:omit-tag="">
-<dl class="portlet portletBirthdayPortlet"
-    i18n:domain="s17.person.portlets">
+<dl class="portlet portletBirthdayPortlet">
 
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
@@ -16,7 +15,8 @@
     <dd class="portletItem" tal:condition="birthday">
         <tal:object tal:define="birthday_obj birthday/getObject">
         <span class="bdate" tal:content="python:birthday_obj.birthday.strftime('%d/%m')">31/12</span>
-        <a href="#" tal:attributes="href birthday_obj/absolute_url"><span class="bname" tal:content="birthday_obj/Title">john doe</span></a>
+        <a href="#" tal:attributes="href birthday_obj/absolute_url">
+            <span class="bname" tal:content="birthday_obj/Title">John Doe</span></a>
         </tal:object>
     </dd>
     </tal:birthdays>
