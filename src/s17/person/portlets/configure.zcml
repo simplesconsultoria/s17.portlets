@@ -11,9 +11,9 @@
 
     <genericsetup:registerProfile
        name="default"
-       title="Person Portlets Profile"
+       title="s17.person.portlets: Install"
        directory="profiles/default"
-       description="Person portlets"
+       description="Profile, birthday and white pages portlets for persons."
        provides="Products.GenericSetup.interfaces.EXTENSION"
        />
 
