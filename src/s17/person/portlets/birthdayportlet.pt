@@ -14,7 +14,7 @@
     <tal:birthdays tal:repeat="birthday view/get_birthdays">
     <dd class="portletItem" tal:condition="birthday">
         <tal:object tal:define="birthday_obj birthday/getObject">
-        <span class="bdate" tal:content="python:birthday_obj.birthday.strftime('%d/%m')">31/12</span>
+        <span class="bdate" tal:content="python:birthday_obj.birthday.strftime('%m/%d')">31/12</span>
         <a href="#" tal:attributes="href birthday_obj/absolute_url">
             <span class="bname" tal:content="birthday_obj/Title">John Doe</span></a>
         </tal:object>
