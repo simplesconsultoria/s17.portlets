@@ -17,11 +17,6 @@
 	            <li><a class="profile" href=""
 	                   tal:attributes="href view/get_user_profile"
 	                   i18n:translate="">My Profile</a></li>
-	            <li><a class="resume" href=""
-	                   tal:attributes="href view/get_resume"
-	                   i18n:translate="">My Resume</a></li>
-	            <li><a class="participation" href=""
-	                   i18n:translate="">Participation</a></li>
 	        </ul>
 
 	       <dl class="portlet">
