@@ -247,7 +247,7 @@ class TestPersonProfileRenderer(unittest.TestCase):
         return (height, width)
 
     def test_get_portrait(self):
-        size = ('154', '123')
+        size = ('250', '200')
         self.assertEquals(size,
             self.get_sizes_from_str(self.render.get_portrait()))
 
