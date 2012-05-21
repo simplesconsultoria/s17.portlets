@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<import-steps>
-    <import-step id="s17.person.portlets-default" version="20120208-16"
-                 handler="s17.person.portlets.setuphandlers.remove_portlets"
-                 title="Remove portlets">
-        <dependency step="plone_content" />
-    Remove portlets
-    </import-step>
-</import-steps>
