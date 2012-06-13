@@ -41,7 +41,7 @@ setup(name='s17.person.portlets',
       zip_safe=False,
       install_requires=[
         'setuptools',
-        'collective.person',
+        'collective.person>=1.03a',
         ],
       extras_require={
         'test': ['plone.app.testing'],
