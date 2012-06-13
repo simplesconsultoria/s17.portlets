@@ -4,10 +4,13 @@ s17.person.portlets
 
 .. contents:: Table of Contents
 
-Overview
---------
+Life, the Universe, and Everything
+----------------------------------
 
 Profile, birthday and white pages portlets for a person.
+
+Don't panic
+-----------
 
 s17.person.portlets contains portlets to be used with the Person content type
 included in `collective.person`_.
@@ -26,5 +29,11 @@ The following portlets are available:
     The white pages portlet displays a search box to look for persons using
     their name.
 
+Mostly Harmless
+---------------
+
+Have an idea? Found a bug? Let us know by `opening a support ticket`_.
+
 .. _`collective.person`: https://github.com/simplesconsultoria/collective.person
+.. _`opening a support ticket`: https://github.com/simplesconsultoria/s17.person.employee/issues
 
