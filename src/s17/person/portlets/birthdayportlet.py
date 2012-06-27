@@ -112,6 +112,12 @@ class Renderer(base.Renderer):
 
         return birthdays
 
+    @property
+    def is_anonymous(self):
+        """ """
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.isAnonymousUser()
+
     render = ViewPageTemplateFile('birthdayportlet.pt')
 
 

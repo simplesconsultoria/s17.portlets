@@ -138,6 +138,12 @@ class Renderer(base.Renderer):
         formated_date = DateTime.DateTime(date).strftime('%d/%m/%Y')
         return formated_date
 
+    @property
+    def is_anonymous(self):
+        """ """
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.isAnonymousUser()
+
 
 class AddForm(base.AddForm):
     """Portlet add form.
