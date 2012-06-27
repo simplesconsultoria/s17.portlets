@@ -96,6 +96,12 @@ class Renderer(base.Renderer):
 
     render = ViewPageTemplateFile('whitepagesportlet.pt')
 
+    @property
+    def is_anonymous(self):
+        """ """
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.isAnonymousUser()
+
 
 class AddForm(base.AddForm):
     """Portlet add form.

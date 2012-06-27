@@ -2,8 +2,10 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="s17.person.portlets"
-      tal:omit-tag="">
-<dl class="portlet portletPersonProfile">
+      tal:omit-tag=""
+      tal:define="anonymous view/is_anonymous;">
+<dl class="portlet portletPersonProfile"
+    tal:condition="not:anonymous">
 
     <dt tal:content="view/data/title">Personal profile</dt>
     <dd>

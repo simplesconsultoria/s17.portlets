@@ -2,7 +2,9 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="s17.person.portlets"
-      tal:omit-tag="">
+      tal:omit-tag=""
+      tal:define="anonymous view/is_anonymous"
+      tal:condition="not:anonymous">
 <dl class="portlet portletWhitePagesPortlet">
 
     <dt class="portletHeader" tal:content="view/data/portlet_title">
