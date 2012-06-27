@@ -1,0 +1,43 @@
+Functional test:
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> request = layer['request']
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> portalURL = portal.absolute_url()
+
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser.open(portalURL + '/login')
+    >>> browser.getControl(name='__ac_name').value = SITE_OWNER_NAME
+    >>> browser.getControl(name='__ac_password').value = SITE_OWNER_PASSWORD
+    >>> browser.getControl(name='submit').click()
+    >>> 'You are now logged in' in browser.contents
+    True
+
+Add portlets:
+
+    >>> browser.open(portalURL + '/@@manage-portlets')
+    >>> browser.open(portalURL + '/++contextportlets++plone.leftcolumn/+/s17.person.portlets.personprofile.PersonProfile')
+    >>> browser.getControl(name='form.portlet_title').value = 'Person Profile'
+    >>> browser.getControl('Save').click()
+
+    >>> browser.open(portalURL + '/++contextportlets++plone.rightcolumn/+/s17.person.portlets.whitepages.WhitePagesPortlet')
+    >>> browser.getControl(name='form.portlet_title').value = 'Paginas Brancas'
+    >>> browser.getControl('Save').click()
+
+    >>> browser.open(portalURL + '/++contextportlets++plone.rightcolumn/+/s17.person.portlets.birthday.BirthdayPortlet')
+    >>> browser.getControl(name='form.portlet_title').value = 'Aniversariantes'
+    >>> browser.getControl('Save').click()
+
+Test portlets for anonymous users:
+
+    >>> browser.open(portalURL + '/logout')
+    >>> browser.open(portalURL)
+    >>> 'Person Profile' in browser.contents
+    False
+    >>> 'Paginas Brancas' in browser.contents
+    False
+    >>> 'Aniversariantes' in browser.contents
+    False
