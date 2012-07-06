@@ -7,6 +7,7 @@ Because you have to know where your towel is.
 ^^^^^^^^^^^^^^^^^^
 
 - Adding test case for portlets with anonymous users. [aleGpereira]
+- Improve the products translation [lepri]
 
 
 1.0a4 (2012-06-27)

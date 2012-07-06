@@ -8,6 +8,7 @@ the following people:
 - Cleber J Santos
 - Héctor Velarde
 - Alejandro Pereira
+- Gustavo Lepri
 
 Development sponsored by Simples Consultoria.
 
