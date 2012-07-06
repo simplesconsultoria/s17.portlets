@@ -7,7 +7,8 @@
       tal:condition="not:anonymous">
 <dl class="portlet portletWhitePagesPortlet">
 
-    <dt class="portletHeader" tal:content="view/data/portlet_title">
+    <dt class="portletHeader" tal:content="view/data/portlet_title"
+        i18n:translate="">
         White Pages
     </dt>
 
@@ -18,7 +19,7 @@
                 <input type="text" tal:attributes="name search_field"/>
             </div>-->
             <input type="text" name="fullname" />
-            <input type="submit" value="Search" class="searchButton" />
+            <input type="submit" value="Search" class="searchButton" i18n:attributes="value" />
         </form>
     </dd>
 

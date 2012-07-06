@@ -7,7 +7,8 @@
 <dl class="portlet portletPersonProfile"
     tal:condition="not:anonymous">
 
-    <dt tal:content="view/data/title">Personal profile</dt>
+    <dt tal:content="view/data/title"
+        i18n:translate="">Personal profile</dt>
     <dd>
         <div id="personal-profile">
 
