@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.person.portlets 1.0\n"
-"POT-Creation-Date: 2012-07-06 12:08+0000\n"
+"POT-Creation-Date: 2012-07-10 18:35+0000\n"
 "PO-Revision-Date: 2012-05-09 16:29-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,25 +17,25 @@ msgstr ""
 
 #: s17/person/portlets/profiles/default/portlets.xml
 msgid "Birthday Portlet"
-msgstr "Portlet de aniversario"
+msgstr "Portlet de Aniversariantes"
 
 #: s17/person/portlets/profiles/default/portlets.xml
 msgid "Displays a search box to look for persons using their name."
-msgstr "Exibe uma caixa de busca para procurar pessoas pelo nome."
+msgstr "Exibe uma caixa de busca para procurar por pessoas que utilizam este nome."
 
 #: s17/person/portlets/profiles/default/portlets.xml
 msgid "Displays information about a person personal profile including portrait, resume and latest posts made on the site."
-msgstr "Exibe informação sobre o perfil pessoal duma pessoa incluindo seu retrato, resumo e as últimas contribuções feitas no site."
+msgstr "Exibe informações sobre um perfil pessoal de um colaborador, incluindo retrato, currículo e as mais recentes postagens feitas no site."
 
 #: s17/person/portlets/profiles/default/portlets.xml
 msgid "Displays the names of the persons with upcoming birthdays in the following days."
-msgstr "Exibe os nomes dos aniversariantes nos próximos dias."
+msgstr "Exibe os nomes das pessoas com aniversários próximos nos dias seguintes."
 
 #: s17/person/portlets/profiles/default/portlets.xml
 msgid "Person Profile Portlet"
-msgstr "Portlet do perfil da pessoa"
+msgstr "Portlet de Perfil Pessoal"
 
 #: s17/person/portlets/profiles/default/portlets.xml
 msgid "White Pages Portlet"
-msgstr "Portlet de páginas brancas"
+msgstr "Portlet de Páginas Brancas"
 

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.person.portlets 1.0\n"
-"POT-Creation-Date: 2012-07-06 12:15+0000\n"
+"POT-Creation-Date: 2012-07-10 18:35+0000\n"
 "PO-Revision-Date: 2012-05-09 16:08-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,22 +15,6 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: s17.person.portlets\n"
 
-#: s17/person/portlets/profiles/default/portlets.xml
-msgid "Birthday Portlet"
-msgstr ""
-
-#: s17/person/portlets/profiles/default/portlets.xml
-msgid "Displays a search box to look for persons using their name."
-msgstr ""
-
-#: s17/person/portlets/profiles/default/portlets.xml
-msgid "Displays information about a person personal profile including portrait, resume and latest posts made on the site."
-msgstr ""
-
-#: s17/person/portlets/profiles/default/portlets.xml
-msgid "Displays the names of the persons with upcoming birthdays in the following days."
-msgstr ""
-
 #: s17/person/portlets/personprofile.pt:28
 msgid "Latest Posts"
 msgstr "Últimas contribuciones"
@@ -42,10 +26,6 @@ msgstr "Mi perfil"
 #: s17/person/portlets/birthdayportlet.py:41
 msgid "Numbers of days"
 msgstr "Número de días"
-
-#: s17/person/portlets/profiles/default/portlets.xml
-msgid "Person Profile Portlet"
-msgstr ""
 
 #: s17/person/portlets/birthdayportlet.py:37
 #: s17/person/portlets/personprofile.py:36
@@ -72,10 +52,6 @@ msgstr "El título del portlet"
 #: s17/person/portlets/personprofile.py:37
 msgid "Title"
 msgstr "Título"
-
-#: s17/person/portlets/profiles/default/portlets.xml
-msgid "White Pages Portlet"
-msgstr ""
 
 #: s17/person/portlets/birthdayportlet.py:38
 msgid "the Title of the portlet"

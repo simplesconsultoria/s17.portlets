@@ -18,7 +18,7 @@ from collective.person.content.person import IPerson
 
 # TODO: If you require i18n translation for any of your schema fields below,
 # uncomment the following to import your package MessageFactory
-from s17.person.portlets import BirthdayPortletMessageFactory as _
+from s17.person.portlets import PersonPortletsMessageFactory as _
 
 
 class IBirthdayPortlet(IPortletDataProvider):
