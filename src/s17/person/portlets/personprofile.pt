@@ -30,7 +30,8 @@
                     </dt>
 
                 <tal:participation tal:define="participation_list view/get_participation">
-                    <dd tal:condition="not: participation_list">No posts created</dd>
+                    <dd tal:condition="not: participation_list"
+                        i18n:translate="">No posts created</dd>
                     <dd class="portletItem odd" tal:condition="participation_list"
                         tal:repeat="activity participation_list">
                         <tal:block tal:define="activity_obj activity/getObject">

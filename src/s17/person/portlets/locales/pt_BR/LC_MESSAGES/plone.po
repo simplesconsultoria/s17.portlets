@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.person.portlets 1.0\n"
-"POT-Creation-Date: 2012-07-10 18:35+0000\n"
+"POT-Creation-Date: 2012-07-11 12:38+0000\n"
 "PO-Revision-Date: 2012-05-09 16:29-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

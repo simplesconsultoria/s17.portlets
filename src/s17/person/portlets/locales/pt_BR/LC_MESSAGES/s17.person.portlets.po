@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.person.portlets 1.0\n"
-"POT-Creation-Date: 2012-07-10 18:35+0000\n"
-"PO-Revision-Date: 2012-07-06 09:28-0300\n"
+"POT-Creation-Date: 2012-07-11 12:38+0000\n"
+"PO-Revision-Date: 2012-07-11 09:39-0300\n"
 "Last-Translator: Gustavo Lepri <lepri@simplesconsultoria.com.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,10 @@ msgstr "Últimos posts"
 #: s17/person/portlets/personprofile.pt:20
 msgid "My Profile"
 msgstr "Meu perfil"
+
+#: s17/person/portlets/personprofile.pt:33
+msgid "No posts created"
+msgstr "Nenhum post foi criado"
 
 #: s17/person/portlets/birthdayportlet.py:41
 msgid "Numbers of days"

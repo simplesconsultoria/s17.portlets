@@ -130,7 +130,6 @@ class Renderer(base.Renderer):
         query['Creator'] = user_id
         query['sort_order'] = 'reverse'
         query['sort_on'] = 'Date'
-        query['object_provides'] = {'query': [IPerson.__identifier__]}
         participation_list = self.catalog.searchResults(query)
         return participation_list
 

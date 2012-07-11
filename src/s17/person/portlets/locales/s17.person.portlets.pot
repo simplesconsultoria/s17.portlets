@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.person.portlets 1.0\n"
-"POT-Creation-Date: 2012-07-10 18:35+0000\n"
+"POT-Creation-Date: 2012-07-11 12:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,10 @@ msgstr ""
 
 #: s17/person/portlets/personprofile.pt:20
 msgid "My Profile"
+msgstr ""
+
+#: s17/person/portlets/personprofile.pt:33
+msgid "No posts created"
 msgstr ""
 
 #: s17/person/portlets/birthdayportlet.py:41
