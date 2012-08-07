@@ -6,6 +6,8 @@ Because you have to know where your towel is.
 1.0a5 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Added overlay in search person [lepri]
+- Fixed query in person profile portlet [lepri]
 - Adding test case for portlets with anonymous users. [aleGpereira]
 - Improve the products translation [lepri]
 
