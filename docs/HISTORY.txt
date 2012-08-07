@@ -3,7 +3,13 @@ Changelog
 
 Because you have to know where your towel is.
 
-1.0a5 (unreleased)
+1.0a6 (unreleased)
+^^^^^^^^^^^^^^^^^^
+
+- Nothing changed yet.
+
+
+1.0a5 (2012-08-07)
 ^^^^^^^^^^^^^^^^^^
 
 - Fixed tests in get_participation function in person portlet [lepri]
@@ -35,5 +41,5 @@ Because you have to know where your towel is.
 1.0a1 (2012-05-21)
 ^^^^^^^^^^^^^^^^^^
 
-- Initial release
+- Initial release.
 
