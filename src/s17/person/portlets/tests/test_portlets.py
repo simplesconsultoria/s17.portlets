@@ -236,9 +236,10 @@ class TestPersonProfileRenderer(unittest.TestCase):
         self.assertEquals(self.portal[TEST_USER_ID], user.getObject())
 
     def test_get_participation(self):
+        # participation in creation of two content types: News Item and collective.person.person
         user = self.render.get_participation()
-        self.assertEquals(1, len(user))
-        self.assertEquals(self.portal[TEST_USER_ID], user[0].getObject())
+        self.assertEquals(2, len(user))
+        self.assertEquals(self.portal[TEST_USER_ID], user[1].getObject())
 
     def get_sizes_from_str(self, string):
         sizes = string[string.find('height'):].split(' ')
