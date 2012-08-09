@@ -32,8 +32,11 @@ The following portlets are available:
 Mostly Harmless
 ---------------
 
+.. image:: https://secure.travis-ci.org/simplesconsultoria/s17.person.portlets.png
+    :target: http://travis-ci.org/simplesconsultoria/s17.person.portlets
+
 Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 
 .. _`collective.person`: https://github.com/simplesconsultoria/collective.person
-.. _`opening a support ticket`: https://github.com/simplesconsultoria/s17.person.employee/issues
+.. _`opening a support ticket`: https://github.com/simplesconsultoria/s17.person.portlets/issues
 
