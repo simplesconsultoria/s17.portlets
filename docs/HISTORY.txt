@@ -6,7 +6,7 @@ Because you have to know where your towel is.
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Nothing changed yet.
+- Adding description field. [aleGpereira]
 
 
 1.0a5 (2012-08-07)
