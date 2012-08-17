@@ -27,10 +27,8 @@
 
     <dd class="portletItem odd">
         <form action="@@whitepages" id="searchpersonform" name="whitepages">
-            <!--<div tal:repeat="search_field view/data/search_fields">
-                <label tal:content="search_field"></label>
-                <input type="text" tal:attributes="name search_field"/>
-            </div>-->
+            <span tal:condition="view/data/description"
+                  tal:content="view/data/description"> Description </span>
             <input type="text" name="fullname" />
             <input type="submit" value="Search" class="searchButton" i18n:attributes="value" />
         </form>

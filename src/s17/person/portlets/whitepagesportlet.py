@@ -55,10 +55,8 @@ class IWhitePagesPortlet(IPortletDataProvider):
                                   description=_(u"The portlet title"),
                                   required=False)
 
-    #search_fields = schema.List(value_type=schema.Choice(title=_(u"Search fields"),
-    #                              description=_(u""),
-    #                              required=False,
-    #                              source=KeywordsVocabulary()))
+    description = schema.TextLine(title=_(u"Portlet description"),
+                                  required=False)
 
 
 class Assignment(base.Assignment):
@@ -73,10 +71,11 @@ class Assignment(base.Assignment):
     # TODO: Set default values for the configurable parameters here
 
     portlet_title = u""
-    #search_fields = None
+    description = u""
 
-    def __init__(self, portlet_title=u""):
+    def __init__(self, portlet_title=u"", description=u""):
         self.portlet_title = portlet_title
+        self.description = description
 
     @property
     def title(self):
@@ -98,7 +97,8 @@ class Renderer(base.Renderer):
 
     @property
     def is_anonymous(self):
-        """ """
+        """ Check if the current user is anonymous.
+        """
         pm = getToolByName(self.context, 'portal_membership')
         return pm.isAnonymousUser()
 
