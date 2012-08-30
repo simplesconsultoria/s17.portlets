@@ -7,15 +7,29 @@
       tal:condition="not:anonymous">
 
 <script type="text/javascript">
-
     jq(document).ready(function() {
-        jq('form[name=whitepages]').prepOverlay(
-                {
-                    subtype: 'ajax',
-                    urlmatch: '$',
-                    urlreplace: ' #content>*'
+        jq('form[name=whitepages]').submit(function(event) {
+            event.preventDefault;
+            if ($('input[name=fullname]').attr('value').length === 0) {
+                console.log('empty fullname');
+                return false;
+            };
+            $.ajax({
+                type: 'POST',
+                url: portal_url + '/@@whitepages',
+                data: $(this).serialize(),
+                success: function(data) {
+                    $('body').append('<div class="ajax-whitepage-results" />');
+                    var result = $('.ajax-whitepage-results');
+                    result.html(data);
+                    result.prepOverlay({
+                        subtype: 'ajax',
+                        filter: '#content > *'
+                    });
                 }
-        );
+            });
+            return false;
+        });
     });
 </script>
 <dl class="portlet portletWhitePagesPortlet">
