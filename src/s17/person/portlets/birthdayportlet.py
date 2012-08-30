@@ -113,6 +113,14 @@ class Renderer(base.Renderer):
         return birthdays
 
     @property
+    def available(self):
+        """ Checks if user is not anonymous and if there are any
+            birthdays to display
+        """
+        available = self.get_birthdays() and not self.is_anonymous
+        return available
+
+    @property
     def is_anonymous(self):
         """ """
         pm = getToolByName(self.context, 'portal_membership')

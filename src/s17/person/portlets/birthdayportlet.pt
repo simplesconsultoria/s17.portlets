@@ -4,8 +4,7 @@
       i18n:domain="s17.person.portlets"
       tal:omit-tag=""
       tal:define="anonymous view/is_anonymous;">
-<dl class="portlet portletBirthdayPortlet"
-    tal:condition="not:anonymous">
+<dl class="portlet portletBirthdayPortlet" tal:condition="view/available">
 
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
