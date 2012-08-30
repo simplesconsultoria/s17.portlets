@@ -112,6 +112,11 @@ class Renderer(base.Renderer):
 
         return birthdays
 
+    def toLocalizedTime(self, date):
+        toLocalizedTime = self.context.restrictedTraverse('@@plone').toLocalizedTime
+        toLocalizedTime = toLocalizedTime(date.strftime('%m/%d')).rsplit('/', 1)[0]
+        return toLocalizedTime
+
     @property
     def available(self):
         """ Checks if user is not anonymous and if there are any
