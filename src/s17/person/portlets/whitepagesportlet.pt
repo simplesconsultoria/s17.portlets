@@ -6,33 +6,7 @@
       tal:define="anonymous view/is_anonymous"
       tal:condition="not:anonymous">
 
-<script type="text/javascript">
-    jq(document).ready(function() {
-        jq('form[name=whitepages]').submit(function(event) {
-            event.preventDefault;
-            if ($('input[name=fullname]', this).attr('value').length === 0) {
-                return false;
-            };
-            $.ajax({
-                type: 'POST',
-                url: portal_url + '/@@whitepages',
-                data: $(this).serialize(),
-                success: function(data) {
-                    $('body').append('<div id="ajax-whitepage-res" />');
-                    var results = $('#ajax-whitepage-res');
-                    results.html(data);
-                    var $data_res = $('#ajax-whitepage-res .people-results');
-                    //results.prepOverlay({
-                    //    subtype: 'ajax',
-                    //    filter: '.people-results'
-                    //});
-                }
-            });
-            $('ajax-whitepage-res').empty();
-            // return false;
-        });
-    });
-</script>
+
 <dl class="portlet portletWhitePagesPortlet">
 
     <dt class="portletHeader" tal:content="view/data/portlet_title"
@@ -41,14 +15,49 @@
     </dt>
 
     <dd class="portletItem odd">
-        <form action="@@whitepages" id="searchpersonform" name="whitepages">
+        <form id="searchpersonform" name="whitepages">
             <span tal:condition="view/data/description"
                   tal:content="view/data/description"> Description </span>
             <input type="text" name="fullname" />
-            <input type="submit" value="Search" class="searchButton" i18n:attributes="value" />
+            <input type="button" value="Search" class="searchButton" i18n:attributes="value" />
         </form>
     </dd>
-
+    <a id="wp_overlaytrigger" href="@@whitepages" style="display:none"> Something</a>
+    <script type="text/javascript">
+        jq(document).ready(function() {
+            $('a#wp_overlaytrigger').prepOverlay({
+                    subtype: 'ajax',
+                    config: {
+                        onBeforeLoad : function (e) {
+                            var input = $('#searchpersonform input[name=fullname]').attr('value');
+                            $.ajax({
+                                type: 'POST',
+                                url: portal_url + '/@@whitepages?fullname=' + input,
+                                 success: function(data) {
+                                    $('.people-results').html(data);
+                                }
+                            });
+                            return true;
+                            }
+                    }
+                });
+            $('#searchpersonform .searchButton').click(function(event){
+                if ($('#searchpersonform input[name=fullname]').attr('value').length === 0) {
+                    return false;
+                };
+                $('a#wp_overlaytrigger').click();
+            });
+            $('#searchpersonform input[name=fullname]').keydown(function(event){
+                if(event.keyCode==13){
+                    if ($(this).attr('value').length === 0) {
+                        return false;
+                    };
+                    $('a#wp_overlaytrigger').click();
+                    event.preventDefault();
+                }
+            });
+        })
+    </script>
 </dl>
 
 </html>

@@ -16,5 +16,4 @@ class WhitePages(BrowserView):
         form_request = self.request.form
 
         results = catalog.searchResults(form_request)
-
         return results
