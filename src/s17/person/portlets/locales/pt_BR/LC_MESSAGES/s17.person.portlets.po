@@ -61,3 +61,6 @@ msgstr "Título"
 msgid "the Title of the portlet"
 msgstr "O título do portlet"
 
+#: s17/person/portlets/whitepagesview.pt:20
+msgid "No items founded"
+msgstr "Nenhum item foi encontrado."

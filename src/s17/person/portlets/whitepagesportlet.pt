@@ -22,7 +22,7 @@
             <input type="button" value="Search" class="searchButton" i18n:attributes="value" />
         </form>
     </dd>
-    <a id="wp_overlaytrigger" href="@@whitepages" style="display:none"> Something</a>
+    <a id="wp_overlaytrigger" href="@@whitepages" style="display:none"></a>
     <script type="text/javascript">
         jq(document).ready(function() {
             $('a#wp_overlaytrigger').prepOverlay({
