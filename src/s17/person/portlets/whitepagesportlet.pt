@@ -10,8 +10,7 @@
     jq(document).ready(function() {
         jq('form[name=whitepages]').submit(function(event) {
             event.preventDefault;
-            if ($('input[name=fullname]').attr('value').length === 0) {
-                console.log('empty fullname');
+            if ($('input[name=fullname]', this).attr('value').length === 0) {
                 return false;
             };
             $.ajax({
@@ -19,16 +18,18 @@
                 url: portal_url + '/@@whitepages',
                 data: $(this).serialize(),
                 success: function(data) {
-                    $('body').append('<div class="ajax-whitepage-results" />');
-                    var result = $('.ajax-whitepage-results');
-                    result.html(data);
-                    result.prepOverlay({
-                        subtype: 'ajax',
-                        filter: '#content > *'
-                    });
+                    $('body').append('<div id="ajax-whitepage-res" />');
+                    var results = $('#ajax-whitepage-res');
+                    results.html(data);
+                    var $data_res = $('#ajax-whitepage-res .people-results');
+                    //results.prepOverlay({
+                    //    subtype: 'ajax',
+                    //    filter: '.people-results'
+                    //});
                 }
             });
-            return false;
+            $('ajax-whitepage-res').empty();
+            // return false;
         });
     });
 </script>
