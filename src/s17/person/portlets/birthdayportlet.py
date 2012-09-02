@@ -6,8 +6,6 @@ from zope.interface import implements
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.app.portlets.portlets import base
 
-# TODO: If you define any fields for the portlet configuration schema below
-# do not forget to uncomment the following import
 from zope import schema
 from zope.formlib import form
 
@@ -16,8 +14,6 @@ from Products.CMFCore.utils import getToolByName
 
 from collective.person.content.person import IPerson
 
-# TODO: If you require i18n translation for any of your schema fields below,
-# uncomment the following to import your package MessageFactory
 from s17.person.portlets import PersonPortletsMessageFactory as _
 
 
@@ -28,11 +24,6 @@ class IBirthdayPortlet(IPortletDataProvider):
     data that is being rendered and the portlet assignment itself are the
     same.
     """
-
-    # TODO: Add any zope.schema fields here to capture portlet configuration
-    # information. Alternatively, if there are no settings, leave this as an
-    # empty interface - see also notes around the add form and edit form
-    # below.
 
     portlet_title = schema.TextLine(title=_(u"Portlet Title"),
                                   description=_(u"the Title of the portlet"),
@@ -80,6 +71,7 @@ class Renderer(base.Renderer):
     rendered, and the implicit variable 'view' will refer to an instance
     of this class. Other methods can be added and referenced in the template.
     """
+
     def get_search_range(self):
         results = []
         now = datetime.now()
@@ -112,10 +104,15 @@ class Renderer(base.Renderer):
 
         return birthdays
 
-    def toLocalizedTime(self, date):
-        toLocalizedTime = self.context.restrictedTraverse('@@plone').toLocalizedTime
-        toLocalizedTime = toLocalizedTime(date.strftime('%m/%d')).rsplit('/', 1)[0]
-        return toLocalizedTime
+    def format_date(self, birthday):
+        localTimeFormat = getToolByName(self.context, 'portal_properties').site_properties.localTimeFormat
+        if ',' in localTimeFormat:
+            localTimeFormat = localTimeFormat.rsplit(',')[0].replace('%b', '%m').replace(' ', '-')
+        else:
+            localTimeFormat = localTimeFormat.rsplit('/', 1)[0]
+        birthday = isinstance(birthday, str) and datetime.strptime(birthday, '%Y-%m-%d') or birthday
+        birthday = birthday.strftime(localTimeFormat)
+        return birthday
 
     @property
     def available(self):
