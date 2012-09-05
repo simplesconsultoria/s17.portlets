@@ -127,10 +127,12 @@ class Renderer(base.Renderer):
 
         self.catalog = getToolByName(self.context, "portal_catalog")
         query = {}
+        sort_limit = 5
         query['Creator'] = user_id
         query['sort_order'] = 'reverse'
         query['sort_on'] = 'Date'
-        participation_list = self.catalog.searchResults(query)
+        query['sort_limit'] = sort_limit
+        participation_list = self.catalog.searchResults(query)[:sort_limit]
         return participation_list
 
     def data_transform(self, date):

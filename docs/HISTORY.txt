@@ -6,6 +6,8 @@ Because you have to know where your towel is.
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Limit list of participations in profile portlet to five. [aleGpereira]
+
 - Make results of white pages appear in a overlay. [aleGpereira]
 
 - Adding description field. [aleGpereira]
