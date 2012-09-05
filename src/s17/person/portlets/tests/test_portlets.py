@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 import unittest2 as unittest
 
 import os
@@ -22,6 +22,7 @@ from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import setRoles
 from plone.app.testing import login
+from plone.app.testing import logout
 
 from plone.app.portlets.storage import PortletAssignmentMapping
 from plone.app.portlets.interfaces import IPortletTypeInterface
@@ -129,6 +130,43 @@ class TestBirthdayRenderer(unittest.TestCase):
                           assignment=birthdayportlet.Assignment('test', 5))
         items = render.get_birthdays()
         self.assertEquals(2, len(items))
+
+    def test_format_date(self):
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 5))
+        value = date(1982, 11, 6)
+        value = render.format_date(value)
+        self.assertEquals('11-06', value)
+
+    def test_is_anonymous(self):
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 5))
+        self.assertFalse(render.is_anonymous)
+        logout()
+        self.assertTrue(render.is_anonymous)
+
+    def test_available(self):
+        # we should not see this portlet if there are no birthdays to display
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 5))
+        self.assertFalse(render.available)
+
+        # but if we create some items
+        birthday1 = datetime.date(datetime.now())
+        birthday2 = datetime.date(datetime.now() + timedelta(days=3))
+        self.portal.invokeFactory('collective.person.person',
+                                  TEST_USER_ID, birthday=birthday1)
+        self.portal.invokeFactory('collective.person.person',
+                                  'name2', birthday=birthday2)
+
+        # we should be able to see it
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 5))
+        self.assertTrue(render.available)
+
+        # except if we are anonymous
+        logout()
+        self.assertFalse(render.available)
 
 
 class TestPersonProfilePortlet(unittest.TestCase):

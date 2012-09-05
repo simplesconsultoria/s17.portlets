@@ -15,7 +15,7 @@
     <dd class="portletItem" tal:condition="birthday">
         <tal:object tal:define="birthday_obj birthday/getObject">
         <span class="bdate"
-            tal:content="python:view.toLocalizedTime(birthday_obj.birthday)">31/12</span>
+            tal:content="python:view.format_date(birthday_obj.birthday)">31/12</span>
         <a tal:attributes="href birthday_obj/absolute_url">
             <span class="bname" tal:content="birthday_obj/Title"></span></a>
         </tal:object>
