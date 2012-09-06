@@ -372,6 +372,20 @@ class TestWhitePagesPortlet(unittest.TestCase):
             (context, request, view, manager, assignment), IPortletRenderer)
         self.assertTrue(isinstance(renderer, whitepagesportlet.Renderer))
 
+    def test_whitepages_view(self):
+        index = 1
+        while index < 5:
+            self.portal.invokeFactory('collective.person.person',
+                                      'person%s' % index,
+                                      given_name='Person %s' % index,
+                                      surname='surname%s' % index)
+            index += 1
+
+        self.request.form = {'fullname': 'Person'}
+        view = self.portal.unrestrictedTraverse('@@whitepages')
+        persons = view.people_list()
+        self.assertEqual(len(persons), 4) 
+
 
 class TestWhitePagesRenderer(unittest.TestCase):
 
@@ -398,8 +412,8 @@ class TestWhitePagesRenderer(unittest.TestCase):
         render = self.renderer(context=self.portal,
                           assignment=whitepagesportlet.Assignment('test'))
         html = render.render()
-        self.assertNotEquals(None, html)
-        self.assertNotEquals('', html)
+        self.assertNotEqual(None, html)
+        self.assertNotEqual('', html)
 
 
 def test_suite():
