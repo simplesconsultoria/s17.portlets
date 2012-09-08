@@ -6,7 +6,11 @@ Because you have to know where your towel is.
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Adding description field. [aleGpereira]
+- Added description field. [aleGpereira]
+
+- Added overlay and fixes for whitepage portlet [aleGpereira]
+
+- Added new features for birthday portlet [davilima6]
 
 
 1.0a5 (2012-08-07)
