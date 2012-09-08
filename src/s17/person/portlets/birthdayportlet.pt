@@ -4,24 +4,23 @@
       i18n:domain="s17.person.portlets"
       tal:omit-tag=""
       tal:define="anonymous view/is_anonymous;">
-<dl class="portlet portletBirthdayPortlet"
-    tal:condition="not:anonymous">
 
+<dl class="portlet portletBirthdayPortlet" tal:condition="view/available">
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
         <span tal:content="view/data/title"></span>
         <span class="portletTopRight"></span>
     </dt>
-
     <tal:birthdays tal:repeat="birthday view/get_birthdays">
     <dd class="portletItem" tal:condition="birthday">
         <tal:object tal:define="birthday_obj birthday/getObject">
-        <span class="bdate" tal:content="python:birthday_obj.birthday.strftime('%m/%d')">31/12</span>
-        <a href="#" tal:attributes="href birthday_obj/absolute_url">
+        <span class="bdate"
+            tal:content="python:view.format_date(birthday_obj.birthday)">31/12</span>
+        <a tal:attributes="href birthday_obj/absolute_url">
             <span class="bname" tal:content="birthday_obj/Title"></span></a>
         </tal:object>
     </dd>
     </tal:birthdays>
-
 </dl>
+
 </html>

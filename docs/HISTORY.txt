@@ -3,23 +3,30 @@ Changelog
 
 Because you have to know where your towel is.
 
+
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
-- Added description field. [aleGpereira]
+- Add description field. [aleGpereira]
 
-- Added overlay and fixes for whitepage portlet [aleGpereira]
+- Limit list of participations in profile portlet to five. [aleGpereira]
 
-- Added new features for birthday portlet [davilima6]
+- Make results of white pages appear in a overlay. [aleGpereira]
+
+- Improves birthday portlet [davilima6]
 
 
 1.0a5 (2012-08-07)
 ^^^^^^^^^^^^^^^^^^
 
 - Fixed tests in get_participation function in person portlet [lepri]
+
 - Added overlay in search person [lepri]
+
 - Fixed query in person profile portlet [lepri]
+
 - Adding test case for portlets with anonymous users. [aleGpereira]
+
 - Improve the products translation [lepri]
 
 

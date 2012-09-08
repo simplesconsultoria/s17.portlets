@@ -43,7 +43,7 @@ msgstr ""
 
 #: s17/person/portlets/whitepagesportlet.pt:22
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: s17/person/portlets/birthdayportlet.py:42
 msgid "Search for birthdays from                                   here plus numbers of days"
@@ -60,4 +60,9 @@ msgstr "Título"
 #: s17/person/portlets/birthdayportlet.py:38
 msgid "the Title of the portlet"
 msgstr "el título del portlet"
+
+#: s17/person/portlets/whitepagesview.pt:20
+msgid "No items founded"
+msgstr "No hay resultados."
+
 

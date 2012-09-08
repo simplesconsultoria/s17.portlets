@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 import unittest2 as unittest
 
 import os
@@ -22,6 +22,7 @@ from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import setRoles
 from plone.app.testing import login
+from plone.app.testing import logout
 
 from plone.app.portlets.storage import PortletAssignmentMapping
 from plone.app.portlets.interfaces import IPortletTypeInterface
@@ -130,6 +131,43 @@ class TestBirthdayRenderer(unittest.TestCase):
         items = render.get_birthdays()
         self.assertEquals(2, len(items))
 
+    def test_format_date(self):
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 5))
+        value = date(1982, 11, 6)
+        value = render.format_date(value)
+        self.assertEquals('11-06', value)
+
+    def test_is_anonymous(self):
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 5))
+        self.assertFalse(render.is_anonymous)
+        logout()
+        self.assertTrue(render.is_anonymous)
+
+    def test_available(self):
+        # we should not see this portlet if there are no birthdays to display
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 5))
+        self.assertFalse(render.available)
+
+        # but if we create some items
+        birthday1 = datetime.date(datetime.now())
+        birthday2 = datetime.date(datetime.now() + timedelta(days=3))
+        self.portal.invokeFactory('collective.person.person',
+                                  TEST_USER_ID, birthday=birthday1)
+        self.portal.invokeFactory('collective.person.person',
+                                  'name2', birthday=birthday2)
+
+        # we should be able to see it
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 5))
+        self.assertTrue(render.available)
+
+        # except if we are anonymous
+        logout()
+        self.assertFalse(render.available)
+
 
 class TestPersonProfilePortlet(unittest.TestCase):
 
@@ -236,10 +274,17 @@ class TestPersonProfileRenderer(unittest.TestCase):
         self.assertEquals(self.portal[TEST_USER_ID], user.getObject())
 
     def test_get_participation(self):
-        # participation in creation of two content types: News Item and collective.person.person
+        """ Participation in creation of 6 content types: Five News Item
+            and a collective.person.person. Returns at most five.
+        """
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        index = 2
+        while index < 6:
+            self.portal.invokeFactory('News Item', 'news%s' % index)
+            index += 1
         user = self.render.get_participation()
-        self.assertEquals(2, len(user))
-        self.assertEquals(self.portal[TEST_USER_ID], user[1].getObject())
+        self.assertEquals(5, len(user))
+        self.assertEquals(self.portal[TEST_USER_ID], user[4].getObject())
 
     def get_sizes_from_str(self, string):
         sizes = string[string.find('height'):].split(' ')
@@ -327,6 +372,20 @@ class TestWhitePagesPortlet(unittest.TestCase):
             (context, request, view, manager, assignment), IPortletRenderer)
         self.assertTrue(isinstance(renderer, whitepagesportlet.Renderer))
 
+    def test_whitepages_view(self):
+        index = 1
+        while index < 5:
+            self.portal.invokeFactory('collective.person.person',
+                                      'person%s' % index,
+                                      given_name='Person %s' % index,
+                                      surname='surname%s' % index)
+            index += 1
+
+        self.request.form = {'fullname': 'Person'}
+        view = self.portal.unrestrictedTraverse('@@whitepages')
+        persons = view.people_list()
+        self.assertEqual(len(persons), 4) 
+
 
 class TestWhitePagesRenderer(unittest.TestCase):
 
@@ -353,8 +412,8 @@ class TestWhitePagesRenderer(unittest.TestCase):
         render = self.renderer(context=self.portal,
                           assignment=whitepagesportlet.Assignment('test'))
         html = render.render()
-        self.assertNotEquals(None, html)
-        self.assertNotEquals('', html)
+        self.assertNotEqual(None, html)
+        self.assertNotEqual('', html)
 
 
 def test_suite():
