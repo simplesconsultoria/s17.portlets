@@ -15,6 +15,10 @@ Because you have to know where your towel is.
 
 - Improves birthday portlet [davilima6]
 
+- Group birthdays by day and also sort them by fullname [davilima6]
+
+- Add small portrait for each person with a birthday [davilima6]
+
 
 1.0a5 (2012-08-07)
 ^^^^^^^^^^^^^^^^^^
