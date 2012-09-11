@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from collections import OrderedDict
 from datetime import datetime, timedelta
+
 from zope.interface import implements
+from zope import schema
+from zope.formlib import form
 
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.app.portlets.portlets import base
-
-from zope import schema
-from zope.formlib import form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
@@ -33,7 +34,7 @@ class IBirthdayPortlet(IPortletDataProvider):
                                   description=_(u"Search for birthdays from \
                                   here plus numbers of days"),
                                   required=True,
-                                  default=0)
+                                  default=30)
 
 
 class Assignment(base.Assignment):
@@ -48,10 +49,10 @@ class Assignment(base.Assignment):
     # TODO: Set default values for the configurable parameters here
 
     portlet_title = u""
-    days_number = 0
+    days_number = 30
 
     # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, portlet_title=u"", days_number=0):
+    def __init__(self, portlet_title=u"", days_number=30):
         self.portlet_title = portlet_title
         self.days_number = days_number
 
@@ -61,7 +62,7 @@ class Assignment(base.Assignment):
         "manage portlets" screen.
         """
         return self.portlet_title if self.portlet_title else \
-               "Birthday Portlet"
+               _("Birthday Portlet")
 
 
 class Renderer(base.Renderer):
@@ -87,22 +88,38 @@ class Renderer(base.Renderer):
         return results
 
     def get_birthdays(self):
+
+        # get next birthdays considering the interval defined in the portlet
         birthdays = None
-        self.catalog = getToolByName(self.context, "portal_personcatalog")
+        self.catalog = getToolByName(self.context, 'portal_personcatalog')
         ranges = self.get_search_range()
         for search_range in ranges:
             query = {}
             query['cooked_birthday'] = {'query': search_range,
                                         'range': 'minmax'}
-            query['sort_order'] = 'birthday'
+            query['sort_on'] = 'birthday'
             query['object_provides'] = {'query': [IPerson.__identifier__]}
-            if birthdays:
+            if birthdays:  # XXX: birthdays is always None here. Can we remove this if?
                 birthdays = birthdays + \
                                  self.catalog.searchResults(query)
             else:
                 birthdays = self.catalog.searchResults(query)
 
-        return birthdays
+        # sort by date and fullname
+        birthdays = [(self.format_date(b.birthday), b.Title, b) for b in birthdays]
+        birthdays.sort()
+
+        # then deliver an ordered mapping
+        results = OrderedDict()
+        for b in birthdays:
+            day = b[0]
+            person = (b[1], b[2])
+            if results.get(day):
+                results[day] += [person]
+            else:
+                results[day] = [person]
+
+        return results
 
     def format_date(self, birthday):
         localTimeFormat = getToolByName(self.context, 'portal_properties').site_properties.localTimeFormat

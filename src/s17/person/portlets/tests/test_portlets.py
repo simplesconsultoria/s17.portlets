@@ -117,23 +117,30 @@ class TestBirthdayRenderer(unittest.TestCase):
                                IPortletRenderer)
 
     def test_get_birthdays(self):
-        birthday1 = datetime.date(datetime.now())
-        birthday2 = datetime.date(datetime.now() + timedelta(days=3))
-        self.portal.invokeFactory('collective.person.person',
-                                  TEST_USER_ID, birthday=birthday1)
-        self.portal.invokeFactory('collective.person.person',
-                                  'name2', birthday=birthday2)
-        self.portal.portal_workflow.doActionFor(
-                                    self.portal[TEST_USER_ID], 'publish')
-        self.portal.portal_workflow.doActionFor(self.portal.name2, 'publish')
+        # create some employees and set their birthdays
+        birthday = datetime.date(datetime.now())
+        names = ['Juan Perez', 'Gustavo Roner', 'Marcelo Santos', 'Marcelo Alves', 'Julia Alvarez']
+        for i, name in enumerate(names):
+            self.portal.invokeFactory('collective.person.person',
+                                      name,
+                                      given_name=name.split()[0],
+                                      surname=name.split()[1],
+                                      birthday=birthday + timedelta(days=i / 2))
+            self.portal.portal_workflow.doActionFor(self.portal[name], 'publish')
+
+        # test if they were all created
         render = self.renderer(context=self.portal,
-                          assignment=birthdayportlet.Assignment('test', 5))
-        items = render.get_birthdays()
-        self.assertEquals(2, len(items))
+                               assignment=birthdayportlet.Assignment('test', 30))
+        mapping = render.get_birthdays()
+        self.assertEquals(3, len(mapping))
+
+        # test if names get listed in the right order and grouping
+        mapping = [[person[0] for person in person] for person in mapping.values()]
+        self.assertEquals([['Gustavo Roner', 'Juan Perez'], ['Marcelo Alves', 'Marcelo Santos'], ['Julia Alvarez']], mapping)
 
     def test_format_date(self):
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                               assignment=birthdayportlet.Assignment('test', 30))
         value = date(1982, 11, 6)
         value = render.format_date(value)
         self.assertEquals('11-06', value)
@@ -384,7 +391,7 @@ class TestWhitePagesPortlet(unittest.TestCase):
         self.request.form = {'fullname': 'Person'}
         view = self.portal.unrestrictedTraverse('@@whitepages')
         persons = view.people_list()
-        self.assertEqual(len(persons), 4) 
+        self.assertEqual(4, len(persons))
 
 
 class TestWhitePagesRenderer(unittest.TestCase):
