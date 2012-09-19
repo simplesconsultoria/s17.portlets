@@ -42,6 +42,7 @@ setup(name='s17.person.portlets',
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'ordereddict>=1.1',
         'Products.CMFPlone>=4.1',
         'collective.person>=1.0a3',
         ],

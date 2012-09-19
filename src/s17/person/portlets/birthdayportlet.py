@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from collections import OrderedDict
+try:
+    from collections import OrderedDict
+# not available on Python < 2.7
+except ImportError:
+    from ordereddict import OrderedDict
+
 from datetime import datetime, timedelta
 
 from zope.interface import implements
