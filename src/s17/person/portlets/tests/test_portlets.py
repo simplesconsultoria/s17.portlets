@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 import unittest2 as unittest
 
 import os
@@ -119,35 +119,32 @@ class TestBirthdayRenderer(unittest.TestCase):
     def test_get_birthdays(self):
         # create some employees and set their birthdays
         birthday = datetime.date(datetime.now())
-        names = ['Juan Perez', 'Gustavo Roner', 'Marcelo Santos', 'Marcelo Alves', 'Julia Alvarez']
+        names = ['Juan Perez', 'Gustavo Roner', 'Marcelo Santos',
+                 'Marcelo Alves', 'Julia Alvarez']
         for i, name in enumerate(names):
             self.portal.invokeFactory('collective.person.person',
-                                      name,
-                                      given_name=name.split()[0],
-                                      surname=name.split()[1],
-                                      birthday=birthday + timedelta(days=i / 2))
-            self.portal.portal_workflow.doActionFor(self.portal[name], 'publish')
+                                  name,
+                                  given_name=name.split()[0],
+                                  surname=name.split()[1],
+                                  birthday=birthday + timedelta(days=i / 2))
+            self.portal.portal_workflow.doActionFor(self.portal[name],
+                                                    'publish')
 
         # test if they were all created
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 30))
+                        assignment=birthdayportlet.Assignment('test', 30))
         mapping = render.get_birthdays()
         self.assertEquals(3, len(mapping))
 
         # test if names get listed in the right order and grouping
-        mapping = [[person[0] for person in person] for person in mapping.values()]
-        self.assertEquals([['Gustavo Roner', 'Juan Perez'], ['Marcelo Alves', 'Marcelo Santos'], ['Julia Alvarez']], mapping)
-
-    def test_format_date(self):
-        render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 30))
-        value = date(1982, 11, 6)
-        value = render.format_date(value)
-        self.assertEquals('11-06', value)
+        mapping = [[person[0] for person in person] for person in \
+                    mapping.values()]
+        self.assertEquals([['Gustavo Roner', 'Juan Perez'], ['Marcelo Alves',
+                            'Marcelo Santos'], ['Julia Alvarez']], mapping)
 
     def test_is_anonymous(self):
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                            assignment=birthdayportlet.Assignment('test', 5))
         self.assertFalse(render.is_anonymous)
         logout()
         self.assertTrue(render.is_anonymous)
@@ -155,7 +152,7 @@ class TestBirthdayRenderer(unittest.TestCase):
     def test_available(self):
         # we should not see this portlet if there are no birthdays to display
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                            assignment=birthdayportlet.Assignment('test', 5))
         self.assertFalse(render.available)
 
         # but if we create some items
@@ -168,7 +165,7 @@ class TestBirthdayRenderer(unittest.TestCase):
 
         # we should be able to see it
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                            assignment=birthdayportlet.Assignment('test', 5))
         self.assertTrue(render.available)
 
         # except if we are anonymous
