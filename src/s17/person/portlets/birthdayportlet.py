@@ -110,7 +110,7 @@ class Renderer(base.Renderer):
                                         'range': 'minmax'}
             query['sort_on'] = 'birthday'
             query['object_provides'] = {'query': [IPerson.__identifier__]}
-            if birthdays:  # XXX: birthdays is always None here. Can we remove this if?
+            if birthdays:
                 birthdays = birthdays + \
                                  self.catalog.searchResults(**query)
             else:
@@ -129,16 +129,6 @@ class Renderer(base.Renderer):
             else:
                 results[day] = [person]
         return results
-
-    def format_date(self, birthday):
-        localTimeFormat = getToolByName(self.context, 'portal_properties').site_properties.localTimeFormat
-        if ',' in localTimeFormat:
-            localTimeFormat = localTimeFormat.rsplit(',')[0].replace('%b', '%m').replace(' ', '-')
-        else:
-            localTimeFormat = localTimeFormat.rsplit('/', 1)[0]
-        birthday = isinstance(birthday, str) and datetime.strptime(birthday, '%Y-%m-%d') or birthday
-        birthday = birthday.strftime(localTimeFormat)
-        return birthday
 
     @property
     def available(self):
