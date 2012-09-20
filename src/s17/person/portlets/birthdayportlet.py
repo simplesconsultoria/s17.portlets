@@ -84,7 +84,13 @@ class Renderer(base.Renderer):
         future_date = now + timedelta(days=self.data.days_number)
         today = now.strftime('%m%d')
         future = future_date.strftime('%m%d')
-        is_other_year = future_date.month < now.month
+        is_other_year = False
+        if future_date.month == now.month:
+            if future_date.day <= now.day:
+                is_other_year = True
+        elif future_date.month < now.month:
+            is_other_year = True
+
         if is_other_year:
             results.append((today, '1231'))
             results.append(('0101', future))
@@ -106,12 +112,11 @@ class Renderer(base.Renderer):
             query['object_provides'] = {'query': [IPerson.__identifier__]}
             if birthdays:  # XXX: birthdays is always None here. Can we remove this if?
                 birthdays = birthdays + \
-                                 self.catalog.searchResults(query)
+                                 self.catalog.searchResults(**query)
             else:
-                birthdays = self.catalog.searchResults(query)
-
+                birthdays = self.catalog.searchResults(**query)
         # sort by date and fullname
-        birthdays = [(self.format_date(b.birthday), b.Title, b) for b in birthdays]
+        birthdays = [(b.birthday.strftime('%d/%m'), b.Title, b) for b in birthdays]
         birthdays.sort()
 
         # then deliver an ordered mapping
@@ -123,7 +128,6 @@ class Renderer(base.Renderer):
                 results[day] += [person]
             else:
                 results[day] = [person]
-
         return results
 
     def format_date(self, birthday):
