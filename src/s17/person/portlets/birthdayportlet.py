@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
+# BBB: OrderedDict drop-in substitute that works in Python 2.6
 try:
     from collections import OrderedDict
-# not available on Python < 2.7
 except ImportError:
     from ordereddict import OrderedDict
 

@@ -42,7 +42,7 @@ setup(name='s17.person.portlets',
       zip_safe=False,
       install_requires=[
         'setuptools',
-        'ordereddict>=1.1',
+        'ordereddict>=1.1',  # BBB: OrderedDict drop-in substitute that works in Python 2.6
         'Products.CMFPlone>=4.1',
         'collective.person>=1.0a3',
         ],
