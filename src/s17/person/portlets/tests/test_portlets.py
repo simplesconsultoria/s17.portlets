@@ -180,7 +180,7 @@ class TestBirthdayRenderer(unittest.TestCase):
                          assignment=birthdayportlet.Assignment('test', 365))
         self.assertFalse(render.available)
         birthday1 = datetime.date(datetime.now())
-        birthday2 = datetime.date(datetime.now() + timedelta(days=-365))
+        birthday2 = datetime.date(datetime.now() + timedelta(days=364))
         self.portal.invokeFactory('collective.person.person',
                                   'name1', birthday=birthday1)
         self.portal.invokeFactory('collective.person.person',
