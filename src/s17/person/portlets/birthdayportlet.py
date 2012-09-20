@@ -116,7 +116,8 @@ class Renderer(base.Renderer):
             else:
                 birthdays = self.catalog.searchResults(**query)
         # sort by date and fullname
-        birthdays = [(b.birthday.strftime('%d/%m'), b.Title, b) for b in birthdays]
+        birthdays = [(b.birthday.strftime('%d/%m'), b.Title, b) for b in \
+                      birthdays]
         birthdays.sort()
 
         # then deliver an ordered mapping

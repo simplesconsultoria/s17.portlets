@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
 import unittest2 as unittest
+
+from datetime import datetime, timedelta
 
 import os
 
 from zope.component import getUtility, getMultiAdapter
 
 from Products.GenericSetup.utils import _getDottedName
+from Products.CMFCore.utils import getToolByName
 
 from plone.namedfile import NamedImage
 from plone.namedfile.tests.base import getFile
@@ -99,10 +101,11 @@ class TestBirthdayRenderer(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.pw = getToolByName(self.portal, 'portal_workflow')
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.portal_workflow.setChainForPortalTypes(
-            ['collective.person.person'], ['simple_publication_workflow'])
+        self.pw.setChainForPortalTypes(['collective.person.person'],
+                                       ['simple_publication_workflow'])
 
     def renderer(self, context=None, request=None, view=None, manager=None,
                  assignment=None):
@@ -127,7 +130,7 @@ class TestBirthdayRenderer(unittest.TestCase):
                                   given_name=name.split()[0],
                                   surname=name.split()[1],
                                   birthday=birthday + timedelta(days=i / 2))
-            self.portal.portal_workflow.doActionFor(self.portal[name],
+            self.pw.doActionFor(self.portal[name],
                                                     'publish')
 
         # test if they were all created
@@ -171,6 +174,19 @@ class TestBirthdayRenderer(unittest.TestCase):
         # except if we are anonymous
         logout()
         self.assertFalse(render.available)
+
+    def test_long_period(self):
+        render = self.renderer(context=self.portal,
+                         assignment=birthdayportlet.Assignment('test', 365))
+        self.assertFalse(render.available)
+        birthday1 = datetime.date(datetime.now())
+        birthday2 = datetime.date(datetime.now() + timedelta(days=-365))
+        self.portal.invokeFactory('collective.person.person',
+                                  'name1', birthday=birthday1)
+        self.portal.invokeFactory('collective.person.person',
+                                  'name2', birthday=birthday2)
+        mapping = render.get_birthdays()
+        self.assertEquals(2, len(mapping))
 
 
 class TestPersonProfilePortlet(unittest.TestCase):
@@ -239,10 +255,11 @@ class TestPersonProfileRenderer(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.pw = getToolByName(self.portal, 'portal_workflow')
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         login(self.portal, TEST_USER_NAME)
-        self.portal.portal_workflow.setChainForPortalTypes(
+        self.pw.setChainForPortalTypes(
             ['collective.person.person'], ['simple_publication_workflow'])
         self.portal.invokeFactory('News Item', 'news1')
         image = os.path.join(os.path.dirname(__file__), 'picture.jpg')
