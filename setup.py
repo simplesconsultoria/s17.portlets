@@ -44,7 +44,7 @@ setup(name='s17.person.portlets',
         'setuptools',
         'ordereddict>=1.1',
         'Products.CMFPlone>=4.1',
-        'collective.person>=1.0a3',
+        'collective.person>=1.0a4',
         ],
       extras_require={
         'test': ['plone.app.testing'],
