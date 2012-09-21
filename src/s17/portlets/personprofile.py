@@ -17,8 +17,6 @@ from zope.component import getMultiAdapter
 
 from s17.portlets import PersonPortletsMessageFactory as _
 
-from s17.person.content.person import IPerson
-
 
 class IPersonProfile(IPortletDataProvider):
     """A portlet
