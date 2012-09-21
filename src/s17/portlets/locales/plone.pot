@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-07-11 12:38+0000\n"
+"POT-Creation-Date: 2012-09-21 21:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-#: s17/person/portlets/profiles/default/portlets.xml
+#: s17/portlets/profiles/default/portlets.xml
 msgid "Birthday Portlet"
 msgstr ""
 
-#: s17/person/portlets/profiles/default/portlets.xml
+#: s17/portlets/profiles/default/portlets.xml
 msgid "Displays a search box to look for persons using their name."
 msgstr ""
 
-#: s17/person/portlets/profiles/default/portlets.xml
+#: s17/portlets/profiles/default/portlets.xml
 msgid "Displays information about a person personal profile including portrait, resume and latest posts made on the site."
 msgstr ""
 
-#: s17/person/portlets/profiles/default/portlets.xml
+#: s17/portlets/profiles/default/portlets.xml
 msgid "Displays the names of the persons with upcoming birthdays in the following days."
 msgstr ""
 
-#: s17/person/portlets/profiles/default/portlets.xml
+#: s17/portlets/profiles/default/portlets.xml
 msgid "Person Profile Portlet"
 msgstr ""
 
-#: s17/person/portlets/profiles/default/portlets.xml
+#: s17/portlets/profiles/default/portlets.xml
 msgid "White Pages Portlet"
 msgstr ""
 

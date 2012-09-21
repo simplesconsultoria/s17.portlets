@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.portlets 1.0\n"
-"POT-Creation-Date: 2012-07-11 12:38+0000\n"
+"POT-Creation-Date: 2012-09-21 21:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,49 +17,57 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: s17.portlets\n"
 
-#: s17/person/portlets/personprofile.pt:28
+#: s17/portlets/birthdayportlet.py:70
+msgid "Birthday Portlet"
+msgstr ""
+
+#: s17/portlets/personprofile.pt:28
 msgid "Latest Posts"
 msgstr ""
 
-#: s17/person/portlets/personprofile.pt:20
+#: s17/portlets/personprofile.pt:20
 msgid "My Profile"
 msgstr ""
 
-#: s17/person/portlets/personprofile.pt:33
+#: s17/portlets/personprofile.pt:33
 msgid "No posts created"
 msgstr ""
 
-#: s17/person/portlets/birthdayportlet.py:41
+#: s17/portlets/birthdayportlet.py:38
 msgid "Numbers of days"
 msgstr ""
 
-#: s17/person/portlets/birthdayportlet.py:37
-#: s17/person/portlets/personprofile.py:36
-#: s17/person/portlets/whitepagesportlet.py:54
+#: s17/portlets/birthdayportlet.py:34
+#: s17/portlets/personprofile.py:36
+#: s17/portlets/whitepagesportlet.py:54
 msgid "Portlet Title"
+msgstr ""
+
+#: s17/portlets/whitepagesportlet.py:58
+msgid "Portlet description"
 msgstr ""
 
 #: configure.zcml
 msgid "Profile, birthday and white pages portlets for persons."
 msgstr ""
 
-#: s17/person/portlets/whitepagesportlet.pt:22
+#: s17/portlets/whitepagesportlet.pt:22
 msgid "Search"
 msgstr ""
 
-#: s17/person/portlets/birthdayportlet.py:42
+#: s17/portlets/birthdayportlet.py:39
 msgid "Search for birthdays from                                   here plus numbers of days"
 msgstr ""
 
-#: s17/person/portlets/whitepagesportlet.py:55
+#: s17/portlets/whitepagesportlet.py:55
 msgid "The portlet title"
 msgstr ""
 
-#: s17/person/portlets/personprofile.py:37
+#: s17/portlets/personprofile.py:37
 msgid "Title"
 msgstr ""
 
-#: s17/person/portlets/birthdayportlet.py:38
+#: s17/portlets/birthdayportlet.py:35
 msgid "the Title of the portlet"
 msgstr ""
 

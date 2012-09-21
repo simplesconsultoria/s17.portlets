@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.portlets 1.0\n"
-"POT-Creation-Date: 2012-07-11 12:38+0000\n"
-"PO-Revision-Date: 2012-05-09 16:08-0300\n"
+"POT-Creation-Date: 2012-09-21 21:17+0000\n"
+"PO-Revision-Date: 2012-09-21 18:19-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,54 +15,57 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: s17.portlets\n"
 
-#: s17/person/portlets/personprofile.pt:28
+#: s17/portlets/birthdayportlet.py:70
+msgid "Birthday Portlet"
+msgstr "Portlet de aniversarios"
+
+#: s17/portlets/personprofile.pt:28
 msgid "Latest Posts"
 msgstr "Últimas contribuciones"
 
-#: s17/person/portlets/personprofile.pt:20
+#: s17/portlets/personprofile.pt:20
 msgid "My Profile"
 msgstr "Mi perfil"
 
-#: s17/person/portlets/personprofile.pt:33
+#: s17/portlets/personprofile.pt:33
 msgid "No posts created"
-msgstr ""
+msgstr "No se han creado items"
 
-#: s17/person/portlets/birthdayportlet.py:41
+#: s17/portlets/birthdayportlet.py:38
 msgid "Numbers of days"
 msgstr "Número de días"
 
-#: s17/person/portlets/birthdayportlet.py:37
-#: s17/person/portlets/personprofile.py:36
-#: s17/person/portlets/whitepagesportlet.py:54
+#: s17/portlets/birthdayportlet.py:34
+#: s17/portlets/personprofile.py:36
+#: s17/portlets/whitepagesportlet.py:54
 msgid "Portlet Title"
 msgstr "Título del portlet"
 
+#: s17/portlets/whitepagesportlet.py:58
+msgid "Portlet description"
+msgstr "Descripción del portlet"
+
 #: configure.zcml
 msgid "Profile, birthday and white pages portlets for persons."
-msgstr ""
+msgstr "Portlets de perfil, aniversario y páginas blancas para personas."
 
-#: s17/person/portlets/whitepagesportlet.pt:22
+#: s17/portlets/whitepagesportlet.pt:22
 msgid "Search"
 msgstr "Buscar"
 
-#: s17/person/portlets/birthdayportlet.py:42
+#: s17/portlets/birthdayportlet.py:39
 msgid "Search for birthdays from                                   here plus numbers of days"
 msgstr "Buscar cumpleaños desde hoy hasta número de días"
 
-#: s17/person/portlets/whitepagesportlet.py:55
+#: s17/portlets/whitepagesportlet.py:55
 msgid "The portlet title"
 msgstr "El título del portlet"
 
-#: s17/person/portlets/personprofile.py:37
+#: s17/portlets/personprofile.py:37
 msgid "Title"
 msgstr "Título"
 
-#: s17/person/portlets/birthdayportlet.py:38
+#: s17/portlets/birthdayportlet.py:35
 msgid "the Title of the portlet"
 msgstr "el título del portlet"
-
-#: s17/person/portlets/whitepagesview.pt:20
-msgid "No items founded"
-msgstr "No hay resultados."
-
 
