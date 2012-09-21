@@ -45,7 +45,7 @@ setup(name='s17.person.portlets',
         'setuptools',
         'ordereddict>=1.1',  # BBB: OrderedDict drop-in substitute that works in Python 2.6
         'Products.CMFPlone>=4.1',
-        'collective.person>=1.0a3',
+        'collective.person>=1.0a4',
         ],
       extras_require={
         'test': ['plone.app.testing'],

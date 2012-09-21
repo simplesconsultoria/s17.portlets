@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, date, timedelta
 import unittest2 as unittest
+
+from datetime import datetime, timedelta
 
 import os
 
 from zope.component import getUtility, getMultiAdapter
 
 from Products.GenericSetup.utils import _getDottedName
+from Products.CMFCore.utils import getToolByName
 
 from plone.namedfile import NamedImage
 from plone.namedfile.tests.base import getFile
@@ -99,10 +101,11 @@ class TestBirthdayRenderer(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.pw = getToolByName(self.portal, 'portal_workflow')
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.portal_workflow.setChainForPortalTypes(
-            ['collective.person.person'], ['simple_publication_workflow'])
+        self.pw.setChainForPortalTypes(['collective.person.person'],
+                                       ['simple_publication_workflow'])
 
     def renderer(self, context=None, request=None, view=None, manager=None,
                  assignment=None):
@@ -119,35 +122,32 @@ class TestBirthdayRenderer(unittest.TestCase):
     def test_get_birthdays(self):
         # create some employees and set their birthdays
         birthday = datetime.date(datetime.now())
-        names = ['Juan Perez', 'Gustavo Roner', 'Marcelo Santos', 'Marcelo Alves', 'Julia Alvarez']
+        names = ['Juan Perez', 'Gustavo Roner', 'Marcelo Santos',
+                 'Marcelo Alves', 'Julia Alvarez']
         for i, name in enumerate(names):
             self.portal.invokeFactory('collective.person.person',
-                                      name,
-                                      given_name=name.split()[0],
-                                      surname=name.split()[1],
-                                      birthday=birthday + timedelta(days=i / 2))
-            self.portal.portal_workflow.doActionFor(self.portal[name], 'publish')
+                                  name,
+                                  given_name=name.split()[0],
+                                  surname=name.split()[1],
+                                  birthday=birthday + timedelta(days=i / 2))
+            self.pw.doActionFor(self.portal[name],
+                                                    'publish')
 
         # test if they were all created
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 30))
+                        assignment=birthdayportlet.Assignment('test', 30))
         mapping = render.get_birthdays()
         self.assertEquals(3, len(mapping))
 
         # test if names get listed in the right order and grouping
-        mapping = [[person[0] for person in person] for person in mapping.values()]
-        self.assertEquals([['Gustavo Roner', 'Juan Perez'], ['Marcelo Alves', 'Marcelo Santos'], ['Julia Alvarez']], mapping)
-
-    def test_format_date(self):
-        render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 30))
-        value = date(1982, 11, 6)
-        value = render.format_date(value)
-        self.assertEquals('11-06', value)
+        mapping = [[person[0] for person in person] for person in \
+                    mapping.values()]
+        self.assertEquals([['Gustavo Roner', 'Juan Perez'], ['Marcelo Alves',
+                            'Marcelo Santos'], ['Julia Alvarez']], mapping)
 
     def test_is_anonymous(self):
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                            assignment=birthdayportlet.Assignment('test', 5))
         self.assertFalse(render.is_anonymous)
         logout()
         self.assertTrue(render.is_anonymous)
@@ -155,7 +155,7 @@ class TestBirthdayRenderer(unittest.TestCase):
     def test_available(self):
         # we should not see this portlet if there are no birthdays to display
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                            assignment=birthdayportlet.Assignment('test', 5))
         self.assertFalse(render.available)
 
         # but if we create some items
@@ -168,12 +168,25 @@ class TestBirthdayRenderer(unittest.TestCase):
 
         # we should be able to see it
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                            assignment=birthdayportlet.Assignment('test', 5))
         self.assertTrue(render.available)
 
         # except if we are anonymous
         logout()
         self.assertFalse(render.available)
+
+    def test_long_period(self):
+        render = self.renderer(context=self.portal,
+                         assignment=birthdayportlet.Assignment('test', 365))
+        self.assertFalse(render.available)
+        birthday1 = datetime.date(datetime.now())
+        birthday2 = datetime.date(datetime.now() + timedelta(days=364))
+        self.portal.invokeFactory('collective.person.person',
+                                  'name1', birthday=birthday1)
+        self.portal.invokeFactory('collective.person.person',
+                                  'name2', birthday=birthday2)
+        mapping = render.get_birthdays()
+        self.assertEquals(2, len(mapping))
 
 
 class TestPersonProfilePortlet(unittest.TestCase):
@@ -242,10 +255,11 @@ class TestPersonProfileRenderer(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        self.pw = getToolByName(self.portal, 'portal_workflow')
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         login(self.portal, TEST_USER_NAME)
-        self.portal.portal_workflow.setChainForPortalTypes(
+        self.pw.setChainForPortalTypes(
             ['collective.person.person'], ['simple_publication_workflow'])
         self.portal.invokeFactory('News Item', 'news1')
         image = os.path.join(os.path.dirname(__file__), 'picture.jpg')
