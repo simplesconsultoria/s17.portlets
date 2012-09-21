@@ -14,12 +14,11 @@ setup(name='s17.portlets',
       description="Profile, birthday and white pages portlets for a person.",
       long_description=long_description,
       classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Framework :: Plone",
-        "Framework :: Plone :: 4.1",
         "Framework :: Plone :: 4.2",
-        "Framework :: Plone :: 4.3",
+#        "Framework :: Plone :: 4.3",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Operating System :: OS Independent",
@@ -44,7 +43,7 @@ setup(name='s17.portlets',
       install_requires=[
         'setuptools',
         'ordereddict>=1.1',  # BBB: OrderedDict drop-in substitute that works in Python 2.6
-        'Products.CMFPlone>=4.1',
+        'Products.CMFPlone>=4.2',
         's17.person',
         ],
       extras_require={

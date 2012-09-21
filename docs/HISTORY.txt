@@ -7,6 +7,10 @@ Because you have to know where your towel is.
 1.0a6 (unreleased)
 ^^^^^^^^^^^^^^^^^^
 
+- Deprecate use on Plone 4.1; we will support only Plone>=4.2. [hvelarde]
+
+- Rename package from s17.person.portlets to s17.portlets. [hvelarde]
+
 - Add description field. [aleGpereira]
 
 - Limit list of participations in profile portlet to five. [aleGpereira]
