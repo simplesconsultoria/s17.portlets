@@ -19,15 +19,15 @@ Functional test:
 Add portlets:
 
     >>> browser.open(portalURL + '/@@manage-portlets')
-    >>> browser.open(portalURL + '/++contextportlets++plone.leftcolumn/+/s17.person.portlets.personprofile.PersonProfile')
+    >>> browser.open(portalURL + '/++contextportlets++plone.leftcolumn/+/s17.portlets.personprofile.PersonProfile')
     >>> browser.getControl(name='form.portlet_title').value = 'Person Profile'
     >>> browser.getControl('Save').click()
 
-    >>> browser.open(portalURL + '/++contextportlets++plone.rightcolumn/+/s17.person.portlets.whitepages.WhitePagesPortlet')
+    >>> browser.open(portalURL + '/++contextportlets++plone.rightcolumn/+/s17.portlets.whitepages.WhitePagesPortlet')
     >>> browser.getControl(name='form.portlet_title').value = 'Paginas Brancas'
     >>> browser.getControl('Save').click()
 
-    >>> browser.open(portalURL + '/++contextportlets++plone.rightcolumn/+/s17.person.portlets.birthday.BirthdayPortlet')
+    >>> browser.open(portalURL + '/++contextportlets++plone.rightcolumn/+/s17.portlets.birthday.BirthdayPortlet')
     >>> browser.getControl(name='form.portlet_title').value = 'Aniversariantes'
     >>> browser.getControl('Save').click()
 

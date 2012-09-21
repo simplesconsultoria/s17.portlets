@@ -1,6 +1,6 @@
-*******************
-s17.person.portlets
-*******************
+************
+s17.portlets
+************
 
 .. contents:: Table of Contents
 
@@ -12,8 +12,8 @@ Profile, birthday and white pages portlets for a person.
 Don't panic
 -----------
 
-s17.person.portlets contains portlets to be used with the Person content type
-included in `collective.person`_.
+s17.portlets contains portlets to be used with the Person content type
+included in `s17.person`_.
 
 The following portlets are available:
 
@@ -32,11 +32,11 @@ The following portlets are available:
 Mostly Harmless
 ---------------
 
-.. image:: https://secure.travis-ci.org/simplesconsultoria/s17.person.portlets.png
-    :target: http://travis-ci.org/simplesconsultoria/s17.person.portlets
+.. image:: https://secure.travis-ci.org/simplesconsultoria/s17.portlets.png
+    :target: http://travis-ci.org/simplesconsultoria/s17.portlets
 
 Have an idea? Found a bug? Let us know by `opening a support ticket`_.
 
-.. _`collective.person`: https://github.com/simplesconsultoria/collective.person
-.. _`opening a support ticket`: https://github.com/simplesconsultoria/s17.person.portlets/issues
+.. _`s17.person`: https://github.com/simplesconsultoria/s17.person
+.. _`opening a support ticket`: https://github.com/simplesconsultoria/s17.portlets/issues
 

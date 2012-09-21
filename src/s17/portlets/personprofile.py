@@ -15,9 +15,9 @@ import DateTime
 
 from zope.component import getMultiAdapter
 
-from s17.person.portlets import PersonPortletsMessageFactory as _
+from s17.portlets import PersonPortletsMessageFactory as _
 
-from collective.person.content.person import IPerson
+from s17.person.content.person import IPerson
 
 
 class IPersonProfile(IPortletDataProvider):

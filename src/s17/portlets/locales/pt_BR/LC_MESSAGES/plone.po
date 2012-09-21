@@ -1,7 +1,7 @@
 # Héctor Velarde <hector.velarde@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: s17.person.portlets 1.0\n"
+"Project-Id-Version: s17.portlets 1.0\n"
 "POT-Creation-Date: 2012-07-11 12:38+0000\n"
 "PO-Revision-Date: 2012-05-09 16:29-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"

@@ -18,9 +18,9 @@ from plone.app.portlets.portlets import base
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
-from collective.person.content.person import IPerson
+from s17.person.content.person import IPerson
 
-from s17.person.portlets import PersonPortletsMessageFactory as _
+from s17.portlets import PersonPortletsMessageFactory as _
 
 
 class IBirthdayPortlet(IPortletDataProvider):

@@ -9,7 +9,7 @@ long_description = open("README.txt").read() + "\n" + \
                    open(os.path.join("docs", "CREDITS.txt")).read() + "\n" + \
                    open(os.path.join("docs", "HISTORY.txt")).read()
 
-setup(name='s17.person.portlets',
+setup(name='s17.portlets',
       version=version,
       description="Profile, birthday and white pages portlets for a person.",
       long_description=long_description,
@@ -34,18 +34,18 @@ setup(name='s17.person.portlets',
       keywords='portlet person portlets',
       author='Simples Consultoria',
       author_email='products@simplesconsultoria.com.br',
-      url='https://github.com/simplesconsultoria/s17.person.portlets',
+      url='https://github.com/simplesconsultoria/s17.portlets',
       license='GPLv2',
       packages=find_packages('src'),
       package_dir={'': 'src'},
-      namespace_packages=['s17', 's17.person'],
+      namespace_packages=['s17'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
         'setuptools',
         'ordereddict>=1.1',  # BBB: OrderedDict drop-in substitute that works in Python 2.6
         'Products.CMFPlone>=4.1',
-        'collective.person>=1.0a4',
+        's17.person',
         ],
       extras_require={
         'test': ['plone.app.testing'],

@@ -1,4 +1,4 @@
-s17.person.portlets Copyright 2012, <YOUR NAME HERE>
+s17.portlets Copyright 2012, Simples Consultoria
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

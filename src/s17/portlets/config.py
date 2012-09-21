@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-PROJECTNAME = 's17.person.portlets'
+PROJECTNAME = 's17.portlets'

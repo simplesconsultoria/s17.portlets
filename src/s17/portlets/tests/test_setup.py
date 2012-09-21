@@ -8,8 +8,8 @@ from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import login
 from plone.app.testing import setRoles
 
-from s17.person.portlets.config import PROJECTNAME
-from s17.person.portlets.testing import INTEGRATION_TESTING
+from s17.portlets.config import PROJECTNAME
+from s17.portlets.testing import INTEGRATION_TESTING
 
 
 class TestInstall(unittest.TestCase):
@@ -27,7 +27,7 @@ class TestInstall(unittest.TestCase):
                         '%s not installed' % PROJECTNAME)
 
     def test_dependencies_installed(self):
-        packages = ['collective.person']
+        packages = ['s17.person']
         for p in packages:
             self.assertTrue(self.qi.isProductInstalled(p),
                             '%s not installed' % p)

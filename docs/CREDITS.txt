@@ -1,8 +1,8 @@
 Share and Enjoy
 ---------------
 
-s17.person.portlets would not have been possible without the contribution of
-the following people:
+s17.portlets would not have been possible without the contribution of the
+following people:
 
 - Silvestre Huens
 - Cleber J Santos

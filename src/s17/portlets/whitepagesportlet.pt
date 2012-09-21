@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      i18n:domain="s17.person.portlets"
+      i18n:domain="s17.portlets"
       tal:omit-tag=""
       tal:define="anonymous view/is_anonymous"
       tal:condition="not:anonymous">

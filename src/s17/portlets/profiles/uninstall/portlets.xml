@@ -3,17 +3,17 @@
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     i18n:domain="plone">
  <portlet
-   addview="s17.person.portlets.birthday.BirthdayPortlet"
+   addview="s17.portlets.birthday.BirthdayPortlet"
    remove="True">
  </portlet>
  <portlet
-   addview="s17.person.portlets.personprofile.PersonProfile"
+   addview="s17.portlets.personprofile.PersonProfile"
    remove="True">
     <for interface="plone.app.portlets.interfaces.IColumn" />
     <for interface="plone.app.portlets.interfaces.IDashboard" />
  </portlet>
  <portlet
-   addview="s17.person.portlets.whitepages.WhitePagesPortlet"
+   addview="s17.portlets.whitepages.WhitePagesPortlet"
    remove="True">
     <for interface="plone.app.portlets.interfaces.IColumn" />
     <for interface="plone.app.portlets.interfaces.IDashboard" />

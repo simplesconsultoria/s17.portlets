@@ -3,7 +3,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
-      i18n:domain="s17.person.portlets">
+      i18n:domain="s17.portlets">
 <body>
     <div class="people-results">
         <tal:block tal:repeat="people view/people_list">

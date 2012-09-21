@@ -12,11 +12,11 @@ class Fixture(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         # Load ZCML
-        import s17.person.portlets
-        self.loadZCML(package=s17.person.portlets)
+        import s17.portlets
+        self.loadZCML(package=s17.portlets)
         # Load ZCML
-        import collective.person
-        self.loadZCML(package=collective.person)
+        import s17.person
+        self.loadZCML(package=s17.person)
         #XXX: We should not have this here but...
         import plone.app.dexterity
         self.loadZCML(package=plone.app.dexterity)
@@ -25,16 +25,16 @@ class Fixture(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         # Install into Plone site using portal_setup
-        self.applyProfile(portal, 's17.person.portlets:default')
-        self.applyProfile(portal, 'collective.person:default')
+        self.applyProfile(portal, 's17.portlets:default')
+        self.applyProfile(portal, 's17.person:default')
 
 
 FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),
-    name='s17.person.portlets:Integration',
+    name='s17.portlets:Integration',
     )
 FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(FIXTURE,),
-    name='s17.person.portlets:Functional',
+    name='s17.portlets:Functional',
     )

@@ -29,11 +29,11 @@ from plone.app.testing import logout
 from plone.app.portlets.storage import PortletAssignmentMapping
 from plone.app.portlets.interfaces import IPortletTypeInterface
 
-from s17.person.portlets import birthdayportlet
-from s17.person.portlets import personprofile
-from s17.person.portlets import whitepagesportlet
+from s17.portlets import birthdayportlet
+from s17.portlets import personprofile
+from s17.portlets import whitepagesportlet
 
-from s17.person.portlets.testing import INTEGRATION_TESTING
+from s17.portlets.testing import INTEGRATION_TESTING
 
 
 class TestBirthdayPortlet(unittest.TestCase):
@@ -43,7 +43,7 @@ class TestBirthdayPortlet(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = 's17.person.portlets.birthday.BirthdayPortlet'
+        self.name = 's17.portlets.birthday.BirthdayPortlet'
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_portlet_type_registered(self):
@@ -104,7 +104,7 @@ class TestBirthdayRenderer(unittest.TestCase):
         self.pw = getToolByName(self.portal, 'portal_workflow')
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.pw.setChainForPortalTypes(['collective.person.person'],
+        self.pw.setChainForPortalTypes(['Person'],
                                        ['simple_publication_workflow'])
 
     def renderer(self, context=None, request=None, view=None, manager=None,
@@ -125,7 +125,7 @@ class TestBirthdayRenderer(unittest.TestCase):
         names = ['Juan Perez', 'Gustavo Roner', 'Marcelo Santos',
                  'Marcelo Alves', 'Julia Alvarez']
         for i, name in enumerate(names):
-            self.portal.invokeFactory('collective.person.person',
+            self.portal.invokeFactory('Person',
                                   name,
                                   given_name=name.split()[0],
                                   surname=name.split()[1],
@@ -161,9 +161,9 @@ class TestBirthdayRenderer(unittest.TestCase):
         # but if we create some items
         birthday1 = datetime.date(datetime.now())
         birthday2 = datetime.date(datetime.now() + timedelta(days=3))
-        self.portal.invokeFactory('collective.person.person',
+        self.portal.invokeFactory('Person',
                                   TEST_USER_ID, birthday=birthday1)
-        self.portal.invokeFactory('collective.person.person',
+        self.portal.invokeFactory('Person',
                                   'name2', birthday=birthday2)
 
         # we should be able to see it
@@ -181,9 +181,9 @@ class TestBirthdayRenderer(unittest.TestCase):
         self.assertFalse(render.available)
         birthday1 = datetime.date(datetime.now())
         birthday2 = datetime.date(datetime.now() + timedelta(days=364))
-        self.portal.invokeFactory('collective.person.person',
+        self.portal.invokeFactory('Person',
                                   'name1', birthday=birthday1)
-        self.portal.invokeFactory('collective.person.person',
+        self.portal.invokeFactory('Person',
                                   'name2', birthday=birthday2)
         mapping = render.get_birthdays()
         self.assertEquals(2, len(mapping))
@@ -196,7 +196,7 @@ class TestPersonProfilePortlet(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = 's17.person.portlets.personprofile.PersonProfile'
+        self.name = 's17.portlets.personprofile.PersonProfile'
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_portlet_type_registered(self):
@@ -260,11 +260,11 @@ class TestPersonProfileRenderer(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         login(self.portal, TEST_USER_NAME)
         self.pw.setChainForPortalTypes(
-            ['collective.person.person'], ['simple_publication_workflow'])
+            ['Person'], ['simple_publication_workflow'])
         self.portal.invokeFactory('News Item', 'news1')
         image = os.path.join(os.path.dirname(__file__), 'picture.jpg')
         data = getFile(image).read()
-        self.portal.invokeFactory('collective.person.person', TEST_USER_ID,
+        self.portal.invokeFactory('Person', TEST_USER_ID,
             birthday=datetime.date(datetime.now()),
             picture=NamedImage(data))
         setRoles(self.portal, TEST_USER_ID, ['Member'])
@@ -296,7 +296,7 @@ class TestPersonProfileRenderer(unittest.TestCase):
 
     def test_get_participation(self):
         """ Participation in creation of 6 content types: Five News Item
-            and a collective.person.person. Returns at most five.
+            and a s17.person.person. Returns at most five.
         """
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         index = 2
@@ -333,7 +333,7 @@ class TestWhitePagesPortlet(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
-        self.name = 's17.person.portlets.whitepages.WhitePagesPortlet'
+        self.name = 's17.portlets.whitepages.WhitePagesPortlet'
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_portlet_type_registered(self):
@@ -396,7 +396,7 @@ class TestWhitePagesPortlet(unittest.TestCase):
     def test_whitepages_view(self):
         index = 1
         while index < 5:
-            self.portal.invokeFactory('collective.person.person',
+            self.portal.invokeFactory('Person',
                                       'person%s' % index,
                                       given_name='Person %s' % index,
                                       surname='surname%s' % index)

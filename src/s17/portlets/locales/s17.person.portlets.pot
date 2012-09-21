@@ -3,7 +3,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: s17.person.portlets 1.0\n"
+"Project-Id-Version: s17.portlets 1.0\n"
 "POT-Creation-Date: 2012-07-11 12:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: s17.person.portlets\n"
+"Domain: s17.portlets\n"
 
 #: s17/person/portlets/personprofile.pt:28
 msgid "Latest Posts"

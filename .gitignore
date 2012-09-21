@@ -12,5 +12,5 @@ eggs/
 include/
 lib/
 parts/
-src/collective.person/
+src/s17.person/
 var/

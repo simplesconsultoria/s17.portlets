@@ -17,7 +17,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.ZCTextIndex.ZCTextIndex import ZCTextIndex
 from Products.PluginIndexes.KeywordIndex.KeywordIndex import KeywordIndex
 
-from s17.person.portlets import PersonPortletsMessageFactory as _
+from s17.portlets import PersonPortletsMessageFactory as _
 
 
 class KeywordsVocabulary(object):
