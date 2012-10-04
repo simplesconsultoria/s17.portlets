@@ -43,8 +43,9 @@ setup(name='s17.portlets',
       install_requires=[
           'setuptools',
           'ordereddict>=1.1',  # BBB: OrderedDict substitute for Python 2.6
-          'Products.CMFPlone>=4.2',
+          'plone.resource',
           's17.person',
+          'Products.CMFPlone>=4.2',
       ],
       extras_require={
           'test': [

@@ -3,61 +3,24 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="s17.portlets"
       tal:omit-tag=""
-      tal:define="anonymous view/is_anonymous"
-      tal:condition="not:anonymous">
-
+      tal:condition="not:view/is_anonymous">
 
 <dl class="portlet portletWhitePagesPortlet">
-
-    <dt class="portletHeader" tal:content="view/data/portlet_title"
+    <dt class="portletHeader"
+        tal:content="view/data/portlet_title"
         i18n:translate="">
         White Pages
     </dt>
-
     <dd class="portletItem odd">
         <form id="searchpersonform" name="whitepages">
             <span tal:condition="view/data/description"
-                  tal:content="view/data/description"> Description </span>
+                  tal:content="view/data/description">Description</span>
             <input type="text" name="fullname" />
-            <input type="button" value="Search" class="searchButton" i18n:attributes="value" />
+            <input type="button" value="Search" class="searchButton"
+                i18n:attributes="value" />
         </form>
     </dd>
-    <a id="wp_overlaytrigger" href="@@whitepages" style="display:none"></a>
-    <script type="text/javascript">
-        jq(document).ready(function() {
-            $('a#wp_overlaytrigger').prepOverlay({
-                    subtype: 'ajax',
-                    config: {
-                        onBeforeLoad : function (e) {
-                            var input = $('#searchpersonform input[name=fullname]').attr('value');
-                            $.ajax({
-                                type: 'POST',
-                                url: portal_url + '/@@whitepages?fullname=' + input,
-                                 success: function(data) {
-                                    $('.people-results').html(data);
-                                }
-                            });
-                            return true;
-                            }
-                    }
-                });
-            $('#searchpersonform .searchButton').click(function(event){
-                if ($('#searchpersonform input[name=fullname]').attr('value').length === 0) {
-                    return false;
-                };
-                $('a#wp_overlaytrigger').click();
-            });
-            $('#searchpersonform input[name=fullname]').keydown(function(event){
-                if(event.keyCode==13){
-                    if ($(this).attr('value').length === 0) {
-                        return false;
-                    };
-                    $('a#wp_overlaytrigger').click();
-                    event.preventDefault();
-                }
-            });
-        })
-    </script>
+    <a id="wp_overlaytrigger" href="@@whitepages" style="display: none"></a>
 </dl>
 
 </html>
