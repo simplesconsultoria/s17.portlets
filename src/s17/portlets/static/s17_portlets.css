@@ -1,3 +1,20 @@
-.portletWhitePagesPortlet dt {
+dl.portletWhitePagesPortlet .overlay {
+    font-size: 100%;
+}
+
+dl.portletWhitePagesPortlet .overlay .odd {
+    background: #eee;
+}
+
+dl.portletWhitePagesPortlet .overlay dt {
     background: #fff;
+    padding: 0;
+}
+
+dl.portletWhitePagesPortlet .overlay dd {
+    margin: 0 0 1em 2em;
+}
+
+dl.portletWhitePagesPortlet .searchResults {
+    margin-top: 1em;
 }
