@@ -11,6 +11,10 @@ dl.portletWhitePagesPortlet .overlay dt {
     padding: 0;
 }
 
+dl.portletWhitePagesPortlet .overlay .image-left {
+    margin: 0 1em 0 0;
+}
+
 dl.portletWhitePagesPortlet .overlay dd {
     margin: 0 0 1em 2em;
 }
