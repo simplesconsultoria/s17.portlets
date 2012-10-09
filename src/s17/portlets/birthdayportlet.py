@@ -108,7 +108,7 @@ class Renderer(base.Renderer):
             query = {}
             query['cooked_birthday'] = {'query': search_range,
                                         'range': 'minmax'}
-            query['review_state'] = 'published'
+            query['review_state'] = ['published','internally_published']
             query['sort_on'] = 'birthday'
             query['object_provides'] = {'query': [IPerson.__identifier__]}
             if birthdays:
