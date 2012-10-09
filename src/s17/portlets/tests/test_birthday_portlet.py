@@ -109,34 +109,41 @@ class BirthdayRendererTestCase(unittest.TestCase):
                                IPortletRenderer)
 
     def test_get_birthdays(self):
-        # create some employees and set their birthdays
+        # lets begin by grabbing the portlet renderer
+        render = self.renderer(context=self.portal,
+                               assignment=birthdayportlet.Assignment('test', 30))
+
+        # then we create some Person items and set their birthdays
         birthday = datetime.date(datetime.now())
         names = ['Juan Perez', 'Gustavo Roner', 'Marcelo Santos',
                  'Marcelo Alves', 'Julia Alvarez']
         for i, name in enumerate(names):
             self.portal.invokeFactory('Person',
-                                  name,
-                                  given_name=name.split()[0],
-                                  surname=name.split()[1],
-                                  birthday=birthday + timedelta(days=i / 2))
-            self.pw.doActionFor(self.portal[name],
-                                                    'publish')
+                                      name,
+                                      given_name=name.split()[0],
+                                      surname=name.split()[1],
+                                      birthday=birthday + timedelta(days=i / 2))
 
-        # test if they were all created
-        render = self.renderer(context=self.portal,
-                        assignment=birthdayportlet.Assignment('test', 30))
+        # since they weren't published, portlet shouldn't listed them
         mapping = render.get_birthdays()
-        self.assertEquals(3, len(mapping))
+        mapping = [[person[0] for person in person] for person in
+                   mapping.values()]
+        self.assertEquals([], mapping)
 
-        # test if names get listed in the right order and grouping
-        mapping = [[person[0] for person in person] for person in \
-                    mapping.values()]
+        # let's publish the items
+        for name in names:
+            self.pw.doActionFor(self.portal[name], 'publish')
+
+        # and test if names are listed in the right order and grouping
+        mapping = render.get_birthdays()
+        mapping = [[person[0] for person in person] for person in
+                   mapping.values()]
         self.assertEquals([['Gustavo Roner', 'Juan Perez'], ['Marcelo Alves',
-                            'Marcelo Santos'], ['Julia Alvarez']], mapping)
+                           'Marcelo Santos'], ['Julia Alvarez']], mapping)
 
     def test_is_anonymous(self):
         render = self.renderer(context=self.portal,
-                            assignment=birthdayportlet.Assignment('test', 5))
+                               assignment=birthdayportlet.Assignment('test', 5))
         self.assertFalse(render.is_anonymous)
         logout()
         self.assertTrue(render.is_anonymous)
@@ -144,20 +151,22 @@ class BirthdayRendererTestCase(unittest.TestCase):
     def test_available(self):
         # we should not see this portlet if there are no birthdays to display
         render = self.renderer(context=self.portal,
-                            assignment=birthdayportlet.Assignment('test', 5))
+                               assignment=birthdayportlet.Assignment('test', 5))
         self.assertFalse(render.available)
 
-        # but if we create some items
+        # but if we create and publish some Person items
         birthday1 = datetime.date(datetime.now())
         birthday2 = datetime.date(datetime.now() + timedelta(days=3))
         self.portal.invokeFactory('Person',
                                   TEST_USER_ID, birthday=birthday1)
         self.portal.invokeFactory('Person',
                                   'name2', birthday=birthday2)
+        self.pw.doActionFor(self.portal[TEST_USER_ID], 'publish')
+        self.pw.doActionFor(self.portal['name2'], 'publish')
 
         # we should be able to see it
         render = self.renderer(context=self.portal,
-                            assignment=birthdayportlet.Assignment('test', 5))
+                               assignment=birthdayportlet.Assignment('test', 5))
         self.assertTrue(render.available)
 
         # except if we are anonymous
@@ -166,7 +175,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
 
     def test_long_period(self):
         render = self.renderer(context=self.portal,
-                         assignment=birthdayportlet.Assignment('test', 365))
+                               assignment=birthdayportlet.Assignment('test', 365))
         self.assertFalse(render.available)
         birthday1 = datetime.date(datetime.now())
         birthday2 = datetime.date(datetime.now() + timedelta(days=364))
@@ -174,5 +183,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
                                   'name1', birthday=birthday1)
         self.portal.invokeFactory('Person',
                                   'name2', birthday=birthday2)
+        self.pw.doActionFor(self.portal['name1'], 'publish')
+        self.pw.doActionFor(self.portal['name2'], 'publish')
         mapping = render.get_birthdays()
         self.assertEquals(2, len(mapping))
