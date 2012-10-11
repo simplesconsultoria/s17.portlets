@@ -101,7 +101,8 @@ class Renderer(base.Renderer):
         user_id = self.get_user_id()
 
         person = self.get_person(user_id)
-        tag = '<img width="75" height="99" title="" alt="" src="defaultUser.png">'
+        portal_url = getToolByName(self.context, 'portal_url')()
+        tag = '<img width="75" height="99" title="" alt="" src="%s/defaultUser.png">' % portal_url
 
         if person:
             obj = person.getObject()
