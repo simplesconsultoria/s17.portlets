@@ -109,6 +109,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
                                IPortletRenderer)
 
     def test_get_birthdays(self):
+
         # lets begin by grabbing the portlet renderer
         render = self.renderer(context=self.portal,
                                assignment=birthdayportlet.Assignment('test', 30))
