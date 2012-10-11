@@ -25,7 +25,8 @@
                         tal:condition="nocall:picture" width="40"
                         tal:attributes="src string:${birthday_obj/absolute_url}/@@images/picture/thumb" />
                     <img class="image-left" src="defaultUser.png" width="32"
-                        tal:condition="not:nocall:picture" />
+                         tal:attributes="src string:${portal_url}/defaultUser.png"
+                         tal:condition="not:nocall:picture" />
                     <a tal:attributes="href birthday_obj/absolute_url"
                         tal:content="birthday_obj/Title">Full name</a>
                     <div class="visualClear"><!-- --></div>
