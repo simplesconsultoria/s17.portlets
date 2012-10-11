@@ -10,6 +10,7 @@ except AttributeError:
 
 from datetime import datetime, timedelta
 
+from zope.component import getMultiAdapter
 from zope.interface import implements
 from zope import schema
 from zope.formlib import form
@@ -118,6 +119,7 @@ class Renderer(base.Renderer):
                                  self.catalog.searchResults(**query)
             else:
                 birthdays = self.catalog.searchResults(**query)
+
         # sort by date and fullname
         birthdays = [(b.birthday.strftime('%d/%m'), b.Title, b) for b in \
                       birthdays]
@@ -147,6 +149,11 @@ class Renderer(base.Renderer):
         """ """
         pm = getToolByName(self.context, 'portal_membership')
         return pm.isAnonymousUser()
+
+    def portal_url(self):
+        portal_state = getMultiAdapter((self.context, self.request),
+                                       name=u'plone_portal_state')
+        return portal_state.portal_url()
 
     render = ViewPageTemplateFile('birthdayportlet.pt')
 
