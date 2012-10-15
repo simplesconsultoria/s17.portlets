@@ -2,9 +2,11 @@
 
 # BBB: OrderedDict drop-in substitute that works in Python 2.6
 try:
-    from collections import OrderedDict
-except ImportError:
-    from ordereddict import OrderedDict
+    import collections
+    OrderedDict = collections.OrderedDict
+except AttributeError:
+    import ordereddict
+    OrderedDict = ordereddict.OrderedDict
 
 from datetime import datetime, timedelta
 
