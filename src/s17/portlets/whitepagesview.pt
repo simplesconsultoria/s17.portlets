@@ -4,11 +4,12 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       i18n:domain="s17.portlets">
-<body tal:define="people view/people_list; portal_state view/portal_state">
+<body tal:define="people view/people_list;
+                  portal_state view/portal_state">
     <h1 class="documentFirstHeading"
         i18n:translate="">Search results for
         <strong id="search-term"
-            tal:content="view/query"
+            tal:content="view/fullname"
             i18n:name="term" />
     </h1>
     <dl class="searchResults">
@@ -63,7 +64,7 @@
         </dd>
         <div class="visualClear"><!-- --></div>
         </tal:block>
-        <h2 tal:condition="not:view/people_list" i18n:translate="">
+        <h2 tal:condition="not:people" i18n:translate="">
           No items found.
         </h2>
     </dl>
