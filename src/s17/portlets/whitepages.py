@@ -13,7 +13,8 @@ class WhitePages(BrowserView):
 
     def people_list(self):
         catalog = getToolByName(self.context, 'portal_personcatalog')
-        form_request = self.request.form
-
-        results = catalog.searchResults(form_request)
+        query = {}
+        query['fullname'] = self.request.form.get('fullname', '')
+        query['review_state'] = ['published', 'internally_published']
+        results = catalog.searchResults(**query)
         return results
