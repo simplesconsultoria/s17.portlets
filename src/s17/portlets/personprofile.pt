@@ -16,7 +16,8 @@
 	            <img tal:replace="structure view/get_portrait" src="defaultUser.png" />
 	        </div>
 
-	        <ul class="profile-options">
+	        <ul class="profile-options"
+                tal:condition="view/get_user_profile">
 	            <li><a class="profile" href=""
 	                   tal:attributes="href view/get_user_profile"
 	                   i18n:translate="">My Profile</a></li>
