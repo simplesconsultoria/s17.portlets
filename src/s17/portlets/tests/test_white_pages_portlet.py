@@ -4,6 +4,7 @@ import unittest2 as unittest
 
 from zope.component import getUtility, getMultiAdapter
 
+from Products.CMFCore.utils import getToolByName
 from Products.GenericSetup.utils import _getDottedName
 
 from plone.portlets.interfaces import IPortletType
@@ -31,7 +32,10 @@ class WhitePagesPortletTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.name = 's17.portlets.whitepages.WhitePagesPortlet'
+        self.pw = getToolByName(self.portal, 'portal_workflow')
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        self.pw.setChainForPortalTypes(['Person'],
+                                       ['simple_publication_workflow'])
 
     def test_portlet_type_registered(self):
         portlet = getUtility(IPortletType, name=self.name)
@@ -91,18 +95,19 @@ class WhitePagesPortletTestCase(unittest.TestCase):
         self.assertTrue(isinstance(renderer, whitepagesportlet.Renderer))
 
     def test_whitepages_view(self):
-        index = 1
-        while index < 5:
+        index = 0
+        while index < 4:
             self.portal.invokeFactory('Person',
                                       'person%s' % index,
                                       given_name='Person %s' % index,
                                       surname='surname%s' % index)
+            self.pw.doActionFor(self.portal['person%s' % index], 'publish')
             index += 1
 
         self.request.form = {'fullname': 'Person'}
         view = self.portal.unrestrictedTraverse('@@whitepages')
-        persons = view.people_list()
-        self.assertEqual(4, len(persons))
+        people = view.people_list()
+        self.assertEqual(4, len(people))
 
 
 class WhitePagesRendererTestCase(unittest.TestCase):
