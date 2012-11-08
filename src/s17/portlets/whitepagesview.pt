@@ -4,20 +4,66 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       i18n:domain="s17.portlets">
-<body>
-    <div class="people-results" tal:define="people view/people_list">
-        <tal:block tal:repeat="person people">
-            <div>
-                <div>
-                    <h3><a tal:attributes="href person/getURL" tal:content="person/fullname"></a></h3>
-                    <tal:email tal:condition="python:hasattr(person, 'email')">
-                        <a tal:attributes="href python:'mailto:' + person.email" tal:content="person/email"></a>
-                    </tal:email>
-                    <!--<span>Extension: </span><span tal:content="person/extension"></span></br>-->
-                </div>
+<body tal:define="people view/people_list;
+                  portal_state view/portal_state">
+    <h1 class="documentFirstHeading"
+        i18n:translate="">Search results for
+        <strong id="search-term"
+            tal:content="view/fullname"
+            i18n:name="term" />
+    </h1>
+    <dl class="searchResults">
+        <tal:block repeat="person people">
+        <dt tal:define="global oddrow repeat/person/odd;
+                        person person/getObject;
+                        picture nocall:person/picture;
+                        portal_url portal_state/portal_url"
+            tal:attributes="class python:oddrow and 'even' or 'odd'">
+          <img class="image-left"
+              tal:condition="nocall:picture"
+              tal:attributes="src string:${person/absolute_url}/@@images/picture/icon" />
+          <img class="image-left" width="32"
+              tal:attributes="src string:${portal_url}/defaultUser.png"
+              tal:condition="not:nocall:picture" />
+          <h3><a tal:attributes="href person/absolute_url"
+              tal:content="person/fullname" /></h3>
+        </dt>
+        <dd tal:define="person_obj person/getObject;
+                        is_rtl portal_state/is_rtl"
+            tal:attributes="class python:oddrow and 'even' or 'odd'">
+            <div class="person_ous"
+                tal:define="parents python:view.get_parents(person)"
+                tal:condition="parents">
+                <strong i18n:translate="">Organization Unit:</strong>
+                <span tal:repeat="parent parents"
+                      tal:attributes="dir python:is_rtl and 'rtl' or 'ltr';
+                                      id string:ou-parent-${repeat/parent/number}">
+                    <tal:item define="url parent/absolute_url; title parent/Title">
+                    <a tal:omit-tag="not:url"
+                       tal:attributes="href url; title parent/Title"
+                       tal:content="title">parent</a>
+                    <span class="breadcrumbSeparator"
+                        tal:condition="not:repeat/parent/end">
+                        <tal:ltr condition="not:is_rtl">/</tal:ltr>
+                        <tal:rtl condition="is_rtl">\</tal:rtl>
+                    </span>
+                    </tal:item>
+                </span>
             </div>
+            <div class="person_email"
+                tal:condition="python:hasattr(person_obj, 'email')">
+                <strong i18n:translate="">E-mail:</strong>
+                <a tal:attributes="href python:'mailto:' + person_obj.email"
+                    tal:content="person_obj/email" />
+            </div>
+            <div class="person_extension"
+                tal:condition="python:hasattr(person_obj, 'extension') and person_obj.extension">
+                <strong i18n:translate="">Extension line:</strong>
+                <span tal:content="person_obj/extension"></span><br />
+            </div>
+        </dd>
         </tal:block>
         <h2 tal:condition="not:people">No items found.</h2>
-    </div>
+    </dl>
 </body>
 </html>

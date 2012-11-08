@@ -44,7 +44,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
         self.assertEquals(birthdayportlet.IBirthdayPortlet, iface)
 
     def test_interfaces(self):
-        portlet = birthdayportlet.Assignment('test', 5)
+        portlet = birthdayportlet.Assignment('test', 30)
         self.failUnless(IPortletAssignment.providedBy(portlet))
         self.failUnless(IPortletDataProvider.providedBy(portlet.data))
 
@@ -66,7 +66,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
         mapping = PortletAssignmentMapping()
         request = self.request
 
-        mapping['foo'] = birthdayportlet.Assignment('test', 5)
+        mapping['foo'] = birthdayportlet.Assignment('test', 30)
         editview = getMultiAdapter((mapping['foo'], request), name='edit')
         self.failUnless(isinstance(editview, birthdayportlet.EditForm))
 
@@ -77,7 +77,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
         manager = getUtility(IPortletManager, name='plone.rightcolumn',
                              context=self.portal)
 
-        assignment = birthdayportlet.Assignment('test', 5)
+        assignment = birthdayportlet.Assignment('test', 30)
 
         renderer = getMultiAdapter(
             (context, request, view, manager, assignment), IPortletRenderer)
@@ -104,7 +104,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
         manager = manager or getUtility(
             IPortletManager, name='plone.rightcolumn', context=self.portal)
 
-        assignment = assignment or birthdayportlet.Assignment('test', 5)
+        assignment = assignment or birthdayportlet.Assignment('test', 30)
         return getMultiAdapter((context, request, view, manager, assignment),
                                IPortletRenderer)
 
@@ -135,7 +135,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
         for name in names:
             self.pw.doActionFor(self.portal[name], 'publish')
 
-        # and test if names are listed in the right order and grouping
+        # so now names should get listed in the right order and grouping
         mapping = render.get_birthdays()
         mapping = [[person[0] for person in person] for person in
                    mapping.values()]
@@ -144,7 +144,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
 
     def test_is_anonymous(self):
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                               assignment=birthdayportlet.Assignment('test', 30))
         self.assertFalse(render.is_anonymous)
         logout()
         self.assertTrue(render.is_anonymous)
@@ -152,7 +152,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
     def test_available(self):
         # we should not see this portlet if there are no birthdays to display
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                               assignment=birthdayportlet.Assignment('test', 30))
         self.assertFalse(render.available)
 
         # but if we create and publish some Person items
@@ -167,7 +167,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
 
         # we should be able to see it
         render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 5))
+                               assignment=birthdayportlet.Assignment('test', 30))
         self.assertTrue(render.available)
 
         # except if we are anonymous
