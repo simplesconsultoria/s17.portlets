@@ -3,8 +3,8 @@
 from zope.component import getMultiAdapter
 from zope.interface import implements
 
-from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
+from Products.Five.browser import BrowserView
 
 from s17.portlets.interfaces import IWhitePages
 
@@ -16,15 +16,16 @@ class WhitePages(BrowserView):
         super(WhitePages, self).__init__(context, request)
         self.portal_state = getMultiAdapter((self.context, self.request),
                                             name=u'plone_portal_state')
-        self.catalog = getToolByName(self.context, 'portal_personcatalog')
 
     def people_list(self):
         catalog = getToolByName(self.context, 'portal_personcatalog')
-        self.fullname = self.request.form.get('fullname', '')
         query = {}
-        query['fullname'] = self.fullname
+        try:
+            query['fullname'] = self.fullname = self.request.form['fullname']
+        except KeyError:
+            return None
         query['review_state'] = ['published', 'internally_published']
-        results = catalog.searchResults(**query)
+        results = catalog.searchResults(query)
         return results
 
     def get_parents(self, person, parents=None):

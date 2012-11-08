@@ -4,14 +4,18 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
       i18n:domain="s17.portlets">
+
 <body tal:define="people view/people_list;
                   portal_state view/portal_state">
+
     <h1 class="documentFirstHeading"
+        tal:condition="view/fullname|nothing"
         i18n:translate="">Search results for
         <strong id="search-term"
-            tal:content="view/fullname"
+            tal:content="view/fullname|nothing"
             i18n:name="term" />
     </h1>
+
     <dl class="searchResults">
         <tal:block repeat="person people">
         <dt tal:define="global oddrow repeat/person/odd;
@@ -29,26 +33,26 @@
               tal:content="person/fullname" /></h3>
         </dt>
         <dd tal:define="person_obj person/getObject;
+                        parents python:view.get_parents(person);
                         is_rtl portal_state/is_rtl"
+            tal:condition="parents"
             tal:attributes="class python:oddrow and 'even' or 'odd'">
-            <div class="person_ous"
-                tal:define="parents python:view.get_parents(person)"
-                tal:condition="parents">
-            <strong i18n:translate="">Organization Unit:</strong>
-            <span tal:repeat="parent parents"
-                  tal:attributes="dir python:is_rtl and 'rtl' or 'ltr';
-                                  id string:ou-parent-${repeat/parent/number}">
-                <tal:item define="url parent/absolute_url; title parent/Title">
-                <a tal:omit-tag="not:url"
-                   tal:attributes="href url; title parent/Title"
-                   tal:content="title">parent</a>
-                <span class="breadcrumbSeparator"
-                    tal:condition="not:repeat/parent/end">
-                    <tal:ltr condition="not:is_rtl">/</tal:ltr>
-                    <tal:rtl condition="is_rtl">\</tal:rtl>
+            <div class="person_ous">
+                <strong i18n:translate="">Organization Unit:</strong>
+                <span tal:repeat="parent parents"
+                      tal:attributes="dir python:is_rtl and 'rtl' or 'ltr';
+                                      id string:ou-parent-${repeat/parent/number}">
+                    <tal:item define="url parent/absolute_url; title parent/Title">
+                    <a tal:omit-tag="not:url"
+                       tal:attributes="href url; title parent/Title"
+                       tal:content="title">parent</a>
+                    <span class="breadcrumbSeparator"
+                        tal:condition="not:repeat/parent/end">
+                        <tal:ltr condition="not:is_rtl">/</tal:ltr>
+                        <tal:rtl condition="is_rtl">\</tal:rtl>
+                    </span>
+                    </tal:item>
                 </span>
-                </tal:item>
-            </span>
             </div>
             <div class="person_email"
                 tal:condition="python:hasattr(person_obj, 'email')">

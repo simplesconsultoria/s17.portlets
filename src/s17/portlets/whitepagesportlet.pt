@@ -15,12 +15,12 @@
         <form id="searchpersonform" name="whitepages">
             <span tal:condition="view/data/description"
                   tal:content="view/data/description">Description</span>
-            <input type="text" name="fullname" />
+            <input type="text" name="fullname" placeholder="Search people" autocomplete="off" i18n:attributes="placeholder" />
             <input type="button" value="Search" class="searchButton"
                 i18n:attributes="value" />
         </form>
     </dd>
-    <a id="wp_overlaytrigger" href="@@whitepages" style="display: none"></a>
+    <a class="overlay-trigger" href="@@whitepages" />
 </dl>
 
 </html>

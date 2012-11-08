@@ -1,3 +1,7 @@
+dl.portletWhitePagesPortlet .overlay-trigger {
+    display: none;
+}
+
 dl.portletWhitePagesPortlet .overlay {
     font-size: 100%;
 }
@@ -19,6 +23,6 @@ dl.portletWhitePagesPortlet .overlay dd {
     margin: 0 0 1em 2em;
 }
 
-dl.portletWhitePagesPortlet .searchResults {
-    margin-top: 1em;
+.overlay .searchResults h1.documentFirstHeading {
+    font-weight: normal;
 }
