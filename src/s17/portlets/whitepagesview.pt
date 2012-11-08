@@ -63,7 +63,7 @@
             </div>
             <div class="person_extension" tal:condition="extension">
                 <strong i18n:translate="">Extension line:</strong>
-                <span tal:content="extension"></span><br />
+                <span tal:content="extension" /><br />
             </div>
         </dd>
         <div class="visualClear"><!-- --></div>
