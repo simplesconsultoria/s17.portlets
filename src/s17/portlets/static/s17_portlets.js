@@ -9,16 +9,14 @@
                 config: {
                     onBeforeLoad: function(event) {
                         var input = $('#searchpersonform input[name=fullname]').attr('value');
-                        // console.log(portal_url + '/@@whitepages?fullname=' + input);
                         $.ajax({
                             type: 'POST',
                             url: portal_url + '/@@whitepages?fullname=' + input,
                              success: function(data) {
-                                // console.log(data);
                                 $('.searchResults').html(data);
                             }
                         });
-                        // return true;
+                        return true;
                         }
                 }
             });

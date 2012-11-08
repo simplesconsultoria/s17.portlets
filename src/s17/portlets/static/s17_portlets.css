@@ -10,19 +10,28 @@ dl.portletWhitePagesPortlet .overlay .odd {
     background: #eee;
 }
 
-dl.portletWhitePagesPortlet .overlay dt {
+.overlay .searchResults dt {
     background: #fff;
     padding: 0;
 }
 
-dl.portletWhitePagesPortlet .overlay .image-left {
-    margin: 0 1em 0 0;
+.overlay .searchResults .image-left {
+    min-width: 44px;
 }
 
-dl.portletWhitePagesPortlet .overlay dd {
+.overlay .searchResults dd {
     margin: 0 0 1em 2em;
 }
 
 .overlay .searchResults h1.documentFirstHeading {
     font-weight: normal;
+    margin-bottom: 0.75em;
 }
+
+/* TODO: magnifying employee picture depends on overlay issues;
+.overlay .searchResults dt img {
+    cursor: pointer;
+    cursor: -moz-zoom-in;
+    cursor: -webkit-zoom-in;
+}
+*/

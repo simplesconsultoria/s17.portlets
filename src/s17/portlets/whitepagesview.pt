@@ -34,10 +34,12 @@
         </dt>
         <dd tal:define="person_obj person/getObject;
                         parents python:view.get_parents(person);
+                        email python:getattr(person_obj, 'email', '');
+                        extension python:getattr(person_obj, 'extension', '');
                         is_rtl portal_state/is_rtl"
-            tal:condition="parents"
+            tal:condition="python: parents or email or extension"
             tal:attributes="class python:oddrow and 'even' or 'odd'">
-            <div class="person_ous">
+            <div class="person_ous" tal:condition="parents">
                 <strong i18n:translate="">Organization Unit:</strong>
                 <span tal:repeat="parent parents"
                       tal:attributes="dir python:is_rtl and 'rtl' or 'ltr';
@@ -54,16 +56,14 @@
                     </tal:item>
                 </span>
             </div>
-            <div class="person_email"
-                tal:condition="python:hasattr(person_obj, 'email')">
+            <div class="person_email" tal:condition="email">
                 <strong i18n:translate="">E-mail:</strong>
-                <a tal:attributes="href python:'mailto:' + person_obj.email"
+                <a tal:attributes="href python:'mailto:' + email"
                     tal:content="person_obj/email" />
             </div>
-            <div class="person_extension"
-                tal:condition="python:hasattr(person_obj, 'extension') and person_obj.extension">
+            <div class="person_extension" tal:condition="extension">
                 <strong i18n:translate="">Extension line:</strong>
-                <span tal:content="person_obj/extension"></span><br />
+                <span tal:content="extension"></span><br />
             </div>
         </dd>
         <div class="visualClear"><!-- --></div>
