@@ -43,13 +43,17 @@ msgstr "Título do portlet"
 
 #: s17/portlets/whitepagesportlet.py:58
 msgid "Portlet description"
-msgstr "Descripção do portlet"
+msgstr "Descrição do portlet"
 
 #: configure.zcml
 msgid "Profile, birthday and white pages portlets for persons."
 msgstr "Portlets de perfis, de aniversários e de páginas brancas para pessoas"
 
-#: s17/portlets/whitepagesportlet.pt:22
+#: s17/portlets/whitepagesportlet.pt:18
+msgid "Search people"
+msgstr "Buscar pessoas"
+
+#: s17/portlets/whitepagesportlet.pt:19
 msgid "Search"
 msgstr "Buscar"
 

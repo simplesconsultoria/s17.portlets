@@ -109,12 +109,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
                                IPortletRenderer)
 
     def test_get_birthdays(self):
-
-        # lets begin by grabbing the portlet renderer
-        render = self.renderer(context=self.portal,
-                               assignment=birthdayportlet.Assignment('test', 30))
-
-        # then we create some Person items and set their birthdays
+        # first let's create some persons and set their birthdays
         birthday = datetime.date(datetime.now())
         names = ['Juan Perez', 'Gustavo Roner', 'Marcelo Santos',
                  'Marcelo Alves', 'Julia Alvarez']
@@ -126,6 +121,8 @@ class BirthdayRendererTestCase(unittest.TestCase):
                                       birthday=birthday + timedelta(days=i / 2))
 
         # since they weren't published, portlet shouldn't listed them
+        render = self.renderer(context=self.portal,
+                        assignment=birthdayportlet.Assignment('test', 30))
         mapping = render.get_birthdays()
         mapping = [[person[0] for person in person] for person in
                    mapping.values()]
@@ -139,8 +136,10 @@ class BirthdayRendererTestCase(unittest.TestCase):
         mapping = render.get_birthdays()
         mapping = [[person[0] for person in person] for person in
                    mapping.values()]
-        self.assertEquals([['Gustavo Roner', 'Juan Perez'], ['Marcelo Alves',
-                           'Marcelo Santos'], ['Julia Alvarez']], mapping)
+        self.assertEquals([['Gustavo Roner', 'Juan Perez'],
+                           ['Marcelo Alves', 'Marcelo Santos'],
+                           ['Julia Alvarez']],
+                          mapping)
 
     def test_is_anonymous(self):
         render = self.renderer(context=self.portal,

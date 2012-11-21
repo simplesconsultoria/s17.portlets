@@ -1,0 +1,37 @@
+dl.portletWhitePagesPortlet .overlay-trigger {
+    display: none;
+}
+
+dl.portletWhitePagesPortlet .overlay {
+    font-size: 100%;
+}
+
+dl.portletWhitePagesPortlet .overlay .odd {
+    background: #eee;
+}
+
+.overlay .searchResults dt {
+    background: #fff;
+    padding: 0;
+}
+
+.overlay .searchResults .image-left {
+    min-width: 44px;
+}
+
+.overlay .searchResults dd {
+    margin: 0 0 1em 2em;
+}
+
+.overlay .searchResults h1.documentFirstHeading {
+    font-weight: normal;
+    margin-bottom: 0.75em;
+}
+
+/* TODO: magnifying employee picture depends on overlay issues;
+.overlay .searchResults dt img {
+    cursor: pointer;
+    cursor: -moz-zoom-in;
+    cursor: -webkit-zoom-in;
+}
+*/
