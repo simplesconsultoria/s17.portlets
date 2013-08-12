@@ -21,6 +21,43 @@
         </form>
     </dd>
     <a class="overlay-trigger" href="@@whitepages" />
+    <script type="text/javascript">
+        jq(document).ready(function() {
+            $('a.overlay-trigger').prepOverlay({
+                    subtype: 'ajax',
+                    config: {
+                        onBeforeLoad : function (e) {
+                            var input = $('#searchpersonform input[name=fullname]').attr('value');
+                            $.ajax({
+                                type: 'POST',
+                                url: portal_url + '/@@whitepages?fullname=' + input,
+                                 success: function(data) {
+                                    $('.searchResults').html(data);
+                                }
+                            });
+                            return true;
+                            }
+                    }
+                });
+            $('#searchpersonform .searchButton').click(function(event){
+                event.preventDefault();
+                if ($('#searchpersonform input[name=fullname]').attr('value').length === 0) {
+                    return false;
+                };
+                $('a.overlay-trigger').click();
+            });
+            $('#searchpersonform input[name=fullname]').keydown(function(event){
+                if(event.keyCode==13){
+                    if ($(this).attr('value').length === 0) {
+                        return false;
+                    };
+                    $('a.overlay-trigger').click();
+                    event.preventDefault();
+                }
+            });
+        })
+    </script>
+
 </dl>
 
 </html>
