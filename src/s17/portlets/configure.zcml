@@ -88,4 +88,11 @@
 
     <i18n:registerTranslations directory="locales" />
 
+    <browser:resourceDirectory
+        name="s17.portlets"
+        directory="static"
+        />
+
+
+
 </configure>
