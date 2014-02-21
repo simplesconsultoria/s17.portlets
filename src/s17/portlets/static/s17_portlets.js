@@ -13,7 +13,11 @@
                             type: 'POST',
                             url: portal_url + '/@@whitepages?fullname=' + input,
                              success: function(data) {
-                                $('.searchResults').html(data);
+                                if($('.searchResults').length>0){
+                                    $('.searchResults').html(data);
+                                } else{
+                                    $('.pb-ajax > div > div').html(data);
+                                }
                             }
                         });
                         return true;
