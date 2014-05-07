@@ -56,8 +56,7 @@ class PersonProfilePortletTestCase(unittest.TestCase):
 
     def test_invoke_add_view(self):
         portlet = getUtility(IPortletType, name=self.name)
-        mapping = self.portal.restrictedTraverse(
-            '++contextportlets++plone.leftcolumn')
+        mapping = self.portal.restrictedTraverse('++contextportlets++plone.leftcolumn')
         for m in mapping.keys():
             del mapping[m]
         addview = mapping.restrictedTraverse('+/' + portlet.addview)
@@ -65,8 +64,8 @@ class PersonProfilePortletTestCase(unittest.TestCase):
         addview.createAndAdd(data={'portlet_title': 'test'})
 
         self.assertEquals(len(mapping), 1)
-        self.assertTrue(isinstance(mapping.values()[0],
-                                personprofile.Assignment))
+        self.assertTrue(
+            isinstance(mapping.values()[0], personprofile.Assignment))
 
     def test_invoke_edit_view(self):
         # NOTE: This test can be removed if the portlet has no edit form
@@ -106,12 +105,15 @@ class PersonProfileRendererTestCase(unittest.TestCase):
         self.portal.invokeFactory('News Item', 'news1')
         image = os.path.join(os.path.dirname(__file__), 'picture.jpg')
         data = getFile(image).read()
-        self.portal.invokeFactory('Person', TEST_USER_ID,
+        self.portal.invokeFactory(
+            'Person',
+            TEST_USER_ID,
             birthday=datetime.date(datetime.now()),
-            picture=NamedImage(data))
+            picture=NamedImage(data)
+        )
         setRoles(self.portal, TEST_USER_ID, ['Member'])
-        self.render = self.renderer(context=self.portal,
-                          assignment=personprofile.Assignment('test'))
+        self.render = self.renderer(
+            context=self.portal, assignment=personprofile.Assignment('test'))
 
     def renderer(self, context=None, request=None, view=None, manager=None,
                  assignment=None):
@@ -157,8 +159,8 @@ class PersonProfileRendererTestCase(unittest.TestCase):
 
     def test_get_portrait(self):
         size = ('250', '200')
-        self.assertEquals(size,
-            self.get_sizes_from_str(self.render.get_portrait()))
+        self.assertEqual(
+            size, self.get_sizes_from_str(self.render.get_portrait()))
 
     def test_data_transform(self):
         date = datetime.now()

@@ -18,7 +18,7 @@ class Fixture(PloneSandboxLayer):
         # Load ZCML
         import s17.person
         self.loadZCML(package=s17.person)
-        #XXX: We should not have this here but...
+        # XXX: We should not have this here but...
         import plone.app.dexterity
         self.loadZCML(package=plone.app.dexterity)
         import plone.app.referenceablebehavior

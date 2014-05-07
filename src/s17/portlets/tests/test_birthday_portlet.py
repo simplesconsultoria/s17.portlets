@@ -121,8 +121,10 @@ class BirthdayRendererTestCase(unittest.TestCase):
                                       birthday=birthday + timedelta(days=i / 2))
 
         # since they weren't published, portlet shouldn't listed them
-        render = self.renderer(context=self.portal,
-                        assignment=birthdayportlet.Assignment('test', 30))
+        render = self.renderer(
+            context=self.portal,
+            assignment=birthdayportlet.Assignment('test', 30)
+        )
         mapping = render.get_birthdays()
         mapping = [[person[0] for person in person] for person in
                    mapping.values()]

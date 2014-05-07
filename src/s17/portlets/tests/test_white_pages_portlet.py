@@ -61,8 +61,7 @@ class WhitePagesPortletTestCase(unittest.TestCase):
 
     def test_invoke_add_view(self):
         portlet = getUtility(IPortletType, name=self.name)
-        mapping = self.portal.restrictedTraverse(
-                        '++contextportlets++plone.leftcolumn')
+        mapping = self.portal.restrictedTraverse('++contextportlets++plone.leftcolumn')
         for m in mapping.keys():
             del mapping[m]
         addview = mapping.restrictedTraverse('+/' + portlet.addview)
@@ -124,16 +123,16 @@ class WhitePagesRendererTestCase(unittest.TestCase):
         context = context or self.portal
         request = request or self.request
         view = view or context.restrictedTraverse('@@plone')
-        manager = manager or getUtility(IPortletManager,
-                    name='plone.rightcolumn', context=self.portal)
+        manager = manager or getUtility(
+            IPortletManager, name='plone.rightcolumn', context=self.portal)
 
         assignment = assignment or whitepagesportlet.Assignment('tests')
-        return getMultiAdapter((context, request, view, manager, assignment),
-                                IPortletRenderer)
+        return getMultiAdapter(
+            (context, request, view, manager, assignment), IPortletRenderer)
 
     def test_render(self):
-        render = self.renderer(context=self.portal,
-                          assignment=whitepagesportlet.Assignment('test'))
+        render = self.renderer(
+            context=self.portal, assignment=whitepagesportlet.Assignment('test'))
         html = render.render()
         self.assertNotEqual(None, html)
         self.assertNotEqual('', html)

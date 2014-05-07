@@ -97,7 +97,7 @@ class Renderer(base.Renderer):
         return person
 
     def get_portrait(self, width=200):
-        #XXX this should be replace by an IPerson data
+        # XXX: this should be replace by an IPerson data
         user_id = self.get_user_id()
 
         person = self.get_person(user_id)

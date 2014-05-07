@@ -34,15 +34,18 @@ class IBirthdayPortlet(IPortletDataProvider):
     same.
     """
 
-    portlet_title = schema.TextLine(title=_(u"Portlet Title"),
-                                  description=_(u"the Title of the portlet"),
-                                  required=True)
+    portlet_title = schema.TextLine(
+        title=_(u"Portlet Title"),
+        description=_(u"the Title of the portlet"),
+        required=True,
+    )
 
-    days_number = schema.Int(title=_(u"Numbers of days"),
-                                  description=_(u"Search for birthdays from \
-                                  here plus numbers of days"),
-                                  required=True,
-                                  default=30)
+    days_number = schema.Int(
+        title=_(u"Numbers of days"),
+        description=_(u"Search for birthdays from here plus numbers of days"),
+        required=True,
+        default=30,
+    )
 
 
 class Assignment(base.Assignment):
@@ -69,8 +72,7 @@ class Assignment(base.Assignment):
         """This property is used to give the title of the portlet in the
         "manage portlets" screen.
         """
-        return self.portlet_title if self.portlet_title else \
-               _("Birthday Portlet")
+        return self.portlet_title if self.portlet_title else _(u'Birthday Portlet')
 
 
 class Renderer(base.Renderer):
@@ -115,14 +117,12 @@ class Renderer(base.Renderer):
             query['sort_on'] = 'birthday'
             query['object_provides'] = {'query': [IPerson.__identifier__]}
             if birthdays:
-                birthdays = birthdays + \
-                                 self.catalog.searchResults(**query)
+                birthdays = birthdays + self.catalog.searchResults(**query)
             else:
                 birthdays = self.catalog.searchResults(**query)
 
         # sort by date and fullname
-        birthdays = [(b.birthday.strftime('%d/%m'), b.Title, b) for b in \
-                      birthdays]
+        birthdays = [(b.birthday.strftime('%d/%m'), b.Title, b) for b in birthdays]
         birthdays.sort()
 
         # then deliver an ordered mapping

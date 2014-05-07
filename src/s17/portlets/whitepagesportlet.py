@@ -51,12 +51,16 @@ class IWhitePagesPortlet(IPortletDataProvider):
     same.
     """
 
-    portlet_title = schema.TextLine(title=_(u"Portlet Title"),
-                                  description=_(u"The portlet title"),
-                                  required=False)
+    portlet_title = schema.TextLine(
+        title=_(u"Portlet Title"),
+        description=_(u"The portlet title"),
+        required=False,
+    )
 
-    description = schema.TextLine(title=_(u"Portlet description"),
-                                  required=False)
+    description = schema.TextLine(
+        title=_(u"Portlet description"),
+        required=False,
+    )
 
 
 class Assignment(base.Assignment):
