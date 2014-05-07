@@ -1,17 +1,17 @@
 Changelog
----------
+=========
 
-Because you have to know where your towel is.
+There's a frood who really knows where his towel is.
 
 
 1.0b2 (unreleased)
-^^^^^^^^^^^^^^^^^^
+------------------
 
 - Nothing changed yet.
 
 
 1.0b1 (2012-09-21)
-^^^^^^^^^^^^^^^^^^
+------------------
 
 - Deprecate use on Plone 4.1; we will support only Plone>=4.2. [hvelarde]
 
@@ -31,7 +31,7 @@ Because you have to know where your towel is.
 
 
 1.0a5 (2012-08-07)
-^^^^^^^^^^^^^^^^^^
+------------------
 
 - Fixed tests in get_participation function in person portlet [lepri]
 
@@ -45,26 +45,25 @@ Because you have to know where your towel is.
 
 
 1.0a4 (2012-06-27)
-^^^^^^^^^^^^^^^^^^
+------------------
 
 - Set render view and template properly for anonymous users in portlets.
   [aleGpereira]
 
 
 1.0a3 (2012-06-14)
-^^^^^^^^^^^^^^^^^^
+------------------
 
 - Fixed package distribution. [hvelarde]
 
 
 1.0a2 (2012-06-13)
-^^^^^^^^^^^^^^^^^^
+------------------
 
 - Added uninstall profile. [aleGpereira]
 
 
 1.0a1 (2012-05-21)
-^^^^^^^^^^^^^^^^^^
+------------------
 
 - Initial release.
-

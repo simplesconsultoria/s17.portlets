@@ -1,7 +1,7 @@
 Share and Enjoy
----------------
+===============
 
-s17.portlets would not have been possible without the contribution of the
+`s17.portlets` would not have been possible without the contribution of the
 following people:
 
 - Silvestre Huens
@@ -11,4 +11,3 @@ following people:
 - Gustavo Lepri
 
 Development sponsored by Simples Consultoria.
-
