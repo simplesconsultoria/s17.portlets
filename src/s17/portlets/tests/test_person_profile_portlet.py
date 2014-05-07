@@ -8,7 +8,7 @@ import os
 
 from zope.component import getUtility, getMultiAdapter
 
-from Products.CMFCore.utils import getToolByName
+from plone import api
 
 from plone.namedfile import NamedImage
 from plone.namedfile.tests.base import getFile
@@ -96,7 +96,7 @@ class PersonProfileRendererTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        self.pw = getToolByName(self.portal, 'portal_workflow')
+        self.pw = api.portal.get_tool('portal_workflow')
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         login(self.portal, TEST_USER_NAME)

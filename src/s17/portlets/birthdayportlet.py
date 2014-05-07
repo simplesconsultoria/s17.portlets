@@ -19,7 +19,7 @@ from plone.portlets.interfaces import IPortletDataProvider
 from plone.app.portlets.portlets import base
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.CMFCore.utils import getToolByName
+from plone import api
 
 from s17.person.content.person import IPerson
 
@@ -107,7 +107,7 @@ class Renderer(base.Renderer):
 
         # get next birthdays considering the interval defined in the portlet
         birthdays = None
-        self.catalog = getToolByName(self.context, 'portal_personcatalog')
+        self.catalog = api.portal.get_tool('portal_personcatalog')
         ranges = self.get_search_range()
         for search_range in ranges:
             query = {}
@@ -146,9 +146,12 @@ class Renderer(base.Renderer):
 
     @property
     def is_anonymous(self):
-        """ """
-        pm = getToolByName(self.context, 'portal_membership')
-        return pm.isAnonymousUser()
+        """Check if the currently logged-in user is anonymous.
+
+        :returns: True if the current user is anonymous, False otherwise.
+        :rtype: bool
+        """
+        return api.user.is_anonymous()
 
     def portal_url(self):
         portal_state = getMultiAdapter((self.context, self.request),

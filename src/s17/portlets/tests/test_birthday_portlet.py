@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from zope.component import getUtility, getMultiAdapter
 
-from Products.CMFCore.utils import getToolByName
+from plone import api
 
 from plone.portlets.interfaces import IPortletType
 from plone.portlets.interfaces import IPortletManager
@@ -90,7 +90,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
-        self.pw = getToolByName(self.portal, 'portal_workflow')
+        self.pw = api.portal.get_tool('portal_workflow')
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.pw.setChainForPortalTypes(['Person'],

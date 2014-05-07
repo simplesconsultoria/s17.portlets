@@ -11,7 +11,7 @@ from zope.formlib import form
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
 
-from Products.CMFCore.utils import getToolByName
+from plone import api
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from Products.ZCTextIndex.ZCTextIndex import ZCTextIndex
@@ -28,7 +28,7 @@ class KeywordsVocabulary(object):
 
     def __call__(self, context):
         self.context = context
-        self.catalog = getToolByName(context, "portal_personcatalog")
+        self.catalog = api.portal.get_tool('portal_personcatalog')
         if self.catalog is None:
             return SimpleVocabulary([])
 
@@ -101,10 +101,12 @@ class Renderer(base.Renderer):
 
     @property
     def is_anonymous(self):
-        """ Check if the current user is anonymous.
+        """Check if the currently logged-in user is anonymous.
+
+        :returns: True if the current user is anonymous, False otherwise.
+        :rtype: bool
         """
-        pm = getToolByName(self.context, 'portal_membership')
-        return pm.isAnonymousUser()
+        return api.user.is_anonymous()
 
 
 class AddForm(base.AddForm):

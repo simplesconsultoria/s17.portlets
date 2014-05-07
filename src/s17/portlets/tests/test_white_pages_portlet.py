@@ -4,7 +4,7 @@ import unittest2 as unittest
 
 from zope.component import getUtility, getMultiAdapter
 
-from Products.CMFCore.utils import getToolByName
+from plone import api
 from Products.GenericSetup.utils import _getDottedName
 
 from plone.portlets.interfaces import IPortletType
@@ -32,7 +32,7 @@ class WhitePagesPortletTestCase(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.name = 's17.portlets.whitepages.WhitePagesPortlet'
-        self.pw = getToolByName(self.portal, 'portal_workflow')
+        self.pw = api.portal.get_tool('portal_workflow')
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         self.pw.setChainForPortalTypes(['Person'],
                                        ['simple_publication_workflow'])

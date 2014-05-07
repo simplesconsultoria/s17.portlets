@@ -9,7 +9,7 @@ from zope import schema
 from zope.formlib import form
 
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.CMFCore.utils import getToolByName
+from plone import api
 
 import DateTime
 
@@ -73,10 +73,12 @@ class Renderer(base.Renderer):
     render = ViewPageTemplateFile('personprofile.pt')
 
     def get_user_id(self):
-        mt = getToolByName(self.context, 'portal_membership')
-        user = mt.getAuthenticatedMember()
-        user_id = user.getId()
-        return user_id
+        """Get the currently logged-in user.
+
+        :returns: Currently logged-in user id.
+        :rtype: string
+        """
+        return api.user.get_current().getId()
 
     def get_user_profile(self):
         user_id = self.get_user_id()
@@ -90,7 +92,7 @@ class Renderer(base.Renderer):
         return ''
 
     def get_person(self, user_id):
-        self.catalog = getToolByName(self.context, "portal_personcatalog")
+        self.catalog = api.portal.get_tool('portal_personcatalog')
         person = self.catalog.searchResults({'id': user_id})
         person = person[0] if person else None
 
@@ -101,7 +103,7 @@ class Renderer(base.Renderer):
         user_id = self.get_user_id()
 
         person = self.get_person(user_id)
-        portal_url = getToolByName(self.context, 'portal_url')()
+        portal_url = api.portal.get().absolute_url()
         tag = '<img width="75" height="99" title="" alt="" src="%s/defaultUser.png">' % portal_url
 
         if person:
@@ -124,7 +126,7 @@ class Renderer(base.Renderer):
     def get_participation(self):
         user_id = self.get_user_id()
 
-        self.catalog = getToolByName(self.context, "portal_catalog")
+        self.catalog = api.portal.get_tool('portal_catalog')
         query = {}
         sort_limit = 5
         query['Creator'] = user_id
@@ -140,9 +142,12 @@ class Renderer(base.Renderer):
 
     @property
     def is_anonymous(self):
-        """ """
-        pm = getToolByName(self.context, 'portal_membership')
-        return pm.isAnonymousUser()
+        """Check if the currently logged-in user is anonymous.
+
+        :returns: True if the current user is anonymous, False otherwise.
+        :rtype: bool
+        """
+        return api.user.is_anonymous()
 
 
 class AddForm(base.AddForm):

@@ -3,7 +3,7 @@
 from zope.component import getMultiAdapter
 from zope.interface import implements
 
-from Products.CMFCore.utils import getToolByName
+from plone import api
 from Products.Five.browser import BrowserView
 
 from s17.portlets.interfaces import IWhitePages
@@ -18,7 +18,7 @@ class WhitePages(BrowserView):
                                             name=u'plone_portal_state')
 
     def people_list(self):
-        catalog = getToolByName(self.context, 'portal_personcatalog')
+        catalog = api.portal.get_tool('portal_personcatalog')
         query = {}
         try:
             query['fullname'] = self.fullname = self.request.form['fullname']

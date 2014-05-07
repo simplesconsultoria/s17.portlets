@@ -42,6 +42,7 @@ setup(name='s17.portlets',
       zip_safe=False,
       install_requires=[
           'ordereddict >=1.1',  # BBB: OrderedDict substitute for Python 2.6
+          'plone.api',
           'plone.app.portlets',
           'plone.portlets',
           'Products.CMFCore',
