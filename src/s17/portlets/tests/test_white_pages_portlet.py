@@ -39,11 +39,11 @@ class WhitePagesPortletTestCase(unittest.TestCase):
 
     def test_portlet_type_registered(self):
         portlet = getUtility(IPortletType, name=self.name)
-        self.assertEquals(portlet.addview, self.name)
+        self.assertEqual(portlet.addview, self.name)
 
     def test_registered_type_interfaces(self):
         iface = getUtility(IPortletTypeInterface, name=self.name)
-        self.assertEquals(whitepagesportlet.IWhitePagesPortlet, iface)
+        self.assertEqual(whitepagesportlet.IWhitePagesPortlet, iface)
 
     def test_registered_interfaces(self):
         portlet = getUtility(IPortletType, name=self.name)
@@ -56,8 +56,8 @@ class WhitePagesPortletTestCase(unittest.TestCase):
 
     def test_interfaces(self):
         portlet = whitepagesportlet.Assignment('test')
-        self.failUnless(IPortletAssignment.providedBy(portlet))
-        self.failUnless(IPortletDataProvider.providedBy(portlet.data))
+        self.assertTrue(IPortletAssignment.providedBy(portlet))
+        self.assertTrue(IPortletDataProvider.providedBy(portlet.data))
 
     def test_invoke_add_view(self):
         portlet = getUtility(IPortletType, name=self.name)
@@ -68,7 +68,7 @@ class WhitePagesPortletTestCase(unittest.TestCase):
 
         addview.createAndAdd(data={'portlet_title': 'test'})
 
-        self.assertEquals(len(mapping), 1)
+        self.assertEqual(len(mapping), 1)
         self.assertTrue(isinstance(mapping.values()[0],
                         whitepagesportlet.Assignment))
 
@@ -78,7 +78,7 @@ class WhitePagesPortletTestCase(unittest.TestCase):
 
         mapping['foo'] = whitepagesportlet.Assignment('test')
         editview = getMultiAdapter((mapping['foo'], request), name='edit')
-        self.failUnless(isinstance(editview, whitepagesportlet.EditForm))
+        self.assertTrue(isinstance(editview, whitepagesportlet.EditForm))
 
     def test_obtain_renderer(self):
         context = self.portal

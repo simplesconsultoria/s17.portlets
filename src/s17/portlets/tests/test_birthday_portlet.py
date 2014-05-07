@@ -37,16 +37,16 @@ class BirthdayPortletTestCase(unittest.TestCase):
 
     def test_portlet_type_registered(self):
         portlet = getUtility(IPortletType, name=self.name)
-        self.assertEquals(portlet.addview, self.name)
+        self.assertEqual(portlet.addview, self.name)
 
     def test_registered_type_interfaces(self):
         iface = getUtility(IPortletTypeInterface, name=self.name)
-        self.assertEquals(birthdayportlet.IBirthdayPortlet, iface)
+        self.assertEqual(birthdayportlet.IBirthdayPortlet, iface)
 
     def test_interfaces(self):
         portlet = birthdayportlet.Assignment('test', 5)
-        self.failUnless(IPortletAssignment.providedBy(portlet))
-        self.failUnless(IPortletDataProvider.providedBy(portlet.data))
+        self.assertTrue(IPortletAssignment.providedBy(portlet))
+        self.assertTrue(IPortletDataProvider.providedBy(portlet.data))
 
     def test_invoke_add_view(self):
         portlet = getUtility(IPortletType, name=self.name)
@@ -58,7 +58,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
 
         addview.createAndAdd(data={'portlet_title': 'test', 'days_number': 5})
 
-        self.assertEquals(len(mapping), 1)
+        self.assertEqual(len(mapping), 1)
         self.assertTrue(isinstance(mapping.values()[0],
                                    birthdayportlet.Assignment))
 
@@ -68,7 +68,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
 
         mapping['foo'] = birthdayportlet.Assignment('test', 5)
         editview = getMultiAdapter((mapping['foo'], request), name='edit')
-        self.failUnless(isinstance(editview, birthdayportlet.EditForm))
+        self.assertTrue(isinstance(editview, birthdayportlet.EditForm))
 
     def test_obtain_renderer(self):
         context = self.portal
@@ -128,7 +128,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
         mapping = render.get_birthdays()
         mapping = [[person[0] for person in person] for person in
                    mapping.values()]
-        self.assertEquals([], mapping)
+        self.assertEqual([], mapping)
 
         # let's publish the items
         for name in names:
@@ -138,10 +138,13 @@ class BirthdayRendererTestCase(unittest.TestCase):
         mapping = render.get_birthdays()
         mapping = [[person[0] for person in person] for person in
                    mapping.values()]
-        self.assertEquals([['Gustavo Roner', 'Juan Perez'],
-                           ['Marcelo Alves', 'Marcelo Santos'],
-                           ['Julia Alvarez']],
-                          mapping)
+        self.assertEqual(
+            [
+                ['Gustavo Roner', 'Juan Perez'],
+                ['Marcelo Alves', 'Marcelo Santos'],
+                ['Julia Alvarez']
+            ],
+            mapping)
 
     def test_is_anonymous(self):
         render = self.renderer(context=self.portal,
@@ -188,4 +191,4 @@ class BirthdayRendererTestCase(unittest.TestCase):
         self.pw.doActionFor(self.portal['name1'], 'publish')
         self.pw.doActionFor(self.portal['name2'], 'publish')
         mapping = render.get_birthdays()
-        self.assertEquals(2, len(mapping))
+        self.assertEqual(2, len(mapping))

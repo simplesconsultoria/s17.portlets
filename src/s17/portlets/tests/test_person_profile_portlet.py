@@ -43,16 +43,16 @@ class PersonProfilePortletTestCase(unittest.TestCase):
 
     def test_portlet_type_registered(self):
         portlet = getUtility(IPortletType, name=self.name)
-        self.assertEquals(portlet.addview, self.name)
+        self.assertEqual(portlet.addview, self.name)
 
     def test_registered_type_interfaces(self):
         iface = getUtility(IPortletTypeInterface, name=self.name)
-        self.assertEquals(personprofile.IPersonProfile, iface)
+        self.assertEqual(personprofile.IPersonProfile, iface)
 
     def test_interfaces(self):
         portlet = personprofile.Assignment('test')
-        self.failUnless(IPortletAssignment.providedBy(portlet))
-        self.failUnless(IPortletDataProvider.providedBy(portlet.data))
+        self.assertTrue(IPortletAssignment.providedBy(portlet))
+        self.assertTrue(IPortletDataProvider.providedBy(portlet.data))
 
     def test_invoke_add_view(self):
         portlet = getUtility(IPortletType, name=self.name)
@@ -63,7 +63,7 @@ class PersonProfilePortletTestCase(unittest.TestCase):
 
         addview.createAndAdd(data={'portlet_title': 'test'})
 
-        self.assertEquals(len(mapping), 1)
+        self.assertEqual(len(mapping), 1)
         self.assertTrue(
             isinstance(mapping.values()[0], personprofile.Assignment))
 
@@ -74,7 +74,7 @@ class PersonProfilePortletTestCase(unittest.TestCase):
 
         mapping['foo'] = personprofile.Assignment('test')
         editview = getMultiAdapter((mapping['foo'], request), name='edit')
-        self.failUnless(isinstance(editview, personprofile.EditForm))
+        self.assertTrue(isinstance(editview, personprofile.EditForm))
 
     def test_obtain_renderer(self):
         context = self.portal
@@ -128,15 +128,15 @@ class PersonProfileRendererTestCase(unittest.TestCase):
                                IPortletRenderer)
 
     def test_get_user_id(self):
-        self.assertEquals(TEST_USER_ID, self.render.get_user_id())
+        self.assertEqual(TEST_USER_ID, self.render.get_user_id())
 
     def test_get_user_profile(self):
         suppose_url = self.portal.absolute_url() + '/' + TEST_USER_ID
-        self.assertEquals(suppose_url, self.render.get_user_profile())
+        self.assertEqual(suppose_url, self.render.get_user_profile())
 
     def test_get_person(self):
         user = self.render.get_person(TEST_USER_ID)
-        self.assertEquals(self.portal[TEST_USER_ID], user.getObject())
+        self.assertEqual(self.portal[TEST_USER_ID], user.getObject())
 
     def test_get_participation(self):
         """ Participation in creation of 6 content types: Five News Item
@@ -148,8 +148,8 @@ class PersonProfileRendererTestCase(unittest.TestCase):
             self.portal.invokeFactory('News Item', 'news%s' % index)
             index += 1
         user = self.render.get_participation()
-        self.assertEquals(5, len(user))
-        self.assertEquals(self.portal[TEST_USER_ID], user[4].getObject())
+        self.assertEqual(5, len(user))
+        self.assertEqual(self.portal[TEST_USER_ID], user[4].getObject())
 
     def get_sizes_from_str(self, string):
         sizes = string[string.find('height'):].split(' ')
@@ -167,4 +167,4 @@ class PersonProfileRendererTestCase(unittest.TestCase):
         day, month, year = date.day, date.month, date.year
         output = '%s/%s/%s' % \
             (str(day).zfill(2), str(month).zfill(2), str(year).zfill(2))
-        self.assertEquals(output, self.render.data_transform(date))
+        self.assertEqual(output, self.render.data_transform(date))
