@@ -12,8 +12,17 @@ Profile, birthday and white pages portlets for a person.
 Mostly Harmless
 ===============
 
-.. image:: https://secure.travis-ci.org/simplesconsultoria/s17.portlets.png
+.. image:: https://secure.travis-ci.org/simplesconsultoria/s17.portlets.png?branch=master
+    :alt: Travis CI badge
     :target: http://travis-ci.org/simplesconsultoria/s17.portlets
+
+.. image:: https://coveralls.io/repos/simplesconsultoria/s17.portlets/badge.png?branch=master
+    :alt: Coveralls badge
+    :target: https://coveralls.io/r/simplesconsultoria/s17.portlets
+
+.. image:: https://pypip.in/d/collective.cover/badge.png
+    :target: https://pypi.python.org/pypi/collective.cover/
+    :alt: Downloads
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
 
