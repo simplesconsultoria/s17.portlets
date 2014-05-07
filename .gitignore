@@ -1,7 +1,8 @@
-*~
 *.egg-info
 *.mo
 *.pyc
+*~
+.coverage
 .installed.cfg
 .mr.developer.cfg
 bin/
@@ -9,6 +10,7 @@ coverage/
 develop-eggs/
 downloads/
 eggs/
+htmlcov/
 include/
 lib/
 parts/
