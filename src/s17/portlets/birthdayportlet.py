@@ -8,119 +8,98 @@ except AttributeError:
     import ordereddict
     OrderedDict = ordereddict.OrderedDict
 
-from datetime import datetime, timedelta
-
-from zope.component import getMultiAdapter
-from zope.interface import implements
+from datetime import datetime
+from datetime import timedelta
+from plone import api
+from plone.app.portlets.portlets import base
+from plone.memoize import instance
+from plone.memoize.compress import xhtml_compress
+from plone.portlets.interfaces import IPortletDataProvider
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from s17.portlets import PersonPortletsMessageFactory as _
 from zope import schema
 from zope.formlib import form
-
-from plone.portlets.interfaces import IPortletDataProvider
-from plone.app.portlets.portlets import base
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone import api
-
-from s17.person.content.person import IPerson
-
-from s17.portlets import PersonPortletsMessageFactory as _
+from zope.interface import implements
 
 
 class IBirthdayPortlet(IPortletDataProvider):
-    """A portlet
 
-    It inherits from IPortletDataProvider because for this portlet, the
-    data that is being rendered and the portlet assignment itself are the
-    same.
+    """Birthday portlet.
+
+    It displays the date, portrait and name of the persons that have
+    aniversaries in the following days.
     """
 
     portlet_title = schema.TextLine(
-        title=_(u"Portlet Title"),
-        description=_(u"the Title of the portlet"),
+        title=_(u'Title'),
+        description=_(u'The title of the portlet.'),
+        default=_(u'Birthdays'),
         required=True,
     )
 
     days_number = schema.Int(
-        title=_(u"Numbers of days"),
-        description=_(u"Search for birthdays from here plus numbers of days"),
-        required=True,
+        title=_(u'Days'),
+        description=_(u'Search for birthdays from here plus numbers of days'),
         default=30,
+        required=True,
     )
 
 
 class Assignment(base.Assignment):
-    """Portlet assignment.
 
-    This is what is actually managed through the portlets UI and associated
-    with columns.
-    """
+    """Portlet assignment."""
 
     implements(IBirthdayPortlet)
 
-    # TODO: Set default values for the configurable parameters here
-
-    portlet_title = u""
-    days_number = 30
-
-    # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, portlet_title=u"", days_number=30):
+    def __init__(self, portlet_title=_(u'Birthdays'), days_number=30):
         self.portlet_title = portlet_title
         self.days_number = days_number
 
     @property
     def title(self):
-        """This property is used to give the title of the portlet in the
-        "manage portlets" screen.
-        """
-        return self.portlet_title if self.portlet_title else _(u'Birthday Portlet')
+        return self.portlet_title
 
 
 class Renderer(base.Renderer):
-    """Portlet renderer.
 
-    This is registered in configure.zcml. The referenced page template is
-    rendered, and the implicit variable 'view' will refer to an instance
-    of this class. Other methods can be added and referenced in the template.
-    """
+    """Portlet renderer."""
+
+    _template = ViewPageTemplateFile('birthdayportlet.pt')
+
+    def render(self):
+        return xhtml_compress(self._template())
+
+    @instance.memoize
+    def _data(self):
+        return self.get_birthdays()
+
+    def upcoming_birthdays(self):
+        return self._data()
 
     def get_search_range(self):
-        results = []
-        now = datetime.now()
-        future_date = now + timedelta(days=self.data.days_number)
-        today = now.strftime('%m%d')
-        future = future_date.strftime('%m%d')
-        is_other_year = False
-        if future_date.month == now.month:
-            if future_date.day <= now.day:
-                is_other_year = True
-        elif future_date.month < now.month:
-            is_other_year = True
+        today = datetime.now()
+        future = today + timedelta(days=self.data.days_number)
+        next_year = future.year > today.year
 
-        if is_other_year:
-            results.append((today, '1231'))
-            results.append(('0101', future))
+        today, future = today.strftime('%m%d'), future.strftime('%m%d')
+        ranges = []
+        if next_year:
+            ranges.append((today, '1231'))
+            ranges.append(('0101', future))
         else:
-            results.append((today, future))
-        return results
+            ranges.append((today, future))
+        return ranges
 
     def get_birthdays(self):
-
-        # get next birthdays considering the interval defined in the portlet
-        birthdays = None
-        self.catalog = api.portal.get_tool('portal_personcatalog')
-        ranges = self.get_search_range()
-        for search_range in ranges:
-            query = {}
-            query['cooked_birthday'] = {'query': search_range,
-                                        'range': 'minmax'}
-            query['review_state'] = ['published', 'internally_published']
-            query['sort_on'] = 'birthday'
-            query['object_provides'] = {'query': [IPerson.__identifier__]}
-            if birthdays:
-                birthdays = birthdays + self.catalog.searchResults(**query)
-            else:
-                birthdays = self.catalog.searchResults(**query)
-
+        """Return next birthdays considering the interval defined in the
+        portlet configuration.
+        """
+        catalog = api.portal.get_tool('portal_personcatalog')
+        query = dict(review_state=('published', 'internally_published'))
+        birthdays = []
+        for range in self.get_search_range():
+            query['cooked_birthday'] = {'query': range, 'range': 'minmax'}
+            birthdays.extend(catalog.searchResults(**query))
         # sort by date and fullname
         birthdays = [(b.birthday.strftime('%d/%m'), b.Title, b) for b in birthdays]
         birthdays.sort()
@@ -138,36 +117,20 @@ class Renderer(base.Renderer):
 
     @property
     def available(self):
-        """ Checks if user is not anonymous and if there are any
-            birthdays to display
+        """Check if user is not anonymous and if there are any birthdays to
+        display.
         """
-        available = self.get_birthdays() and not self.is_anonymous
-        return available
+        return not api.user.is_anonymous() and len(self._data())
 
-    @property
-    def is_anonymous(self):
-        """Check if the currently logged-in user is anonymous.
-
-        :returns: True if the current user is anonymous, False otherwise.
-        :rtype: bool
-        """
-        return api.user.is_anonymous()
-
-    def portal_url(self):
-        portal_state = getMultiAdapter((self.context, self.request),
-                                       name=u'plone_portal_state')
-        return portal_state.portal_url()
-
-    render = ViewPageTemplateFile('birthdayportlet.pt')
+    def default_user_portrait(self):
+        """Return portal URL."""
+        return api.portal.get().absolute_url() + '/defaultUser.png'
 
 
 class AddForm(base.AddForm):
-    """Portlet add form.
 
-    This is registered in configure.zcml. The form_fields variable tells
-    zope.formlib which fields to display. The create() method actually
-    constructs the assignment that is being added.
-    """
+    """Portlet add form."""
+
     form_fields = form.Fields(IBirthdayPortlet)
 
     def create(self, data):
@@ -175,9 +138,7 @@ class AddForm(base.AddForm):
 
 
 class EditForm(base.EditForm):
-    """Portlet edit form.
 
-    This is registered with configure.zcml. The form_fields variable tells
-    zope.formlib which fields to display.
-    """
+    """Portlet edit form."""
+
     form_fields = form.Fields(IBirthdayPortlet)

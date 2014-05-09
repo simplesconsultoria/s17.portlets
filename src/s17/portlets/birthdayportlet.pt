@@ -2,20 +2,19 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="s17.portlets"
-      tal:omit-tag=""
-      tal:define="anonymous view/is_anonymous;">
+      tal:omit-tag="">
 
-<dl class="portlet portletBirthdayPortlet" tal:condition="view/available">
+<dl class="portlet portletBirthdayPortlet">
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
         <span tal:content="view/data/title"></span>
         <span class="portletTopRight"></span>
     </dt>
     <tal:birthdays
-        define="birthdays view/get_birthdays"
+        define="birthdays view/upcoming_birthdays"
         repeat="birthday birthdays">
         <dd class="portletItem" tal:condition="birthday">
-            <div class="bdate" tal:content="birthday">31/12</div>
+            <div class="" tal:content="birthday">31/12</div>
             <div tal:define="persons python:birthdays[birthday]"
                 tal:repeat="person persons">
                 <tal:object
@@ -26,7 +25,7 @@
                         tal:attributes="src string:${birthday_obj/absolute_url}/@@images/picture/thumb" />
                     <img class="image-left" width="32"
                         tal:condition="not:nocall:picture"
-                        tal:attributes="src string:${view/portal_url}/defaultUser.png"
+                        tal:attributes="src view/default_user_portrait"
                         />
                     <a tal:attributes="href birthday_obj/absolute_url"
                         tal:content="birthday_obj/Title">Full name</a>
