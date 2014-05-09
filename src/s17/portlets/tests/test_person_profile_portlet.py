@@ -100,8 +100,6 @@ class PersonProfileRendererTestCase(unittest.TestCase):
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         login(self.portal, TEST_USER_NAME)
-        self.pw.setChainForPortalTypes(
-            ['Person'], ['simple_publication_workflow'])
         self.portal.invokeFactory('News Item', 'news1')
         image = os.path.join(os.path.dirname(__file__), 'picture.jpg')
         data = getFile(image).read()

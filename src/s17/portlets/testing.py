@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-
-from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import PLONE_FIXTURE
-from plone.app.testing import IntegrationTesting
+from plone import api
 from plone.app.testing import FunctionalTesting
+from plone.app.testing import IntegrationTesting
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
 from plone.testing.z2 import ZSERVER_FIXTURE
+from s17.portlets.config import HAS_PERSON
 
 
 class Fixture(PloneSandboxLayer):
@@ -15,20 +16,16 @@ class Fixture(PloneSandboxLayer):
         # Load ZCML
         import s17.portlets
         self.loadZCML(package=s17.portlets)
-        # Load ZCML
-        import s17.person
-        self.loadZCML(package=s17.person)
-        # XXX: We should not have this here but...
-        import plone.app.dexterity
-        self.loadZCML(package=plone.app.dexterity)
-        import plone.app.referenceablebehavior
-        self.loadZCML(package=plone.app.referenceablebehavior)
 
     def setUpPloneSite(self, portal):
         # Install into Plone site using portal_setup
-        self.applyProfile(portal, 's17.portlets:default')
-        self.applyProfile(portal, 's17.person:default')
+        if HAS_PERSON:
+            self.applyProfile(portal, 's17.person:default')
+            wt = api.portal.get_tool('portal_workflow')
+            wt.setChainForPortalTypes(
+                ('Person',), ('simple_publication_workflow',))
 
+        self.applyProfile(portal, 's17.portlets:default')
 
 FIXTURE = Fixture()
 INTEGRATION_TESTING = IntegrationTesting(

@@ -34,8 +34,6 @@ class WhitePagesPortletTestCase(unittest.TestCase):
         self.name = 's17.portlets.whitepages.WhitePagesPortlet'
         self.pw = api.portal.get_tool('portal_workflow')
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.pw.setChainForPortalTypes(['Person'],
-                                       ['simple_publication_workflow'])
 
     def test_portlet_type_registered(self):
         portlet = getUtility(IPortletType, name=self.name)

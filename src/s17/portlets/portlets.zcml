@@ -1,0 +1,51 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+   <!--
+      If the portlet has no configurable parameters, you can remove
+      the EditForm declaration in birthdayportlet.py and delete
+      the 'editview' attribute from this statement.
+      -->
+
+  <configure zcml:condition="installed s17.person"> 
+    <plone:portlet
+        name="s17.portlets.birthday.BirthdayPortlet"
+        interface=".birthdayportlet.IBirthdayPortlet"
+        assignment=".birthdayportlet.Assignment"
+        view_permission="zope2.View"
+        edit_permission="cmf.ManagePortal"
+        renderer=".birthdayportlet.Renderer"
+        addview=".birthdayportlet.AddForm"
+        editview=".birthdayportlet.EditForm"
+        />
+  </configure>
+
+  <configure zcml:condition="installed s17.person"> 
+    <plone:portlet
+        name="s17.portlets.personprofile.PersonProfile"
+        interface=".personprofile.IPersonProfile"
+        assignment=".personprofile.Assignment"
+        view_permission="zope2.View"
+        edit_permission="cmf.ManagePortal"
+        renderer=".personprofile.Renderer"
+        addview=".personprofile.AddForm"
+        editview=".personprofile.EditForm"
+        />
+  </configure>
+
+  <configure zcml:condition="installed s17.person"> 
+    <plone:portlet
+        name="s17.portlets.whitepages.WhitePagesPortlet"
+        interface=".whitepagesportlet.IWhitePagesPortlet"
+        assignment=".whitepagesportlet.Assignment"
+        view_permission="zope2.View"
+        edit_permission="cmf.ManagePortal"
+        renderer=".whitepagesportlet.Renderer"
+        addview=".whitepagesportlet.AddForm"
+        editview=".whitepagesportlet.EditForm"
+        />
+  </configure>
+
+</configure>

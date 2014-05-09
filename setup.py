@@ -56,6 +56,9 @@ setup(name='s17.portlets',
           'zope.schema',
       ],
       extras_require={
+          'person': [
+              's17.person',
+          ],
           'test': [
               'plone.app.dexterity',
               'plone.app.referenceablebehavior',
