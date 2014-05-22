@@ -39,7 +39,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
         self.assertEqual(birthdayportlet.IBirthdayPortlet, iface)
 
     def test_interfaces(self):
-        portlet = birthdayportlet.Assignment('test', 5)
+        portlet = birthdayportlet.Assignment(5)
         self.assertTrue(IPortletAssignment.providedBy(portlet))
         self.assertTrue(IPortletDataProvider.providedBy(portlet.data))
 
@@ -51,7 +51,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
             del mapping[m]
         addview = mapping.restrictedTraverse('+/' + portlet.addview)
 
-        addview.createAndAdd(data={'portlet_title': 'test', 'days_number': 5})
+        addview.createAndAdd(data={'days_number': 5})
 
         self.assertEqual(len(mapping), 1)
         self.assertTrue(
@@ -61,7 +61,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
         mapping = PortletAssignmentMapping()
         request = self.request
 
-        mapping['foo'] = birthdayportlet.Assignment('test', 5)
+        mapping['foo'] = birthdayportlet.Assignment(5)
         editview = getMultiAdapter((mapping['foo'], request), name='edit')
         self.assertTrue(isinstance(editview, birthdayportlet.EditForm))
 
@@ -72,7 +72,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
         manager = getUtility(
             IPortletManager, name='plone.rightcolumn', context=self.portal)
 
-        assignment = birthdayportlet.Assignment('test', 5)
+        assignment = birthdayportlet.Assignment(5)
 
         renderer = getMultiAdapter(
             (context, request, view, manager, assignment), IPortletRenderer)
@@ -124,7 +124,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
         # since they weren't published, portlet shouldn't listed them
         render = self.renderer(
             context=self.portal,
-            assignment=birthdayportlet.Assignment('test', 30)
+            assignment=birthdayportlet.Assignment(30)
         )
         mapping = render.get_birthdays()
         mapping = [
@@ -151,7 +151,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
         # we should not see this portlet if there are no birthdays to display
         render = self.renderer(
             context=self.portal,
-            assignment=birthdayportlet.Assignment('test', 5)
+            assignment=birthdayportlet.Assignment(5)
         )
         self.assertFalse(render.available)
 
@@ -168,7 +168,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
         # we should be able to see it
         render = self.renderer(
             context=self.portal,
-            assignment=birthdayportlet.Assignment('test', 5)
+            assignment=birthdayportlet.Assignment(5)
         )
         self.assertTrue(render.available)
 
@@ -178,7 +178,7 @@ class BirthdayRendererTestCase(unittest.TestCase):
 
     def test_long_period(self):
         render = self.renderer(
-            assignment=birthdayportlet.Assignment('test', 365))
+            assignment=birthdayportlet.Assignment(365))
         self.assertFalse(render.available)
         birthday1 = datetime.date(datetime.now())
         birthday2 = datetime.date(datetime.now() + timedelta(days=364))

@@ -28,7 +28,6 @@ Add portlets:
     >>> browser.getControl('Save').click()
 
     >>> browser.open(portalURL + '/++contextportlets++plone.rightcolumn/+/s17.portlets.birthday.BirthdayPortlet')
-    >>> browser.getControl(name='form.portlet_title').value = 'Aniversariantes'
     >>> browser.getControl('Save').click()
 
 Test portlets for anonymous users:

@@ -30,13 +30,6 @@ class IBirthdayPortlet(IPortletDataProvider):
     aniversaries in the following days.
     """
 
-    portlet_title = schema.TextLine(
-        title=_(u'Title'),
-        description=_(u'The title of the portlet.'),
-        default=_(u'Birthdays'),
-        required=True,
-    )
-
     days_number = schema.Int(
         title=_(u'Days'),
         description=_(u'Search for birthdays from here plus numbers of days'),
@@ -51,13 +44,12 @@ class Assignment(base.Assignment):
 
     implements(IBirthdayPortlet)
 
-    def __init__(self, portlet_title=_(u'Birthdays'), days_number=30):
-        self.portlet_title = portlet_title
+    def __init__(self, days_number=30):
         self.days_number = days_number
 
     @property
     def title(self):
-        return self.portlet_title
+        return _(u'Birthdays')
 
 
 class Renderer(base.Renderer):
