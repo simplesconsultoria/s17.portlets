@@ -1,10 +1,9 @@
-import unittest
+# -*- coding:utf-8 -*-
+from plone.testing import layered
+from s17.portlets.testing import FUNCTIONAL_TESTING
 
 import robotsuite
-
-from plone.testing import layered
-
-from s17.portlets.testing import FUNCTIONAL_TESTING
+import unittest
 
 
 def test_suite():

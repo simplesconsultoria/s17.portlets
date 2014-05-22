@@ -1,34 +1,25 @@
 # -*- coding: utf-8 -*-
-
-import unittest2 as unittest
-
 from datetime import datetime
-
-import os
-
-from zope.component import getUtility, getMultiAdapter
-
 from plone import api
-
-from plone.namedfile import NamedImage
-from plone.namedfile.tests.base import getFile
-
-from plone.portlets.interfaces import IPortletType
-from plone.portlets.interfaces import IPortletManager
-from plone.portlets.interfaces import IPortletAssignment
-from plone.portlets.interfaces import IPortletDataProvider
-from plone.portlets.interfaces import IPortletRenderer
-
+from plone.app.portlets.interfaces import IPortletTypeInterface
+from plone.app.portlets.storage import PortletAssignmentMapping
+from plone.app.testing import login
+from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
-from plone.app.testing import setRoles
-from plone.app.testing import login
-
-from plone.app.portlets.storage import PortletAssignmentMapping
-from plone.app.portlets.interfaces import IPortletTypeInterface
-
+from plone.namedfile import NamedImage
+from plone.namedfile.tests.base import getFile
+from plone.portlets.interfaces import IPortletAssignment
+from plone.portlets.interfaces import IPortletDataProvider
+from plone.portlets.interfaces import IPortletManager
+from plone.portlets.interfaces import IPortletRenderer
+from plone.portlets.interfaces import IPortletType
 from s17.portlets import personprofile
 from s17.portlets.testing import INTEGRATION_TESTING
+from zope.component import getUtility, getMultiAdapter
+
+import os
+import unittest
 
 
 class PersonProfilePortletTestCase(unittest.TestCase):

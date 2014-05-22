@@ -1,27 +1,20 @@
 # -*- coding: utf-8 -*-
-
-import unittest2 as unittest
-
-from zope.component import getUtility, getMultiAdapter
-
 from plone import api
-from Products.GenericSetup.utils import _getDottedName
-
-from plone.portlets.interfaces import IPortletType
-from plone.portlets.interfaces import IPortletManager
+from plone.app.portlets.interfaces import IPortletTypeInterface
+from plone.app.portlets.storage import PortletAssignmentMapping
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from plone.portlets.interfaces import IPortletAssignment
 from plone.portlets.interfaces import IPortletDataProvider
+from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletRenderer
-
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import setRoles
-
-from plone.app.portlets.storage import PortletAssignmentMapping
-from plone.app.portlets.interfaces import IPortletTypeInterface
-
+from plone.portlets.interfaces import IPortletType
+from Products.GenericSetup.utils import _getDottedName
 from s17.portlets import whitepagesportlet
-
 from s17.portlets.testing import INTEGRATION_TESTING
+from zope.component import getUtility, getMultiAdapter
+
+import unittest
 
 
 class WhitePagesPortletTestCase(unittest.TestCase):
