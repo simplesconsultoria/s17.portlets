@@ -9,5 +9,8 @@ following people:
 - Héctor Velarde
 - Alejandro Pereira
 - Gustavo Lepri
+- `Tango! Desktop Project`_ (image)
 
 Development sponsored by Simples Consultoria.
+
+.. _`Tango! Desktop Project`: http://tango.freedesktop.org/Tango_Desktop_Project

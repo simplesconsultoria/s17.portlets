@@ -5,35 +5,28 @@
       tal:omit-tag="">
 
 <dl class="portlet portletBirthdayPortlet">
-    <dt class="portletHeader">
-        <span class="portletTopLeft"></span>
-        <span tal:content="view/data/title"></span>
-        <span class="portletTopRight"></span>
-    </dt>
-    <tal:birthdays
-        define="birthdays view/upcoming_birthdays"
-        repeat="birthday birthdays">
-        <dd class="portletItem" tal:condition="birthday">
-            <div class="" tal:content="birthday">31/12</div>
-            <div tal:define="persons python:birthdays[birthday]"
-                tal:repeat="person persons">
-                <tal:object
-                    define="birthday_obj python:person[1].getObject();
-                            picture nocall:birthday_obj/picture">
-                    <img class="image-left"
-                        tal:condition="nocall:picture" width="40"
-                        tal:attributes="src string:${birthday_obj/absolute_url}/@@images/picture/thumb" />
-                    <img class="image-left" width="32"
-                        tal:condition="not:nocall:picture"
-                        tal:attributes="src view/default_user_portrait"
-                        />
-                    <a tal:attributes="href birthday_obj/absolute_url"
-                        tal:content="birthday_obj/Title">Full name</a>
-                    <div class="visualClear"><!-- --></div>
-                </tal:object>
-            </div>
-        </dd>
-    </tal:birthdays>
+  <dt class="portletHeader">
+    <span class="portletTopLeft"></span>
+    <span tal:content="view/data/title"></span>
+    <span class="portletTopRight"></span>
+  </dt>
+  <tal:birthdays
+      define="birthdays view/upcoming_birthdays"
+      repeat="day birthdays">
+    <dd class="portletItem">
+      <div class="" tal:content="day">31/12</div>
+      <div tal:define="persons python:birthdays[day]"
+          tal:repeat="person persons">
+        <img class="image-left" width="32"
+            tal:attributes="src person/portrait" />
+        <a href="" title=""
+            tal:content="person/fullname"
+            tal:attributes="href person/url;
+                            title person/description">Full name</a>
+        <div class="visualClear"><!-- --></div>
+      </div>
+    </dd>
+  </tal:birthdays>
 </dl>
 
 </html>

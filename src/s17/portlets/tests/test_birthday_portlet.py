@@ -13,7 +13,9 @@ from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletRenderer
 from plone.portlets.interfaces import IPortletType
 from s17.portlets import birthdayportlet
+from s17.portlets.config import HAS_PERSON
 from s17.portlets.testing import INTEGRATION_TESTING
+from s17.portlets.utils import sort_birthdays
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 
@@ -103,15 +105,21 @@ class BirthdayRendererTestCase(unittest.TestCase):
         manager = manager or getUtility(
             IPortletManager, name='plone.rightcolumn', context=self.portal)
 
-        assignment = assignment or birthdayportlet.Assignment('test', 5)
+        assignment = assignment or birthdayportlet.Assignment(5)
         return getMultiAdapter(
             (context, request, view, manager, assignment), IPortletRenderer)
 
-    def test_get_birthdays(self):
+    @unittest.skipUnless(HAS_PERSON, 'test depends on s17.person')
+    def test_data(self):
         # first let's create some persons and set their birthdays
         birthday = datetime.date(datetime.now())
         names = [
-            'Juan Perez', 'Gustavo Roner', 'Marcelo Santos', 'Marcelo Alves', 'Julia Alvarez']
+            'Juan Perez',
+            'Gustavo Roner',
+            'Marcelo Santos',
+            'Marcelo Alves',
+            'Julia Alvarez',
+        ]
         for i, name in enumerate(names):
             self.portal.invokeFactory(
                 'Person',
@@ -122,71 +130,85 @@ class BirthdayRendererTestCase(unittest.TestCase):
             )
 
         # since they weren't published, portlet shouldn't listed them
-        render = self.renderer(
-            context=self.portal,
-            assignment=birthdayportlet.Assignment(30)
-        )
-        mapping = render.get_birthdays()
-        mapping = [
-            [person[0] for person in person] for person in mapping.values()]
-        self.assertEqual([], mapping)
+        render = self.renderer(assignment=birthdayportlet.Assignment(30))
+        birthdays = render._data()
+        self.assertEqual(len(birthdays), 0)
 
         # let's publish the items
         for name in names:
             self.pw.doActionFor(self.portal[name], 'publish')
 
         # and test if names are listed in the right order and grouping
-        mapping = render.get_birthdays()
-        mapping = [
-            [person[0] for person in person] for person in mapping.values()]
-        self.assertEqual(
-            [
-                ['Gustavo Roner', 'Juan Perez'],
-                ['Marcelo Alves', 'Marcelo Santos'],
-                ['Julia Alvarez']
-            ],
-            mapping)
+        render = self.renderer(assignment=birthdayportlet.Assignment(30))
+        birthdays = render._data()
+        expected = [
+            ['Gustavo Roner', 'Juan Perez'],
+            ['Marcelo Alves', 'Marcelo Santos'],
+            ['Julia Alvarez'],
+        ]
+        for i, day in enumerate(birthdays):
+            names = [info['fullname'] for info in birthdays[day]]
+            self.assertEqual(names, expected[i])
 
     def test_available(self):
         # we should not see this portlet if there are no birthdays to display
-        render = self.renderer(
-            context=self.portal,
-            assignment=birthdayportlet.Assignment(5)
-        )
+        render = self.renderer(assignment=birthdayportlet.Assignment(5))
         self.assertFalse(render.available)
 
-        # but if we create and publish some Person items
-        birthday1 = datetime.date(datetime.now())
-        birthday2 = datetime.date(datetime.now() + timedelta(days=3))
-        self.portal.invokeFactory(
-            'Person', TEST_USER_ID, birthday=birthday1)
-        self.portal.invokeFactory(
-            'Person', 'name2', birthday=birthday2)
-        self.pw.doActionFor(self.portal[TEST_USER_ID], 'publish')
-        self.pw.doActionFor(self.portal['name2'], 'publish')
+        # let's create and publish a Person
+        birthday = datetime.date(datetime.now())
+        self.portal.invokeFactory('Person', 'person', birthday=birthday)
+        self.pw.doActionFor(self.portal['person'], 'publish')
 
         # we should be able to see it
-        render = self.renderer(
-            context=self.portal,
-            assignment=birthdayportlet.Assignment(5)
-        )
+        render = self.renderer(assignment=birthdayportlet.Assignment(5))
         self.assertTrue(render.available)
 
         # except if we are anonymous
         logout()
         self.assertFalse(render.available)
 
+    @unittest.skipUnless(HAS_PERSON, 'test depends on s17.person')
     def test_long_period(self):
-        render = self.renderer(
-            assignment=birthdayportlet.Assignment(365))
+        render = self.renderer(assignment=birthdayportlet.Assignment(365))
         self.assertFalse(render.available)
         birthday1 = datetime.date(datetime.now())
         birthday2 = datetime.date(datetime.now() + timedelta(days=364))
-        self.portal.invokeFactory(
-            'Person', 'name1', birthday=birthday1)
-        self.portal.invokeFactory(
-            'Person', 'name2', birthday=birthday2)
+        self.portal.invokeFactory('Person', 'name1', birthday=birthday1)
+        self.portal.invokeFactory('Person', 'name2', birthday=birthday2)
         self.pw.doActionFor(self.portal['name1'], 'publish')
         self.pw.doActionFor(self.portal['name2'], 'publish')
-        mapping = render.get_birthdays()
-        self.assertEqual(2, len(mapping))
+        birthdays = render.get_birthdays_from_persons()
+        birthdays = sort_birthdays(birthdays)
+        self.assertEqual(2, len(birthdays))
+
+    def test_in_range(self):
+        render = self.renderer()  # 5 days in the future by default
+        today = datetime.now()
+        delta = timedelta(1)  # one day
+        yesterday = today - delta
+        tomorrow = today + delta
+        self.assertTrue(render.in_range(today.strftime('%d/%m/%Y')))
+        self.assertFalse(render.in_range(yesterday.strftime('%d/%m/%Y')))
+        self.assertTrue(render.in_range(tomorrow.strftime('%d/%m/%Y')))
+
+        # TODO: cover dates on next year also; probably mocking datetime.now()
+        #       http://nedbatchelder.com/blog/201209/mocking_datetimetoday.html
+
+    def test_get_birthdays_from_users(self):
+        render = self.renderer()  # 5 days in the future by default
+        # first, we don't have a birthday property on member data
+        self.assertEqual(render.get_birthdays_from_users(), [])
+        # let's add the property
+        memberdata = api.portal.get_tool('portal_memberdata')
+        memberdata._setProperty('birthday', '', 'string')
+        today = datetime.now()
+        properties = dict(birthday=today.strftime('%d/%m/%Y'))
+        api.user.create(
+            username='foo', email='foo@bar.org', properties=properties)
+        # the user birthday's is today, so we got one result
+        results = render.get_birthdays_from_users()
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['fullname'], 'foo')
+        self.assertEqual(
+            results[0]['portrait'], 'http://nohost/plone/defaultUser.png')
