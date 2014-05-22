@@ -20,8 +20,8 @@ Mostly Harmless
     :alt: Coveralls badge
     :target: https://coveralls.io/r/simplesconsultoria/s17.portlets
 
-.. image:: https://pypip.in/d/collective.cover/badge.png
-    :target: https://pypi.python.org/pypi/collective.cover/
+.. image:: https://pypip.in/d/s17.portlets/badge.png
+    :target: https://pypi.python.org/pypi/s17.portlets/
     :alt: Downloads
 
 Got an idea? Found a bug? Let us know by `opening a support ticket`_.
