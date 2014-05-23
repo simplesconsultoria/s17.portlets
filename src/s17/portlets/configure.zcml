@@ -9,12 +9,12 @@
     i18n_domain="s17.portlets">
 
     <five:registerPackage package="." />
+    <include package="five.grok" />
+    <include package="Products.CMFCore" file="permissions.zcml" />
 
     <configure zcml:condition="installed s17.person">
       <include package="s17.person" />
     </configure>
-
-    <include package="Products.CMFCore" file="permissions.zcml" />
 
     <grok:grok package="." />
 

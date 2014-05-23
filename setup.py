@@ -40,6 +40,7 @@ setup(name='s17.portlets',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+          'five.grok',
           'ordereddict >=1.1',  # BBB: OrderedDict substitute for Python 2.6
           'plone.api',
           'plone.app.portlets',
