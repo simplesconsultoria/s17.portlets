@@ -81,6 +81,7 @@ class BirthdayPortletTestCase(unittest.TestCase):
         self.assertTrue(isinstance(renderer, birthdayportlet.Renderer))
 
 
+# TODO: split in two test cases: one for person and one for user
 class BirthdayRendererTestCase(unittest.TestCase):
 
     layer = INTEGRATION_TESTING
@@ -150,6 +151,8 @@ class BirthdayRendererTestCase(unittest.TestCase):
             names = [info['fullname'] for info in birthdays[day]]
             self.assertEqual(names, expected[i])
 
+    # FIXME: we need to test this for users
+    @unittest.skipUnless(HAS_PERSON, 'test depends on s17.person')
     def test_available(self):
         # we should not see this portlet if there are no birthdays to display
         render = self.renderer(assignment=birthdayportlet.Assignment(5))

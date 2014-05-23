@@ -11,8 +11,10 @@ from plone.portlets.interfaces import IPortletRenderer
 from plone.portlets.interfaces import IPortletType
 from Products.GenericSetup.utils import _getDottedName
 from s17.portlets import whitepagesportlet
+from s17.portlets.config import HAS_PERSON
 from s17.portlets.testing import INTEGRATION_TESTING
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getMultiAdapter
+from zope.component import getUtility
 
 import unittest
 
@@ -22,6 +24,9 @@ class WhitePagesPortletTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
+        if not HAS_PERSON:
+            self.skipTest('test depends on s17.person')
+
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.name = 's17.portlets.whitepages.WhitePagesPortlet'
@@ -105,6 +110,9 @@ class WhitePagesRendererTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
+        if not HAS_PERSON:
+            self.skipTest('test depends on s17.person')
+
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])

@@ -15,8 +15,10 @@ from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletRenderer
 from plone.portlets.interfaces import IPortletType
 from s17.portlets import personprofile
+from s17.portlets.config import HAS_PERSON
 from s17.portlets.testing import INTEGRATION_TESTING
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getMultiAdapter
+from zope.component import getUtility
 
 import os
 import unittest
@@ -27,6 +29,9 @@ class PersonProfilePortletTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
+        if not HAS_PERSON:
+            self.skipTest('test depends on s17.person')
+
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.name = 's17.portlets.personprofile.PersonProfile'
@@ -86,6 +91,9 @@ class PersonProfileRendererTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
+        if not HAS_PERSON:
+            self.skipTest('test depends on s17.person')
+
         self.portal = self.layer['portal']
         self.pw = api.portal.get_tool('portal_workflow')
         self.request = self.layer['request']
