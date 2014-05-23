@@ -73,13 +73,13 @@ The following portlets are always available:
     The birthday portlet displays the names of the persons with upcoming
     birthdays in the following days (the number of days is user configurable).
 
-.. figure:: https://raw.github.com/simplesconsultoria/s17.portlets/master/birthday.png
+.. figure:: https://raw.github.com/simplesconsultoria/s17.portlets/master/birthdays.png
     :align: center
     :height: 260px
     :width: 265px
 
 The following portlets currently depend on the installation of `s17.person`_
-and work only with Person objects::
+and work only with Person objects:
 
 **Profile**
     The profile portlet displays information about a person personal profile
