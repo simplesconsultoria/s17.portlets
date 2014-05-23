@@ -9,18 +9,16 @@
       the 'editview' attribute from this statement.
       -->
 
-  <configure zcml:condition="installed s17.person"> 
-    <plone:portlet
-        name="s17.portlets.birthday.BirthdayPortlet"
-        interface=".birthdayportlet.IBirthdayPortlet"
-        assignment=".birthdayportlet.Assignment"
-        view_permission="zope2.View"
-        edit_permission="cmf.ManagePortal"
-        renderer=".birthdayportlet.Renderer"
-        addview=".birthdayportlet.AddForm"
-        editview=".birthdayportlet.EditForm"
-        />
-  </configure>
+  <plone:portlet
+      name="s17.portlets.birthday.BirthdayPortlet"
+      interface=".birthdayportlet.IBirthdayPortlet"
+      assignment=".birthdayportlet.Assignment"
+      view_permission="zope2.View"
+      edit_permission="cmf.ManagePortal"
+      renderer=".birthdayportlet.Renderer"
+      addview=".birthdayportlet.AddForm"
+      editview=".birthdayportlet.EditForm"
+      />
 
   <configure zcml:condition="installed s17.person"> 
     <plone:portlet
