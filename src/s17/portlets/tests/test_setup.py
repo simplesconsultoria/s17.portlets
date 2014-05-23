@@ -20,14 +20,7 @@ class TestInstall(unittest.TestCase):
         self.qi = getattr(self.portal, 'portal_quickinstaller')
 
     def test_installed(self):
-        self.assertTrue(self.qi.isProductInstalled(PROJECTNAME),
-                        '%s not installed' % PROJECTNAME)
-
-    def test_dependencies_installed(self):
-        packages = ['s17.person']
-        for p in packages:
-            self.assertTrue(self.qi.isProductInstalled(p),
-                            '%s not installed' % p)
+        self.assertTrue(self.qi.isProductInstalled(PROJECTNAME))
 
 
 class TestUninstall(unittest.TestCase):
