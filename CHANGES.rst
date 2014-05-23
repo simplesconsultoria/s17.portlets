@@ -13,6 +13,9 @@ There's a frood who really knows where his towel is.
     Buildout configuration or ``setup.py``. See package documentation for more
     information.
 
+- Brazilian Portuguese and Spanish translations were updated.
+  [hvelarde]
+
 - The package ``s17.person`` is no longer a hard dependency, but an extra.
   The birthday portlet is available with or without it; the profile portlet
   and the white pages portlet will be available only if ``s17.person`` is

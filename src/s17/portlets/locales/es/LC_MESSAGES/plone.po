@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.portlets 1.0\n"
-"POT-Creation-Date: 2012-09-21 21:17+0000\n"
-"PO-Revision-Date: 2012-05-09 16:29-0300\n"
+"POT-Creation-Date: 2014-05-23 16:36+0000\n"
+"PO-Revision-Date: 2014-05-23 13:39-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Domain: plone\n"
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Birthday Portlet"
-msgstr "Portlet de cumpleaños"
+msgid "Birthdays"
+msgstr "Cumpleaños"
 
 #: s17/portlets/profiles/default/portlets.xml
 msgid "Displays a search box to look for persons using their name."
@@ -32,10 +32,10 @@ msgid "Displays the names of the persons with upcoming birthdays in the followin
 msgstr "Muestra los nombres de las personas que cumpliran años en los próximos días."
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Person Profile Portlet"
-msgstr "Portlet de perfil personal"
+msgid "Profile"
+msgstr "Perfil de usuario"
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "White Pages Portlet"
-msgstr "Portlet de páginas blancas"
+msgid "White Pages"
+msgstr "Búsqueda de usuarios"
 

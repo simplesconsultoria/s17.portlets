@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-09-21 21:17+0000\n"
+"POT-Creation-Date: 2014-05-23 16:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Domain: plone\n"
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Birthday Portlet"
+msgid "Birthdays"
 msgstr ""
 
 #: s17/portlets/profiles/default/portlets.xml
@@ -34,10 +34,10 @@ msgid "Displays the names of the persons with upcoming birthdays in the followin
 msgstr ""
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Person Profile Portlet"
+msgid "Profile"
 msgstr ""
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "White Pages Portlet"
+msgid "White Pages"
 msgstr ""
 
