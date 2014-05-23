@@ -7,7 +7,17 @@ There's a frood who really knows where his towel is.
 1.0b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+.. Warning::
+    This release makes the use of ``s17.person`` optional. If your project
+    depends on such package, you should add the ``person`` extra to your
+    Buildout configuration or ``setup.py``. See package documentation for more
+    information.
+
+- The package ``s17.person`` is no longer a hard dependency, but an extra.
+  The birthday portlet is available with or without it; the profile portlet
+  and the white pages portlet will be available only if ``s17.person`` is
+  installed.
+  [hvelarde]
 
 
 1.0b1 (2012-09-21)

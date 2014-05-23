@@ -36,13 +36,22 @@ Installation
 
 To enable this product in a buildout-based installation:
 
-1. Edit your buildout.cfg and add ``s17.portlets`` to the list of eggs to
+#. Edit your ``buildout.cfg`` and add ``s17.portlets`` to the list of eggs to
    install ::
 
     [buildout]
     ...
     eggs =
         s17.portlets
+
+#. Starting on 1.0b2 ``s17.portlets`` no longer depends on ``s17.person``. If
+   your project depends on such package, you should add the ``person`` extra
+   to your ``buildout.cfg`` or ``setup.py``::
+
+    [buildout]
+    ...
+    eggs =
+        s17.portlets [person]
 
 After updating the configuration you need to run ''bin/buildout'', which will
 take care of updating your system.
@@ -58,16 +67,23 @@ Check the box next to ``s17.portlets`` and click the 'Activate' button.
 Portlets
 --------
 
-`s17.portlets` contains portlets to be used with the Person content type
-included in `s17.person`_. The following portlets are available:
-
-**Profile**
-    The profile portlet displays information about a person personal profile
-    including portrait, resume and latest posts made on the site.
+The following portlets are always available:
 
 **Birthday**
     The birthday portlet displays the names of the persons with upcoming
     birthdays in the following days (the number of days is user configurable).
+
+.. figure:: https://raw.github.com/simplesconsultoria/s17.portlets/master/birthday.png
+    :align: center
+    :height: 260px
+    :width: 265px
+
+The following portlets currently depend on the installation of `s17.person`_
+and work only with Person objects::
+
+**Profile**
+    The profile portlet displays information about a person personal profile
+    including portrait, resume and latest posts made on the site.
 
 **White pages**
     The white pages portlet displays a search box to look for persons using
