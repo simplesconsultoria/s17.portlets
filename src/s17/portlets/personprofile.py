@@ -1,162 +1,169 @@
 # -*- coding: utf-8 -*-
-
-from zope.interface import implements
-
-from plone.portlets.interfaces import IPortletDataProvider
+from plone import api
 from plone.app.portlets.portlets import base
-
+from plone.memoize import instance
+from plone.memoize.compress import xhtml_compress
+from plone.portlets.interfaces import IPortletDataProvider
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from s17.portlets import PersonPortletsMessageFactory as _
+from s17.portlets.utils import get_portrait_url
 from zope import schema
 from zope.formlib import form
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone import api
-
-import DateTime
-
-from zope.component import getMultiAdapter
-
-from s17.portlets import PersonPortletsMessageFactory as _
+from zope.interface import implements
 
 
 class IPersonProfile(IPortletDataProvider):
-    """A portlet
 
-    It inherits from IPortletDataProvider because for this portlet, the
-    data that is being rendered and the portlet assignment itself are the
-    same.
+    """Profile portlet.
+
+    Displays a portrait, some useful links and a list of content created by
+    the user.
     """
 
-    # TODO: Add any zope.schema fields here to capture portlet configuration
-    # information. Alternatively, if there are no settings, leave this as an
-    # empty interface - see also notes around the add form and edit form
-    # below.
-    portlet_title = schema.TextLine(
-        title=_(u"Portlet Title"),
-        description=_(u"Title"),
-        required=False)
+    show_title = schema.Bool(
+        title=_(u'Show title'),
+        description=_(u'Show title of this portlet.'),
+        required=True,
+        default=True,
+    )
+
+    show_edit_profile_link = schema.Bool(
+        title=_(u'Show edit profile link'),
+        description=_(u'Show edit profile link for current user.'),
+        required=True,
+        default=True,
+    )
+
+    show_logout_link = schema.Bool(
+        title=_(u'Show logout link'),
+        description=_(u'Show logout link for current user.'),
+        required=True,
+        default=True,
+    )
+
+    show_recent_content = schema.Bool(
+        title=_(u'Show recent content'),
+        description=_(u'Show recent content created by current user.'),
+        required=True,
+        default=True,
+    )
 
 
 class Assignment(base.Assignment):
-    """Portlet assignment.
 
-    This is what is actually managed through the portlets UI and associated
-    with columns.
-    """
+    """Portlet assignment."""
 
     implements(IPersonProfile)
 
-    # TODO: Set default values for the configurable parameters here
+    show_title = True
+    show_edit_profile_link = True
+    show_logout_link = True
+    show_recent_content = True
 
-    # some_field = u""
-    portlet_title = u""
-
-    # TODO: Add keyword parameters for configurable parameters here
-    def __init__(self, portlet_title=u""):
-        self.portlet_title = portlet_title
+    def __init__(
+        self,
+        show_title=True,
+        show_edit_profile_link=True,
+        show_logout_link=True,
+        show_recent_content=True,
+    ):
+        self.show_title = show_title
+        self.show_edit_profile_link = show_edit_profile_link
+        self.show_logout_link = show_logout_link
+        self.show_recent_content = show_recent_content
 
     @property
     def title(self):
-        """This property is used to give the title of the portlet in the
-        "manage portlets" screen.
-        """
-        return self.portlet_title if self.portlet_title else "Person Profile"
+        return _(u'User Profile')
 
 
 class Renderer(base.Renderer):
-    """Portlet renderer.
 
-    This is registered in configure.zcml. The referenced page template is
-    rendered, and the implicit variable 'view' will refer to an instance
-    of this class. Other methods can be added and referenced in the template.
-    """
+    """Portlet renderer."""
 
-    render = ViewPageTemplateFile('personprofile.pt')
+    _template = ViewPageTemplateFile('personprofile.pt')
 
-    def get_user_id(self):
-        """Get the currently logged-in user.
-
-        :returns: Currently logged-in user id.
-        :rtype: string
-        """
-        return api.user.get_current().getId()
-
-    def get_user_profile(self):
-        user_id = self.get_user_id()
-        person = self.get_person(user_id)
-        url = ''
-        if person:
-            url = person.getURL()
-        return url
-
-    def get_resume(self):
-        return ''
-
-    def get_person(self, user_id):
-        self.catalog = api.portal.get_tool('portal_personcatalog')
-        person = self.catalog.searchResults({'id': user_id})
-        person = person[0] if person else None
-
-        return person
-
-    def get_portrait(self, width=200):
-        # XXX: this should be replace by an IPerson data
-        user_id = self.get_user_id()
-
-        person = self.get_person(user_id)
-        portal_url = api.portal.get().absolute_url()
-        tag = '<img width="75" height="99" title="" alt="" src="%s/defaultUser.png">' % portal_url
-
-        if person:
-            obj = person.getObject()
-
-            image = obj.picture
-            if image:
-                image_size = image.getImageSize()
-                w = image_size[0]
-                h = image_size[1]
-                proportion = h / float(w)
-
-                height = round(width * proportion, 0)
-                images = getMultiAdapter((obj, self.request), name="images")
-                img = images.scale('picture', width=width, height=height)
-                tag = img.tag()
-
-        return tag
-
-    def get_participation(self):
-        user_id = self.get_user_id()
-
-        self.catalog = api.portal.get_tool('portal_catalog')
-        query = {}
-        sort_limit = 5
-        query['Creator'] = user_id
-        query['sort_order'] = 'reverse'
-        query['sort_on'] = 'Date'
-        query['sort_limit'] = sort_limit
-        participation_list = self.catalog.searchResults(query)[:sort_limit]
-        return participation_list
-
-    def data_transform(self, date):
-        formated_date = DateTime.DateTime(date).strftime('%d/%m/%Y')
-        return formated_date
+    def render(self):
+        return xhtml_compress(self._template())
 
     @property
-    def is_anonymous(self):
-        """Check if the currently logged-in user is anonymous.
+    def available(self):
+        """Check if user is not anonymous."""
+        return not api.user.is_anonymous()
 
-        :returns: True if the current user is anonymous, False otherwise.
-        :rtype: bool
-        """
-        return api.user.is_anonymous()
+    @property
+    def show_title(self):
+        """Return the value of the show_title field."""
+        return self.data.show_title
+
+    @property
+    def show_edit_profile_link(self):
+        """Return the value of the show_edit_profile_link field."""
+        return self.data.show_edit_profile_link
+
+    @property
+    def show_logout_link(self):
+        """Return the value of the show_logout_link field."""
+        return self.data.show_logout_link
+
+    @property
+    def show_recent_content(self):
+        """Return the value of the show_recent_content field."""
+        return self.data.show_recent_content
+
+    @property
+    def current_user_id(self):
+        """Return the id of the current user."""
+        return api.user.get_current().getId()
+
+    @property
+    def portrait_url(self):
+        """Return the URL of the portrait of the current user."""
+        # XXX: This will return always the image of the Plone user and not
+        #      the image of the Person object. We should fix s17.person to
+        #      synchronize those images.
+        return get_portrait_url(self.current_user_id)
+
+    @instance.memoize
+    def get_user_content(self):
+        """Return a list of content created by the user as catalog brains."""
+        self.catalog = api.portal.get_tool('portal_catalog')
+        posts = 5
+        query = dict(
+            Creator=self.current_user_id,
+            sort_on='Date',
+            sort_order='reverse',
+            sort_limit=posts,
+        )
+        return self.catalog(**query)[:posts]
+
+    @property
+    def user_has_content(self):
+        """Return True if the user has content created."""
+        return len(self.get_user_content()) > 0
+
+    def toLocalizedTime(self, date):
+        """Return the localized time of the date."""
+        util = api.portal.get_tool('translation_service')
+        return util.toLocalizedTime(date, long_format=True)
+
+    @instance.memoize
+    def all_user_content_url(self):
+        """Return URL of a search of content created by the user."""
+        portal_url = api.portal.get().absolute_url()
+        search_url = '{0}/search?Creator={1}&sort_on=created&sort_order=reverse'
+        return search_url.format(portal_url, self.current_user_id)
+
+    @instance.memoize
+    def portal_url(self):
+        """Return the URL of the portal."""
+        return api.portal.get().absolute_url()
 
 
 class AddForm(base.AddForm):
-    """Portlet add form.
 
-    This is registered in configure.zcml. The form_fields variable tells
-    zope.formlib which fields to display. The create() method actually
-    constructs the assignment that is being added.
-    """
+    """Portlet add form."""
+
     form_fields = form.Fields(IPersonProfile)
 
     def create(self, data):
@@ -164,9 +171,7 @@ class AddForm(base.AddForm):
 
 
 class EditForm(base.EditForm):
-    """Portlet edit form.
 
-    This is registered with configure.zcml. The form_fields variable tells
-    zope.formlib which fields to display.
-    """
+    """Portlet edit form."""
+
     form_fields = form.Fields(IPersonProfile)

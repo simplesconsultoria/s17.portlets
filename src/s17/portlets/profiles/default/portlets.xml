@@ -12,8 +12,8 @@
  </portlet>
  <portlet
    addview="s17.portlets.personprofile.PersonProfile"
-   title="Profile"
-   description="Displays information about a person personal profile including portrait, resume and latest posts made on the site."
+   title="User Profile"
+   description="Displays a portrait, some useful links and a list of content created by the current user."
    i18n:attributes="title; description">
     <for interface="plone.app.portlets.interfaces.IColumn" />
     <for interface="plone.app.portlets.interfaces.IDashboard" />

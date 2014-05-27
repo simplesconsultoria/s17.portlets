@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-05-23 16:36+0000\n"
+"POT-Creation-Date: 2014-05-26 23:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,11 @@ msgid "Birthdays"
 msgstr ""
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Displays a search box to look for persons using their name."
+msgid "Displays a portrait, some useful links and a list of content created by the current user."
 msgstr ""
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Displays information about a person personal profile including portrait, resume and latest posts made on the site."
+msgid "Displays a search box to look for persons using their name."
 msgstr ""
 
 #: s17/portlets/profiles/default/portlets.xml
@@ -34,7 +34,7 @@ msgid "Displays the names of the persons with upcoming birthdays in the followin
 msgstr ""
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Profile"
+msgid "User Profile"
 msgstr ""
 
 #: s17/portlets/profiles/default/portlets.xml

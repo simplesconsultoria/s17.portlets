@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: s17.portlets 1.0\n"
-"POT-Creation-Date: 2014-05-23 16:36+0000\n"
-"PO-Revision-Date: 2014-05-23 13:39-0300\n"
+"POT-Creation-Date: 2014-05-26 23:02+0000\n"
+"PO-Revision-Date: 2014-05-26 18:47-0300\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,20 +20,20 @@ msgid "Birthdays"
 msgstr "Cumpleaños"
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Displays a search box to look for persons using their name."
-msgstr "Muestra una caja de búsqueda para buscar personas por su nombre."
+msgid "Displays a portrait, some useful links and a list of content created by the current user."
+msgstr "Muestra un retrato, algunos vínculos útiles y una lista de contenido creado por el usuario actual."
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Displays information about a person personal profile including portrait, resume and latest posts made on the site."
-msgstr "Muestra información acerca del perfil personal de una persona, incluyendo su retrato, currículum y sus últimas contribuciones en el sitio."
+msgid "Displays a search box to look for persons using their name."
+msgstr "Muestra una caja de búsqueda para buscar personas por su nombre."
 
 #: s17/portlets/profiles/default/portlets.xml
 msgid "Displays the names of the persons with upcoming birthdays in the following days."
 msgstr "Muestra los nombres de las personas que cumpliran años en los próximos días."
 
 #: s17/portlets/profiles/default/portlets.xml
-msgid "Profile"
-msgstr "Perfil de usuario"
+msgid "User Profile"
+msgstr "Perfil del usuario"
 
 #: s17/portlets/profiles/default/portlets.xml
 msgid "White Pages"

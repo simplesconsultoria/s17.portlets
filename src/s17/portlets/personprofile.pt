@@ -2,52 +2,65 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="s17.portlets"
-      tal:omit-tag=""
-      tal:define="anonymous view/is_anonymous;">
-<dl class="portlet portletPersonProfile"
-    tal:condition="not:anonymous">
+      tal:omit-tag="">
 
-    <dt tal:content="view/data/title"
-        i18n:translate="">Personal profile</dt>
-    <dd>
-        <div id="personal-profile">
+<dl class="portlet portletPersonProfile">
+  <dt class="portletHeader" tal:condition="view/show_title">
+    <span class="portletTopLeft"></span>
+    <span tal:replace="view/data/title" />
+    <span class="portletTopRight"></span>
+  </dt>
+  <dd class="portletItem">
+    <img class="" alt="Portrait" src=""
+        tal:attributes="src view/portrait_url"
+        i18n:attributes="alt" />
 
-            <div class="portrait">
-	            <img tal:replace="structure view/get_portrait" src="defaultUser.png" />
-	        </div>
+    <ul>
+      <li tal:replace="nothing">
+          FIXME: the edit profile link will point always to the user profile
+                 and not to the person object; we need to figure out how to
+                 know if the user profile has a linked person
+      </li>
+      <li tal:condition="view/show_edit_profile_link">
+        <a href="" tal:attributes="href string:${view/portal_url}/@@personal-information"
+            i18n:translate="">Edit profile</a>
+      </li>
+      <li tal:condition="view/show_logout_link">
+        <a href="" tal:attributes="href string:${view/portal_url}/logout"
+            i18n:domain="plone" i18n:translate="">Log out</a>
+      </li>
+    </ul>
 
-	        <ul class="profile-options"
-                tal:condition="view/get_user_profile">
-	            <li><a class="profile" href=""
-	                   tal:attributes="href view/get_user_profile"
-	                   i18n:translate="">My Profile</a></li>
-	        </ul>
-
-	       <dl class="portlet">
-	               <dt class="portletHeader">
-                        <span class="portletTopLeft"></span>
-                            <span i18n:translate="">Latest Posts</span>
-                        <span class="portletTopRight"></span>
-                    </dt>
-
-                <tal:participation tal:define="participation_list view/get_participation">
-                    <dd tal:condition="not: participation_list"
-                        i18n:translate="">No posts created</dd>
-                    <dd class="portletItem odd" tal:condition="participation_list"
-                        tal:repeat="activity participation_list">
-                        <tal:block tal:define="activity_obj activity/getObject">
-                        <a title="" class="tile"
-                           tal:attributes="href activity_obj/absolute_url">
-                           <span class="portletItemDetails" tal:content="python:view.data_transform(activity_obj.Date())"></span>
-                           <span tal:replace="activity/Title" />
-
-                        </a>
-                       </tal:block>
-                    </dd>
-                </tal:participation>
-
-	        </dl>
-        </div>
-    </dd>
+    <div tal:condition="python:view.show_recent_content and view.user_has_content">
+      <table summary="Lists the latest content created by you"
+          i18n:attributes="summary" style="width: 100%">
+        <caption style="text-align: left" i18n:translate="">Latest content created by you:</caption>
+        <tfoot>
+          <tr>
+            <td>
+              <a tal:attributes="href view/all_user_content_url" i18n:translate="">
+                  All content created by you
+              </a>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr tal:repeat="item view/get_user_content">
+            <td>
+              <a class="tile" href="" title=""
+                  tal:attributes="href item/getURL;
+                                  title item/Description">
+                <span tal:replace="item/pretty_title_or_id">Lorem ipsum</span>
+              </a>
+              <span class="portletItemDetails"
+                  tal:content="python:view.toLocalizedTime(item.Date)">
+                  May 26, 2014 08:15 PM
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </dd>
 </dl>
 </html>

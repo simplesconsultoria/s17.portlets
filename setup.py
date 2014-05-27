@@ -11,7 +11,7 @@ long_description = (
 
 setup(name='s17.portlets',
       version=version,
-      description="Profile, birthday and white pages portlets for a person.",
+      description="User Profile, Birthdays and White Pages portlets for a user or person.",
       long_description=long_description,
       classifiers=[
           "Development Status :: 4 - Beta",
@@ -30,7 +30,7 @@ setup(name='s17.portlets',
           "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
           "Topic :: Software Development :: Libraries :: Python Modules",
       ],
-      keywords='portlet person portlets',
+      keywords='user person profile birthdays search portlets',
       author='Simples Consultoria',
       author_email='products@simplesconsultoria.com.br',
       url='https://github.com/simplesconsultoria/s17.portlets',

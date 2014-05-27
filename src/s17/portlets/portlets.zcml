@@ -3,12 +3,6 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:zcml="http://namespaces.zope.org/zcml">
 
-   <!--
-      If the portlet has no configurable parameters, you can remove
-      the EditForm declaration in birthdayportlet.py and delete
-      the 'editview' attribute from this statement.
-      -->
-
   <plone:portlet
       name="s17.portlets.birthday.BirthdayPortlet"
       interface=".birthdayportlet.IBirthdayPortlet"
@@ -20,18 +14,16 @@
       editview=".birthdayportlet.EditForm"
       />
 
-  <configure zcml:condition="installed s17.person"> 
-    <plone:portlet
-        name="s17.portlets.personprofile.PersonProfile"
-        interface=".personprofile.IPersonProfile"
-        assignment=".personprofile.Assignment"
-        view_permission="zope2.View"
-        edit_permission="cmf.ManagePortal"
-        renderer=".personprofile.Renderer"
-        addview=".personprofile.AddForm"
-        editview=".personprofile.EditForm"
-        />
-  </configure>
+  <plone:portlet
+      name="s17.portlets.personprofile.PersonProfile"
+      interface=".personprofile.IPersonProfile"
+      assignment=".personprofile.Assignment"
+      view_permission="zope2.View"
+      edit_permission="cmf.ManagePortal"
+      renderer=".personprofile.Renderer"
+      addview=".personprofile.AddForm"
+      editview=".personprofile.EditForm"
+      />
 
   <configure zcml:condition="installed s17.person"> 
     <plone:portlet

@@ -1,26 +1,20 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 from plone import api
-from plone.app.portlets.interfaces import IPortletTypeInterface
 from plone.app.portlets.storage import PortletAssignmentMapping
-from plone.app.testing import login
+from plone.app.testing import logout
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_NAME
-from plone.namedfile import NamedImage
-from plone.namedfile.tests.base import getFile
 from plone.portlets.interfaces import IPortletAssignment
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletRenderer
 from plone.portlets.interfaces import IPortletType
+from Products.GenericSetup.utils import _getDottedName
 from s17.portlets import personprofile
-from s17.portlets.config import HAS_PERSON
 from s17.portlets.testing import INTEGRATION_TESTING
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 
-import os
 import unittest
 
 
@@ -29,9 +23,6 @@ class PersonProfilePortletTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
-        if not HAS_PERSON:
-            self.skipTest('test depends on s17.person')
-
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         self.name = 's17.portlets.personprofile.PersonProfile'
@@ -41,12 +32,18 @@ class PersonProfilePortletTestCase(unittest.TestCase):
         portlet = getUtility(IPortletType, name=self.name)
         self.assertEqual(portlet.addview, self.name)
 
-    def test_registered_type_interfaces(self):
-        iface = getUtility(IPortletTypeInterface, name=self.name)
-        self.assertEqual(personprofile.IPersonProfile, iface)
+    def test_registered_interfaces(self):
+        portlet = getUtility(IPortletType, name=self.name)
+        registered_interfaces = [_getDottedName(i) for i in portlet.for_]
+        registered_interfaces.sort()
+        expected = [
+            'plone.app.portlets.interfaces.IColumn',
+            'plone.app.portlets.interfaces.IDashboard'
+        ]
+        self.assertEqual(registered_interfaces, expected)
 
     def test_interfaces(self):
-        portlet = personprofile.Assignment('test')
+        portlet = personprofile.Assignment()
         self.assertTrue(IPortletAssignment.providedBy(portlet))
         self.assertTrue(IPortletDataProvider.providedBy(portlet.data))
 
@@ -57,29 +54,28 @@ class PersonProfilePortletTestCase(unittest.TestCase):
             del mapping[m]
         addview = mapping.restrictedTraverse('+/' + portlet.addview)
 
-        addview.createAndAdd(data={'portlet_title': 'test'})
+        addview.createAndAdd(data={})
 
         self.assertEqual(len(mapping), 1)
         self.assertTrue(
             isinstance(mapping.values()[0], personprofile.Assignment))
 
     def test_invoke_edit_view(self):
-        # NOTE: This test can be removed if the portlet has no edit form
         mapping = PortletAssignmentMapping()
         request = self.request
 
-        mapping['foo'] = personprofile.Assignment('test')
+        mapping['foo'] = personprofile.Assignment()
         editview = getMultiAdapter((mapping['foo'], request), name='edit')
         self.assertTrue(isinstance(editview, personprofile.EditForm))
 
-    def test_obtain_renderer(self):
+    def test_renderer(self):
         context = self.portal
         request = self.request
         view = context.restrictedTraverse('@@plone')
-        manager = getUtility(IPortletManager, name='plone.rightcolumn',
-                             context=self.portal)
+        manager = getUtility(
+            IPortletManager, name='plone.leftcolumn', context=self.portal)
 
-        assignment = personprofile.Assignment('test')
+        assignment = personprofile.Assignment()
 
         renderer = getMultiAdapter(
             (context, request, view, manager, assignment), IPortletRenderer)
@@ -91,77 +87,109 @@ class PersonProfileRendererTestCase(unittest.TestCase):
     layer = INTEGRATION_TESTING
 
     def setUp(self):
-        if not HAS_PERSON:
-            self.skipTest('test depends on s17.person')
-
         self.portal = self.layer['portal']
-        self.pw = api.portal.get_tool('portal_workflow')
         self.request = self.layer['request']
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        login(self.portal, TEST_USER_NAME)
-        self.portal.invokeFactory('News Item', 'news1')
-        image = os.path.join(os.path.dirname(__file__), 'picture.jpg')
-        data = getFile(image).read()
-        self.portal.invokeFactory(
-            'Person',
-            TEST_USER_ID,
-            birthday=datetime.date(datetime.now()),
-            picture=NamedImage(data)
-        )
-        setRoles(self.portal, TEST_USER_ID, ['Member'])
-        self.render = self.renderer(
-            context=self.portal, assignment=personprofile.Assignment('test'))
+        # setRoles(self.portal, TEST_USER_ID, ['Member'])
 
-    def renderer(self, context=None, request=None, view=None, manager=None,
-                 assignment=None):
+    def renderer(
+            self,
+            context=None,
+            request=None,
+            view=None,
+            manager=None,
+            assignment=None
+    ):
         context = context or self.portal
         request = request or self.request
         view = view or context.restrictedTraverse('@@plone')
         manager = manager or getUtility(
-            IPortletManager, name='plone.rightcolumn', context=self.portal)
+            IPortletManager, name='plone.leftcolumn', context=self.portal)
 
-        assignment = assignment or personprofile.Assignment('test')
-        return getMultiAdapter((context, request, view, manager, assignment),
-                               IPortletRenderer)
+        assignment = assignment or personprofile.Assignment()
+        return getMultiAdapter(
+            (context, request, view, manager, assignment), IPortletRenderer)
 
-    def test_get_user_id(self):
-        self.assertEqual(TEST_USER_ID, self.render.get_user_id())
+    def test_available(self):
+        r = self.renderer()
+        self.assertTrue(r.available)
+        logout()
+        self.assertFalse(r.available)
 
-    def test_get_user_profile(self):
-        suppose_url = self.portal.absolute_url() + '/' + TEST_USER_ID
-        self.assertEqual(suppose_url, self.render.get_user_profile())
+    def test_show_title(self):
+        r = self.renderer()
+        self.assertTrue(r.show_title)
+        self.assertIn(u'User Profile', r.render())
 
-    def test_get_person(self):
-        user = self.render.get_person(TEST_USER_ID)
-        self.assertEqual(self.portal[TEST_USER_ID], user.getObject())
+        r = self.renderer(
+            assignment=personprofile.Assignment(show_title=False))
+        self.assertFalse(r.show_title)
+        self.assertNotIn(u'User Profile', r.render())
 
-    def test_get_participation(self):
-        """ Participation in creation of 6 content types: Five News Item
-            and a s17.person.person. Returns at most five.
-        """
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        index = 2
-        while index < 6:
-            self.portal.invokeFactory('News Item', 'news%s' % index)
-            index += 1
-        user = self.render.get_participation()
-        self.assertEqual(5, len(user))
-        self.assertEqual(self.portal[TEST_USER_ID], user[4].getObject())
+    def test_show_edit_profile_link(self):
+        r = self.renderer()
+        self.assertTrue(r.show_edit_profile_link)
+        self.assertIn(u'Edit profile', r.render())
 
-    def get_sizes_from_str(self, string):
-        sizes = string[string.find('height'):].split(' ')
-        height = sizes[0].strip('height="')
-        width = sizes[1].strip('width="')
-        return (height, width)
+        r = self.renderer(
+            assignment=personprofile.Assignment(show_edit_profile_link=False))
+        self.assertFalse(r.show_edit_profile_link)
+        self.assertNotIn(u'Edit profile', r.render())
 
-    def test_get_portrait(self):
-        size = ('250', '200')
-        self.assertEqual(
-            size, self.get_sizes_from_str(self.render.get_portrait()))
+    def test_show_logout_link(self):
+        r = self.renderer()
+        self.assertTrue(r.show_logout_link)
+        self.assertIn(u'Log out', r.render())
 
-    def test_data_transform(self):
-        date = datetime.now()
-        day, month, year = date.day, date.month, date.year
-        output = '%s/%s/%s' % \
-            (str(day).zfill(2), str(month).zfill(2), str(year).zfill(2))
-        self.assertEqual(output, self.render.data_transform(date))
+        r = self.renderer(
+            assignment=personprofile.Assignment(show_logout_link=False))
+        self.assertFalse(r.show_logout_link)
+        self.assertNotIn(u'Log out', r.render())
+
+    def test_show_recent_content(self):
+        latest_content_msg = u'Latest content created by you:'
+        all_content_msg = u'All content created by you'
+        search_url = u'http://nohost/plone/search?Creator=test_user_1_&amp;sort_on=created&amp;sort_order=reverse'
+        r = self.renderer()
+        self.assertTrue(r.show_recent_content)
+        self.assertNotIn(latest_content_msg, r.render())
+        self.assertNotIn(all_content_msg, r.render())
+        self.assertNotIn(search_url, r.render())
+
+        with api.env.adopt_roles(['Manager']):
+            api.content.create(self.portal, 'Document', title='Lorem ipsum')
+
+        r = self.renderer()
+        self.assertTrue(r.show_recent_content)
+        self.assertIn(latest_content_msg, r.render())
+        self.assertIn(all_content_msg, r.render())
+        self.assertIn(search_url, r.render())
+
+        r = self.renderer(
+            assignment=personprofile.Assignment(show_recent_content=False))
+        self.assertFalse(r.show_recent_content)
+        self.assertNotIn(latest_content_msg, r.render())
+        self.assertNotIn(all_content_msg, r.render())
+        self.assertNotIn(search_url, r.render())
+
+    def test_get_user_content(self):
+        r = self.renderer()
+        self.assertEqual(r.get_user_content(), [])
+
+        with api.env.adopt_roles(['Manager']):
+            api.content.create(self.portal, 'Document', title='Lorem ipsum')
+
+        r = self.renderer()
+        content = r.get_user_content()
+        self.assertEqual(len(content), 1)
+        self.assertEqual(content[0].Title, 'Lorem ipsum')
+        self.assertEqual(content[0].portal_type, 'Document')
+
+    def test_user_has_content(self):
+        r = self.renderer()
+        self.assertFalse(r.user_has_content)
+
+        with api.env.adopt_roles(['Manager']):
+            api.content.create(self.portal, 'Document', title='Lorem ipsum')
+
+        r = self.renderer()
+        self.assertTrue(r.user_has_content)

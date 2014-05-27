@@ -7,7 +7,7 @@ s17.portlets
 Life, the Universe, and Everything
 ==================================
 
-Profile, birthday and white pages portlets for a person.
+User Profile, Birthdays and White Pages portlets for a user or person.
 
 Mostly Harmless
 ===============
@@ -69,9 +69,19 @@ Portlets
 
 The following portlets are always available:
 
-**Birthday**
-    The birthday portlet displays the names of the persons with upcoming
-    birthdays in the following days (the number of days is user configurable).
+**User Profile**
+    The User Profile portlet displays a portrait, some useful links and a list
+    of content created by the current user.
+
+.. figure:: https://raw.github.com/simplesconsultoria/s17.portlets/master/user-profile.png
+    :align: center
+    :height: 400px
+    :width: 265px
+
+**Birthdays**
+    The Birthdays portlet displays the names of the users or persons with
+    upcoming birthdays in the following days (the number of days is user
+    configurable).
 
 .. figure:: https://raw.github.com/simplesconsultoria/s17.portlets/master/birthdays.png
     :align: center
@@ -80,10 +90,6 @@ The following portlets are always available:
 
 The following portlets currently depend on the installation of `s17.person`_
 and work only with Person objects:
-
-**Profile**
-    The profile portlet displays information about a person personal profile
-    including portrait, resume and latest posts made on the site.
 
 **White pages**
     The white pages portlet displays a search box to look for persons using

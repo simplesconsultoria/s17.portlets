@@ -16,10 +16,17 @@ There's a frood who really knows where his towel is.
 - Brazilian Portuguese and Spanish translations were updated.
   [hvelarde]
 
-- The package ``s17.person`` is no longer a hard dependency, but an extra.
-  The birthday portlet is available with or without it; the profile portlet
-  and the white pages portlet will be available only if ``s17.person`` is
-  installed.
+- The User Profile portlet was completely refactored.
+  [hvelarde]
+
+- The Birthdays portlet was completely refactored. If ``s17.person`` is
+  installed, it will use the ``birthday`` field on the content type to
+  grab the upcoming birthdays using the Person catalog; otherwise, it will
+  look for a user defined ``birthday`` field on the MemberData tool.
+  [hvelarde]
+
+- The package ``s17.person`` is no longer a hard dependency, but an extra
+  requirement.
   [hvelarde]
 
 
