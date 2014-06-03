@@ -3,7 +3,6 @@ Changelog
 
 There's a frood who really knows where his towel is.
 
-
 1.0b2 (unreleased)
 ------------------
 
@@ -16,7 +15,8 @@ There's a frood who really knows where his towel is.
 - Brazilian Portuguese and Spanish translations were updated.
   [hvelarde]
 
-- The User Profile portlet was completely refactored.
+- The User Profile portlet was completely refactored and will only work with
+  users and not with ``s17.person`` objects as it doesn't make sense.
   [hvelarde]
 
 - The Birthdays portlet was completely refactored. If ``s17.person`` is
@@ -33,7 +33,7 @@ There's a frood who really knows where his towel is.
 1.0b1 (2012-09-21)
 ------------------
 
-- Deprecate use on Plone 4.1; we will support only Plone>=4.2. [hvelarde]
+- Deprecate use on Plone 4.1; we will support only Plone >=4.2. [hvelarde]
 
 - Rename package from s17.person.portlets to s17.portlets. [hvelarde]
 
