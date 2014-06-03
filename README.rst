@@ -85,7 +85,7 @@ The following portlets are always available:
 
 .. figure:: https://raw.github.com/simplesconsultoria/s17.portlets/master/birthdays.png
     :align: center
-    :height: 260px
+    :height: 340px
     :width: 265px
 
 The following portlets currently depend on the installation of `s17.person`_

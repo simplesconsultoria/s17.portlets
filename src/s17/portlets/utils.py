@@ -28,7 +28,7 @@ def get_portrait_url(user):
         assert user.portal_type == 'Person'
         if user.picture is not None:
             scales = user.restrictedTraverse('@@images')
-            icon = scales.scale('picture', scale='icon')
+            icon = scales.scale('picture', width=75, height=75)
             return icon.url
         else:
             return api.portal.get().absolute_url() + '/defaultUser.png'

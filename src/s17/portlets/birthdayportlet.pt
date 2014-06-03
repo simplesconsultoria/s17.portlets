@@ -17,8 +17,7 @@
       <div class="" tal:content="day">31/12</div>
       <div tal:define="persons python:birthdays[day]"
           tal:repeat="person persons">
-        <img class="image-left" width="32"
-            tal:attributes="src person/portrait" />
+        <img class="image-left" tal:attributes="src person/portrait" />
         <a href="" title=""
             tal:content="person/fullname"
             tal:attributes="href person/url;

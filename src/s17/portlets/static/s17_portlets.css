@@ -1,3 +1,7 @@
+dl.portletBirthdayPortlet .image-left {
+    border: none;
+}
+
 dl.portletWhitePagesPortlet .overlay-trigger {
     display: none;
 }
